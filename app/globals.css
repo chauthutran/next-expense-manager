@@ -23,6 +23,43 @@
   }
 }
 
+.triangle-background {
+  width: 0;
+  height: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 100px solid #E4EDED; /* Triangle color */
+}
+
+.diamond {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid yellow; /* Color of the diamond */
+  position: relative;
+  transform: rotate(45deg);
+}
+.diamond::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid yellow; /* Color of the diamond */
+  transform: rotate(90deg);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.twinkle {
+  animation: twinkle 1s infinite;
+}
+
 /* DatePickerStyles.css */
 
 .react-datepicker-wrapper {

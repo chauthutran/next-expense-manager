@@ -9,16 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        "bright-lime-green": "#89fa19",
+        'gold': '#FFD700',
+        "gainsboro": "#E4EDED",
+
+
+        'light-coral': "#fc7e6e", // Header
+        'warm-gray': '#A9A9A9',
+        'deep-coral': "#D96A5B", // Footer
+        'soft-peach': "#FFD3B4", // Primary Button
+        'muted-salmon': "#FFAD91", // Secondary Button
+        "teal-green": "#2A9D8F", // Accent Button:
+        "light-sand": "#F4EDE8", // Background
+        'soft-pink': '#FFB6C1',
+
+        'soft-coral': "##fff6f5",
         'tiffany-blue': '#23aaa6',
+        
         'living-coral': '#FF6F61',
         'ultra-violet': '#6A0DAD',
         'pale-yellow': '#FFFACD',
         'bright-yellow': '#FFD700',
         'mint-green': '#98FF98',
         'sky-blue': '#87CEEB',
-        'soft-pink': '#FFB6C1',
         'dark-teal': '#008080',
-        'warm-gray': '#A9A9A9',
         'sunset-orange': '#FD5E53',
         'slate-blue': '#6A5ACD',
       },

@@ -10,13 +10,15 @@ import { CategoryProvider } from "./contexts/CategoryContext";
 export default function Home() {
 
 	return (
-		<main >
+		<main>
 			<MainUiProvider>
 				<AuthProvider>
 					<CategoryProvider>
 						<div className="h-screen flex flex-col">
 							<Header />
-							<main className="flex-1 overflow-auto">
+							<main className="flex-1 overflow-auto bg-gainsboro">
+							
+
 								<AppWrapper />
 							</main>
 							<Footer />
