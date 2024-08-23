@@ -4,7 +4,7 @@ import Header from "./ui/layout/Header";
 import Footer from "./ui/layout/Footer";
 import AppWrapper from "./ui/AppWrapper";
 import { MainUiProvider } from "./contexts/MainUiContext";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { CategoryProvider } from "./contexts/CategoryContext";
 import Triangle from "./ui/basics/Triangle";
 

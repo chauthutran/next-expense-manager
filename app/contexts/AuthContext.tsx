@@ -7,9 +7,10 @@ import * as Utils from "@/lib/utils";
 
 interface AuthContextProps {
 	user: JSONObject | null;
-	login: (username: string, pin: string) => Promise<void>;
+	login: (email: string, password: string) => Promise<void>;
 	logout: () => void;
 	register: (user: JSONObject) => Promise<void>;
+	setUser: (user: JSONObject | null) => void,
 	error: string | null;
 	loading: boolean;
 }
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextProps>({
 	login: async () => { },
 	logout: () => { },
 	register: async(user: JSONObject) => {},
+	setUser: (user: JSONObject | null) => {},
 	error: null,
 	loading: false
 });
@@ -36,19 +38,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const login = async (username: string, password: string) => {
+	const login = async (email: string, password: string) => {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await fetch(`api/auth?username=${username}&password=${password}`);
+			const response = await fetch(`api/auth?actionType=login&email=${email}&password=${password}`);
             
 			if (!response.ok) {
                 setError("Network response was not ok");
             }
             else {
-                const userList = await response.json();
-                if (userList.length > 0 ) {
-                    setUser(userList[0]);
+                const foundUser = await response.json();
+                if (foundUser != null ) {
+                    setUser(foundUser);
                 }
                 else {
                     setError("Username/password is wrong.");
@@ -68,14 +70,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const register = async(user: JSONObject) => {
 		setLoading(true);
 		setError(null);
-			
+
+		const payload = {payload: user, actionType: "add"};
+		
 		try {
 			const response = await fetch("api/auth", {
 				method: "POST",
 				headers: {
-					"Content-type": "appliction/json"
+					"Content-type": "application/json"
 				},
-				body: JSON.stringify(user)
+				body: JSON.stringify(payload)
 			});
 
 			if( !response.ok ){
@@ -94,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, loading, error: error, login, logout, register }}>
+		<AuthContext.Provider value={{ user, setUser, loading, error: error, login, logout, register }}>
 			{children}
 		</AuthContext.Provider>
 	);

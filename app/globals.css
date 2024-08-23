@@ -24,23 +24,23 @@
 }
 .background-img {
   background: linear-gradient(to bottom, #E4EDED, #E4EDED);
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 95%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 0% 100%);
 }
-
+/* 
 .triangle-background {
   width: 0;
   height: 0;
   border-left: 100px solid transparent;
   border-right: 100px solid transparent;
-  border-bottom: 100px solid #E4EDED; /* Triangle color */
+  border-bottom: 100px solid #E4EDED;
 }
-
+/* 
 .diamond {
   width: 0;
   height: 0;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-bottom: 20px solid yellow; /* Color of the diamond */
+  border-bottom: 20px solid yellow;
   position: relative;
   transform: rotate(45deg);
 }
@@ -53,9 +53,9 @@
   height: 0;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-top: 20px solid yellow; /* Color of the diamond */
+  border-top: 20px solid yellow
   transform: rotate(90deg);
-}
+} */
 
 @keyframes twinkle {
   0%, 100% { opacity: 1; }
