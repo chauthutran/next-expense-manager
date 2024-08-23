@@ -50,9 +50,9 @@ export default function ExpenseList() {
 
 	return (
 		<div className="w-full flex flex-col">
-			<div className="shadow-lg bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 px-5 py-3 ">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 ">
 				<div>
-					<label className="block text-gray-700 mb-2 text-sm font-bold" htmlFor='categoryFilter'>Category Filter</label>
+					<label className="block mb-2 text-sm" htmlFor='categoryFilter'>Category Filter</label>
 					<select
 						id="categoryFilter"
 						// value={selectedReportType}
@@ -84,18 +84,13 @@ export default function ExpenseList() {
 				/>
 
 				<div>
-					<label className="block text-gray-700 mb-2 text-sm font-bold" htmlFor="hasBudget">Has budget</label>
-					<input type="checkbox" checked={hasBudget} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHasBudget(e.target.checked)} />
-				</div>
-
-				<div>
-					<label className="block text-gray-700 mb-2 text-sm font-bold">&nbsp;</label>
+					<label className="block text-gray-700 mb-2 text-sm">&nbsp;</label>
 					<button
-						className=" bg-red-300 hover:bg-red-400 text-black px-10 py-2 rounded-md font-semibold"
+						className=" bg-teal-green  text-white px-10 py-2 rounded-md font-semibold"
 						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Add</button>
 				</div>
 
-				<div className="italic font-bold text-yellow-600">
+				<div className="italic text-yellow-600">
 					{/* <label className="block text-gray-700 mb-2 text-sm font-bold">&nbsp;</label> */}
 					<span>There is {filteredList.length} item(s)</span></div>
 			</div>

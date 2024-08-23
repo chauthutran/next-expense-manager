@@ -13,12 +13,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-us">
-      <body className={`flex flex-col min-h-screen ${inter.className}`}>
-          {/* <ReduxProvider> */}
-              {/* <div> */}
-                  {children}
-              {/* </div> */}
-          {/* </ReduxProvider> */}
+        <body className={`flex flex-col min-h-screen ${inter.className}`}>
+            {children}
         </body>
     </html>
   );

@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        "background-color": "#E4EDED",
         "bright-lime-green": "#89fa19",
         'gold': '#FFD700',
         "gainsboro": "#E4EDED",

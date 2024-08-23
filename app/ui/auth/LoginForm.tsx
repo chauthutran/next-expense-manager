@@ -84,7 +84,7 @@ export default function LoginForm() {
 			<div className="mb-4">
 				<button className="flex w-full flex-row bg-gold px-4 py-2 rounded hover:bg-yellow-300" onClick={(e) => handleLoginBtn(e)} >
 					<span className="flex-1">Log in</span>
-					{loading && <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />}
+					{loading && <FaSpinner className="ml-auto h-5" size={20} />}
 				</button>
 			</div>
 

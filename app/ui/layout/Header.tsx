@@ -9,11 +9,19 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
 	
-	const { setMainPage } = useMainUi();
-	const { user } = useAuth();
+	const { mainPage, setMainPage } = useMainUi();
+	const { user, logout } = useAuth();
+
+	const handleLogout = () => {
+		const ok = confirm("are you sure you want to logout ?");
+		if( ok ) {
+			logout();
+			setMainPage(Constant.PAGE_LOGIN);
+		}
+	}
 
 	return ( 
-		<header className="p-4 shadow-md" >
+		<header className={`p-4 shadow-md`}>
 			<div className="flex justify-between items-center mx-3">
 				<div className="flex flex-row">
 					<div className="uppercase text-xl tracking-wider" style={{ letterSpacing: "8px" }}>
@@ -26,14 +34,19 @@ export default function Header() {
 
 				<div className="flex-grow"></div>
 
-				{user === null && <div className="flex flex-row space-x-1 items-center">
-					<button className="text-teal-green hover:text-teal-600" onClick={() => setMainPage(Constant.PAGE_USER_REGISTRATION)}>Register</button>
-					<div className="bg-teal-green w-4 h-4 rounded-full"></div>
+				{mainPage === Constant.PAGE_LOGIN  && <div onClick={() => setMainPage(Constant.PAGE_USER_REGISTRATION)} className="flex flex-row space-x-1 items-center text-sm border border-slate-400 px-4 py-1 rounded-md">
+					<button className="text-teal-green hover:text-teal-600">Register</button>
+					<div className="bg-teal-green w-2 h-2 rounded-full"></div>
 				</div>}
 
-				{user !== null && <div className="flex flex-row space-x-1 items-center">
-					<button className="text-red-500 hover:text-red-600" onClick={() => setMainPage(Constant.PAGE_USER_REGISTRATION)}>Logout</button>
-					<div className="bg-red-500 w-4 h-4 rounded-full"></div>
+				{mainPage === Constant.PAGE_USER_REGISTRATION && <div  onClick={() => setMainPage(Constant.PAGE_LOGIN)} className="flex flex-row space-x-1 items-center text-sm border border-slate-400 px-4 py-1 rounded-md">
+					<button className="text-teal-green hover:text-teal-600">Login</button>
+					<div className="bg-teal-green w-2 h-2 rounded-full"></div>
+				</div>}
+
+				{user !== null && <div  onClick={() => handleLogout()} className="flex flex-row space-x-1 items-center text-sm border border-slate-400 px-4 py-1 rounded-md">
+					<button className="text-red-500 hover:text-red-600">Logout</button>
+					<div className="bg-red-500 w-2 h-2 rounded-full"></div>
 				</div>}
 			</div>
 

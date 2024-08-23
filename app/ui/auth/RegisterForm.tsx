@@ -93,7 +93,7 @@ export default function RegisterForm() {
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 					
-					{email === "" && <span className="text-red-500 italic">This field is required</span>}
+					{email === "" && <span className="text-red-500 italic text-sm">* This field is required</span>}
 				</div>
 			</div>
 
@@ -118,7 +118,7 @@ export default function RegisterForm() {
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 					
-					{password === "" && <span className="text-red-500 italic">This field is required</span>}
+					{password === "" && <span className="text-red-500 italic text-sm">* This field is required</span>}
 				</div>
 			</div>
 			
@@ -143,20 +143,17 @@ export default function RegisterForm() {
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 
-					{errorMsg !== null && <span className="text-red-500">{errorMsg}</span>}
+					{errorMsg !== null && <span className="text-red-500 italic text-sm">{errorMsg}</span>}
 				</div>
 			</div>
 
-			<div className="flex justify-between space-x-4">
-				<button className="grid-cols-1 bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700" style={{width: "45%"}} onClick={(e) => handleRegisterBtn(e)} >
-					Register
-					{loading && <FaSpinner className="ml-auto  h-5 text-gray-50" />}
-				</button>
-
-				<button onClick={(e) => handleCancelBtn()} className="grid-cols-1 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" style={{width: "45%"}}>
-					Cancel
+			<div className="mb-4">
+				<button className="flex w-full flex-row bg-gold px-4 py-2 rounded hover:bg-yellow-300" onClick={(e) => handleRegisterBtn(e)} >
+					<span className="flex-1">Register</span>
+					{loading && <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />}
 				</button>
 			</div>
+
 			<div className="flex h-8 items-end space-x-1">
 				{error !== null && <p>{error}</p>}
 			</div>
