@@ -8,8 +8,6 @@ import * as Constant from '@/lib/constants';
 
 interface CategoryContextProps {
 	categoryList: JSONObject[] | null;
-    incomeCategoryList: JSONObject[] | null;
-    expenseCategoryList: JSONObject[] | null;
     saveCategory: (category: JSONObject) => Promise<void>;
 	deleteCategory: (categoryId: string) => Promise<void>;
     error: string | null;
@@ -19,8 +17,6 @@ interface CategoryContextProps {
 
 const CategoryContext = createContext<CategoryContextProps>({
 	categoryList: null,
-    incomeCategoryList: null,
-    expenseCategoryList: null,
 	saveCategory: async(category: JSONObject) => {},
 	deleteCategory: async(categoryId: string) => {},
     error: null,
@@ -38,8 +34,6 @@ export const useCategory = (): CategoryContextProps => {
 
 export const CategoryProvider = ({ children }: { children: ReactNode }) => {
     const [categoryList, setCategoryList] = useState<JSONObject[] | null>(null);
-    const [incomeCategoryList, setIncomeList] = useState<JSONObject[] | null>(null);
-    const [expenseCategoryList, setExpenseList] = useState<JSONObject[] | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [processingStatus, setProcessingStatus] = useState("");
 	const [newCategory, setNewCategory] = useState<JSONObject | null>(null);
@@ -56,18 +50,14 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
         setError(null);
 		try {
 			const response = await fetch(`api/category`);
-            console.log(response); 
+
             if (!response.ok) {
                 setError("Network response was not ok");
                 setProcessingStatus(Constant.FETCH_BUDGET_lIST_FAILURE);
             }
             else {
                 const categories = await response.json();
-                const incomes = categories.filter((item: JSONObject) => item.type === "income");
-                const expenses = categories.filter((item: JSONObject) => item.type === "expense");
 				setCategoryList(categories);
-                setIncomeList(incomes);
-                setExpenseList(expenses);
                 setProcessingStatus(Constant.FETCH_BUDGET_lIST_SUCCESS);
             }
 
@@ -146,7 +136,7 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
     }
 
 	return (
-		<CategoryContext.Provider value={{ processingStatus, error, categoryList, incomeCategoryList, expenseCategoryList, saveCategory, deleteCategory, newCategory }}>
+		<CategoryContext.Provider value={{ processingStatus, error, categoryList, saveCategory, deleteCategory, newCategory }}>
 			{children}
 		</CategoryContext.Provider>
 	);

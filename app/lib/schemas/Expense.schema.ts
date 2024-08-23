@@ -5,7 +5,7 @@ import mongoose, {  Schema } from "mongoose";
 const ExpenseSchema = new Schema ( 
     {
         userId: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: String,
             required: true,
             ref: 'User',
         },

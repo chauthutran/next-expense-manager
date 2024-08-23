@@ -52,7 +52,7 @@ export const ExpenseProvider = ({ userId, children }: { userId: string, children
         setProcessingStatus(Constant.FETCH_EXPENSE_lIST_REQUEST);
         setError(null);
 		try {
-			const response = await fetch(`api/transaction?userId=${userId}&categoryType=expense`);
+			const response = await fetch(`api/expense?userId=${userId}`);
             if (!response.ok) {
                 setError("Network response was not ok");
                 setProcessingStatus(Constant.FETCH_EXPENSE_lIST_FAILURE);
@@ -75,7 +75,7 @@ export const ExpenseProvider = ({ userId, children }: { userId: string, children
 
         try {
             const requestMethod = ( expense._id === undefined ) ? "POST" : "PUT";
-            const response = await fetch("api/transaction", {
+            const response = await fetch("api/expense", {
                 method: requestMethod,
                 headers: {
                     "Content-type": "appliction/json"
@@ -116,7 +116,7 @@ export const ExpenseProvider = ({ userId, children }: { userId: string, children
         setError(null);
         
         try {
-            const response = await fetch(`api/transaction?id=${expenseId}`, { method: "DELETE" });
+            const response = await fetch(`api/expense?id=${expenseId}`, { method: "DELETE" });
 
             if( !response.ok ){
                 setError("Network response was not ok");

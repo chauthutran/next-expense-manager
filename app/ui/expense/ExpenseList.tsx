@@ -16,7 +16,7 @@ export default function ExpenseList() {
 
 	const { setSubPage } = useMainUi();
 	const { expenseList } = useExpense();
-	const { expenseCategoryList } = useCategory();
+	const { categoryList } = useCategory();
 
 	const [categoryFilter, setCategoryFilter] = useState("");
 	const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateOfCurrentDate());
@@ -60,7 +60,7 @@ export default function ExpenseList() {
 						className="w-full p-2 border border-gray-300 rounded"
 					>
 						<option value="">All</option>
-						{expenseCategoryList != null && expenseCategoryList.map((caterogy, index) => (
+						{categoryList != null && categoryList.map((caterogy, index) => (
 							<option key={index} value={caterogy._id}>
 								{caterogy.name}
 							</option>
@@ -86,29 +86,28 @@ export default function ExpenseList() {
 				<div>
 					<label className="block text-gray-700 mb-2 text-sm">&nbsp;</label>
 					<button
-						className=" bg-teal-green  text-white px-10 py-2 rounded-md font-semibold"
+						className="bg-gold text-gray-600 px-10 py-2 rounded-md"
 						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Add</button>
 				</div>
 
-				<div className="italic text-yellow-600">
-					{/* <label className="block text-gray-700 mb-2 text-sm font-bold">&nbsp;</label> */}
+				<div className="italic text-teal-green">
 					<span>There is {filteredList.length} item(s)</span></div>
 			</div>
 
 			{/* <!-- Table for larger screens --> */}
-			<div className="flex-1 p-3 shadow-md hidden md:block">
+			<div className="flex-1 p-3 hidden md:block">
 				{/* <div className=" overflow-y-auto h-[calc(100vh-270px)]"> */}
 				<div className=" overflow-y-auto ">
 					{/* <div className="overflow-y-auto"> */}
-					<table className="min-w-full border border-red-800">
-						<thead className="bg-red-200">
-							<tr className="border border-red-300">
-								<th className="px-4 py-2 text-left">Date</th>
-								<th className="px-4 py-2 text-left">Category</th>
-								<th className="px-4 py-2 text-left">Amount</th>
-								<th className="px-4 py-2 text-left">Description</th>
-								<th className="px-4 py-2 text-left">Budget related</th>
-								<th className="px-4 py-2">#</th>
+					<table className="min-w-full border border-red-800 text-white">
+						<thead className="bg-teal-green">
+							<tr className="border border-sky-blue">
+								<th className="px-4 py-2 text-left font-normal">Date</th>
+								<th className="px-4 py-2 text-left font-normal">Category</th>
+								<th className="px-4 py-2 text-left font-normal">Amount</th>
+								<th className="px-4 py-2 text-left font-normal">Description</th>
+								<th className="px-4 py-2 text-left font-normal">Budget related</th>
+								<th className="px-4 py-2 font-normal">#</th>
 							</tr>
 						</thead>
 						<tbody>

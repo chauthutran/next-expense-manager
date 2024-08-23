@@ -10,14 +10,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET( request: NextRequest, {params}) {
     const url = new URL(request.url);
 	
-    const searchValues = Utils.convertUrlSearchParamToJson( url.searchParams );
-    const userId = searchValues.userId;
-	if(  userId !== undefined ) {
-		searchValues.userId = new mongoose.Types.ObjectId( userId as string );
-	}
-
 	await connectToDatabase();
-    const searchResult = await Category.find(searchValues);
+    const searchResult = await Category.find({});
     const categoryList = ( searchResult.length > 0 ) ? Utils.converDbObjectToJson(searchResult) : [];
 
     return NextResponse.json(categoryList, {status: 200});

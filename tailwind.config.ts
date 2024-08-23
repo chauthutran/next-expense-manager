@@ -13,6 +13,14 @@ const config: Config = {
         "bright-lime-green": "#89fa19",
         'gold': '#FFD700',
         "gainsboro": "#E4EDED",
+        "hightlight-green": "#59ce8f",
+        "brutal-blue": "#0049B7",
+        "grandpa-orange": "#ffb766",
+        "blue-greeny": "#5cbdb9",
+        "teeny-greeny": "#ebf6f5",
+        "yellow-gloves": "#f2d53c",
+        "purple-mountains-majesty": "#8076a3",
+
 
 
         'light-coral': "#fc7e6e", // Header

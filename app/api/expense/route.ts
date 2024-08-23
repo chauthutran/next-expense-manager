@@ -11,42 +11,13 @@ export async function GET(request: NextRequest, { params }) {
 	const url = new URL(request.url);
 	const searchValues = Utils.convertUrlSearchParamToJson(url.searchParams);
 
-	const userId = searchValues.userId;
-	const categoryType = searchValues.categoryType;
-
+	// const userId = searchValues.userId;
+	// const categoryType = searchValues.categoryType;
+console.log(searchValues);
 	await connectToDatabase();
-	const expenseList = await Expense.aggregate([
-		{
-			$lookup: {
-				from: 'categories', // Name of the Category collection
-				localField: 'categoryId',
-				foreignField: '_id',
-				as: 'categoryInfo',
-			},
-		},
-		{
-			$unwind: '$categoryInfo',
-		},
-		{
-			$match: {
-				userId: new mongoose.Types.ObjectId(userId),
-				'categoryInfo.type': categoryType
-			},
-		},
-		{
-			$project: {
-				_id: 1,
-				description: 1,
-				categoryId: '$categoryInfo._id',
-				categoryName: '$categoryInfo.name',
-				budgetId: '$budgetId',
-				amount: 1,
-				date: 1,
-				// categoryType: '$categoryInfo.type', // Project the category type
-			},
-		},
-	]);
+	const expenseList = await Expense.find(searchValues);
 
+console.log(expenseList);
 	return NextResponse.json(expenseList, { status: 200 });
 }
 
@@ -104,5 +75,6 @@ export async function DELETE(request: NextRequest) {
 
 	await connectToDatabase();
 	await Expense.findByIdAndDelete(id);
-	return NextResponse.json({ message: "Transaction is deleted." }, { status: 200 });
+
+	return NextResponse.json({ message: "Expense is deleted." }, { status: 200 });
 }
