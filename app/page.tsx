@@ -6,6 +6,7 @@ import AppWrapper from "./ui/AppWrapper";
 import { MainUiProvider } from "./contexts/MainUiContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CategoryProvider } from "./contexts/CategoryContext";
+import Triangle from "./ui/basics/Triangle";
 
 export default function Home() {
 
@@ -16,9 +17,7 @@ export default function Home() {
 					<CategoryProvider>
 						<div className="h-screen flex flex-col">
 							<Header />
-							<main className="flex-1 overflow-auto bg-gainsboro">
-							
-
+							<main className="flex-1 overflow-auto background-img">
 								<AppWrapper />
 							</main>
 							<Footer />

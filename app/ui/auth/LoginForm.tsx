@@ -82,21 +82,13 @@ export default function LoginForm() {
 					</div>
 				</div>
 
-				<div className="flex justify-between space-x-4">
-					<button className="w-full flex flex-row bg-slate-700 text-white px-4 py-2 rounded hover:bg-slate-500" onClick={(e) => handleLoginBtn(e)} >
+				<div className="flex justify-between">
+					<button className="w-full flex flex-row bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onClick={(e) => handleLoginBtn(e)} >
 						<span className="flex-1">Log in</span>
 						{loading && <FaSpinner className="ml-auto h-5 text-gray-700" size={20} />}
-						{/* <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />  */}
 					</button>
-
-					<button className="w-full flex flex-row bg-gold text-black px-4 py-2 rounded hover:bg-yellow-300" onClick={(e) => setMainPage(Constant.PAGE_USER_REGISTRATION)} >
-						<span className="flex-1">Register</span>
-						{loading && <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />}
-						{/* <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />  */}
-					</button>
-
 				</div>
-				<div className="flex h-8 items-end space-x-1">
+				<div className="flex h-8 items-end space-x-1 text-red-500 italic">
 					{error != null && <p>{error}</p>}
 				</div>
 				

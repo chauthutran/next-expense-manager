@@ -22,6 +22,10 @@
     text-wrap: balance;
   }
 }
+.background-img {
+  background: linear-gradient(to bottom, #E4EDED, #E4EDED);
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 95%);
+}
 
 .triangle-background {
   width: 0;
@@ -52,6 +56,7 @@
   border-top: 20px solid yellow; /* Color of the diamond */
   transform: rotate(90deg);
 }
+
 @keyframes twinkle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }

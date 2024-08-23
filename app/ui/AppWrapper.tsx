@@ -2,7 +2,6 @@
 
 import * as Constant from "@/lib/constants";
 import LoginForm from "./auth/LoginForm";
-import HomePage from "./HomePage";
 import RegisterForm from "./auth/RegisterForm";
 import { useAuth } from "@/contexts/AuthContext";
 import { useMainUi } from "@/contexts/MainUiContext";
