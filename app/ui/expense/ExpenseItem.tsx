@@ -23,16 +23,18 @@ import { FaTheaterMasks } from "react-icons/fa";
 
 
 const categoryIcons: Record<string, IconType> = {
-	'Rent': FaHome,
-	'Food': FaUtensils,
+	'Groceries': FaHome,
+	'Rent/Mortgage': FaHome,
+	'Utilities': FaHome,
 	'Transportation': FaCar,
-	'Insurance': SiInstacart,
-	'Housing - Rent/Mortgage': FaHome,
-	'Healthcare': RiHealthBookFill,
-	'Debt': FcDebt,
+
+	'Food': FaUtensils,
+	'Health & Wellness': SiInstacart,
+	'Dining Out': RiHealthBookFill,
 	'Entertainment': FaTheaterMasks,
-	'Personal Care': GiClothes,
 	'Education': MdOutlineSchool,
+	'Savings & Investments': FcDebt,
+	'Clothing & Accessories': GiClothes,
 	'Other Expenses': MdDevicesOther
 };
 

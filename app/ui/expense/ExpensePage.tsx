@@ -15,7 +15,7 @@ export default function ExpensePage() {
 
     return (
         <ExpenseProvider userId={user!._id}>
-            <div className="">
+            <div className="bg-white">
                 { subPage === null && <ExpenseList /> }
                 { subPage == Constant.SUB_UI_ADD_FORM && <ExpenseForm  />}
                 { subPage == Constant.SUB_UI_EDIT_FORM && <ExpenseForm data={AppStore.getSelected()!} />}

@@ -11,6 +11,7 @@ import * as AppStore from "@/lib/appStore";
 import { useCategory } from "@/contexts/CategoryContext";
 import CustomDatePicker from "@/ui/basics/DatePicker";
 import * as Utils from "@/lib/utils";
+import CategoryNavigation from "./CategoryNavigation";
 
 export default function ExpenseList() {
 
@@ -50,8 +51,9 @@ export default function ExpenseList() {
 
 	return (
 		<div className="w-full flex flex-col">
+			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 ">
-				<div>
+				{/* <div>
 					<label className="block mb-2 text-sm" htmlFor='categoryFilter'>Category Filter</label>
 					<select
 						id="categoryFilter"
@@ -66,7 +68,7 @@ export default function ExpenseList() {
 							</option>
 						))}
 					</select>
-				</div>
+				</div> */}
 
 				{/* For date range */}
 				<CustomDatePicker

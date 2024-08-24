@@ -8,16 +8,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function GET(request: NextRequest, { params }) {
-	const url = new URL(request.url);
-	const searchValues = Utils.convertUrlSearchParamToJson(url.searchParams);
 
-	// const userId = searchValues.userId;
-	// const categoryType = searchValues.categoryType;
-console.log(searchValues);
 	await connectToDatabase();
-	const expenseList = await Expense.find(searchValues);
 
-console.log(expenseList);
+	const { searchParams } = new URL(request.url);
+	const userId = searchParams.get("userId");
+
+	const expenseList = await Expense.find({userId});
+	
 	return NextResponse.json(expenseList, { status: 200 });
 }
 

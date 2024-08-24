@@ -14,7 +14,7 @@ import { useCategory } from '@/contexts/CategoryContext';
 export default function ExpenseForm({ data = {} as JSONObject }) {
 
 	const { setSubPage } = useMainUi();
-	const { expenseCategoryList } = useCategory();
+	const { categoryList } = useCategory();
 	const { userId, processingStatus, setProcessingStatus, error, saveExpense, newExpense } = useExpense();
 
 	const [expense, setExpense] = useState(data);
@@ -118,7 +118,7 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 								className="w-full p-2 border border-gray-300 rounded"
 							>
 								<option value="">[Please select]</option>
-								{expenseCategoryList && expenseCategoryList?.map((category: JSONObject) => (
+								{categoryList && categoryList?.map((category: JSONObject) => (
 									<option key={category._id} value={category._id}>{category.name}</option>
 								))}
 							</select>
