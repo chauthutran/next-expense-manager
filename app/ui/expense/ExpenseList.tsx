@@ -23,6 +23,7 @@ export default function ExpenseList() {
 	const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateOfCurrentDate());
 	const [endDate, setEndDate] = useState<Date | null>(new Date());
 	const [hasBudget, setHasBudget] = useState(false);
+	const [dataVisualization, setDataVisualization] = useState<string>(Constant.DATA_VISUALIZATION_DATA_LIST);
 
 
 	const filterExpenseList = () => {
@@ -51,7 +52,9 @@ export default function ExpenseList() {
 
 	return (
 		<div className="w-full flex flex-col bg-background-color">
-			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
+			<CategoryNavigation 
+				onCategorySelect={(id: string) => setCategoryFilter(id)}
+				onSeleteDataVisualization={(name: string) => setDataVisualization(name)} />
 
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-5 mt-5 gap-x-3 mb-4">
 				{/* For date range */}
@@ -72,7 +75,7 @@ export default function ExpenseList() {
 				<div className="flex flex-col justify-end">
 					<label className="block text-gray-700 text-sm ">&nbsp;</label>
 					<button
-						className="bg-mint-green text-gray-800 px-10 py-2 rounded-md mt-auto"
+						className="bg-teal-green text-gray-800 px-10 py-2 rounded-md mt-auto"
 						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Chart</button>
 				</div>
 
@@ -86,7 +89,6 @@ export default function ExpenseList() {
 
 			{/* <!-- Table for larger screens --> */}
 			<div className="flex-1 py-3 hidden md:block shadow-lg bg-white mt-4">
-				{/* <div className=" overflow-y-auto h-[calc(100vh-270px)]"> */}
 				<div className=" overflow-y-auto">
 					<div className="grid grid-cols-5 gap-y-4">
 						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>

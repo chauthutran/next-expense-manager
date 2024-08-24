@@ -5,14 +5,15 @@ import { JSONObject } from '@/lib/definations';
 import { useRef, useState } from 'react';
 import { TiMediaPlayReverse } from "react-icons/ti";
 import { TiMediaPlay } from "react-icons/ti";
-import { FcComboChart } from "react-icons/fc";
+import * as Constant from "@/lib/constants";
 import { CiViewList } from "react-icons/ci";
 
 
-export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}) {
+export default function CategoryNav({onCategorySelect, onSeleteDataVisualization}: {onCategorySelect: (id: string) => void, onSeleteDataVisualization: (name: string) => void}) {
     const { categoryList } = useCategory();
-    const [showChart, setShowChart] = useState(false);
+    const [dataType, setDataType] = useState(Constant.DATA_VISUALIZATION_DATA_LIST);
     const [selectedId, setSelectedId] = useState("");
+     
 
     const scrollRef = useRef<HTMLUListElement>(null);
 
@@ -36,7 +37,7 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
 
     const handleItemSelected = (id: string) => {
         setSelectedId(id);
-        onSelect(id);
+        onCategorySelect(id);
     }
 
     return (
@@ -49,31 +50,25 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
             </button>
 
             {/* Category List */}
-            {!showChart && <>
-                <div className={`hover:bg-slate-blue cursor-pointer px-3 rounded-sm ml-5 font-semibold ${selectedId === "" && "bg-slate-blue text-white"}`} onClick={() => handleItemSelected("")}>
-                    All
-                </div>
-
-                <ul
-                    ref={scrollRef}
-                    className="flex space-x-5 overflow-x-hidden scroll-smooth mx-10 w-full items-start text-sm"
-                >
-                    {categoryList?.slice(0, 10).map((category: JSONObject, idx: number) => (
-                        <li
-                            key={`category_${category._id}`}
-                            className={`min-w-max hover:bg-slate-blue hover:text-white px-3 cursor-pointer hover:rounded-sm py-1 ${selectedId === category._id && "bg-slate-blue text-white"}`}
-                            onClick={() => handleItemSelected(category._id)}
-                        >
-                            {category.name}
-                        </li>
-                    ))}
-                </ul>
-
-            </> }
-
-            {showChart && <>
             
-            </>}
+            <div className={`hover:bg-slate-blue hover:text-white cursor-pointer px-3 rounded-sm ml-5 font-semibold ${selectedId === "" && "bg-slate-blue text-white"}`} onClick={() => handleItemSelected("")}>
+                All
+            </div>
+
+            <ul
+                ref={scrollRef}
+                className="flex space-x-5 overflow-x-hidden scroll-smooth mx-10 w-full items-start text-sm"
+            >
+                {categoryList?.slice(0, 10).map((category: JSONObject, idx: number) => (
+                    <li
+                        key={`category_${category._id}`}
+                        className={`min-w-max hover:bg-slate-blue hover:text-white px-3 cursor-pointer hover:rounded-sm py-1 ${selectedId === category._id && "bg-slate-blue text-white"}`}
+                        onClick={() => handleItemSelected(category._id)}
+                    >
+                        {category.name}
+                    </li>
+                ))}
+            </ul>
 
             <button
                 onClick={scrollRight}
@@ -82,19 +77,17 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
                 <TiMediaPlay size={25} />
             </button>
 
-            {showChart && <button
-                onClick={() => setShowChart(false)}
-                className="px-2 py-2 hover:bg-slate-400 mx-2 rounded-full"
+           <select
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onSeleteDataVisualization(e.target.value)}
+                className="pl-2 py-2 bg-slate-300 rounded-md"
             >
-                <CiViewList className="text-teal-green hover:text-gray-600" size={20} />
-            </button>}
-
-            {!showChart && <button
-                onClick={() => setShowChart(true)}
-                className="px-2 py-2 hover:bg-slate-400 mx-2 rounded-full"
-            >
-                <FcComboChart className=" hover:text-gray-600" size={20} />
-            </button>}
+                <option value={Constant.DATA_VISUALIZATION_DATA_LIST}>Table List</option>
+                <option value={Constant.DATA_VISUALIZATION_DAILY_EXPENSE}>Daily Expenses</option>
+                <option value={Constant.DATA_VISUALIZATION_CHART_DISTRIBUTION_BY_CATEGORY}>Expense Distribution by Category</option>
+                <option value={Constant.DATA_VISUALIZATION_MONTHLT_EXPENSE_TRENDS}>Monthly Expense Trends </option>
+                <option value={Constant.DATA_VISUALIZATION_CHART_EXPENSE_OVERTIME_BY_CATEGORY}>Expenses Over Time by Category</option>
+                <option value={Constant.DATA_VISUALIZATION_TOP_5_EXPENSE_CATEGORY}>Top 5 Expense Categories</option>
+            </select>
 
         </nav>
     );
