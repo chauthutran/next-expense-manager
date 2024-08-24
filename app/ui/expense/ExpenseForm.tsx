@@ -10,6 +10,8 @@ import * as Constant from '@/lib/constants';
 import { useExpense } from '@/contexts/ExpenseContext';
 import { useMainUi } from '@/contexts/MainUiContext';
 import { useCategory } from '@/contexts/CategoryContext';
+import { IoTriangle } from "react-icons/io5";
+
 
 export default function ExpenseForm({ data = {} as JSONObject }) {
 
@@ -79,8 +81,11 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 	}
 
 	return (
-		<div className="overflow-x-auto border-red-100 ">
-			
+		<div className="overflow-x-auto bg-background-color">
+			<h2 className="text-2xl font-semibold text-center flex flex-row space-x-4 justify-center items-end m-5">
+				Add New Expense
+			</h2>
+
 			{processingStatus == Constant.SAVE_EXPENSE_SUCCESS && <Alert type={Constant.ALERT_TYPE_INFO} message={`Saved successfully.`} />}
 			{processingStatus == Constant.SAVE_EXPENSE_FAILURE && <Alert type={Constant.ALERT_TYPE_ERROR} message={`Saving data is failed. ${error}`} />}
 			{error == Constant.SAVE_EXPENSE_FAILURE && <Alert type={Constant.ALERT_TYPE_ERROR} message={`Saving data is failed. ${error}`} />}
@@ -89,8 +94,6 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 
 			<div className="flex items-center justify-center ">
 				<div className="flex-1 p-6 rounded border-2 shadow-md max-w-xl bg-white ">
-					<h2 className="text-2xl mb-4 text-center">{setTitle()}</h2>
-
 					<div>
 						<div className="mb-4">
 							<label className="block text-gray-700 mb-2" htmlFor="amount">
@@ -150,27 +153,27 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 							/>
 						</div>
 
-						<div className="flex justify-between items-center">
+						<div className="grid grid-cols-3 gap-x-3">
 							<button
 								type="submit"
-								className="bg-blue-500 w-2/6 text-white px-4 py-2 rounded hover:bg-blue-600"
+								className="bg-gold px-4 py-2 rounded hover:bg-yellow-300"
 								onClick={(e) => handleOnSave(e, false)}
 							>
-								Save And Go back
+								Save & Go back
 							</button>
 							<button
 								type="submit"
-								className="bg-blue-500 w-2/6 text-white px-4 py-2 rounded hover:bg-blue-600"
+								className="bg-blue-greeny px-4 py-2 rounded hover:bg-teal-400"
 								onClick={(e) => handleOnSave(e, true)}
 							>
-								Save and Continue
+								Save & Continue
 							</button>
 							<button
 								type="button"
-								onClick={() => handleOnReset()}
-								className="bg-gray-500 w-1/6 text-white px-4 py-2 rounded hover:bg-gray-600"
+								onClick={() => setSubPage(null)}
+								className="bg-gray-400 px-4 py-2 rounded hover:bg-gray-500"
 							>
-								Reset
+								Go Back
 							</button>
 						</div>
 					</div>

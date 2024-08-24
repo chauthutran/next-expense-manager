@@ -1,6 +1,3 @@
-import { GiTwoCoins } from "react-icons/gi";
-import Triangle from "../basics/Triangle";
-import { WiDayLightWind } from "react-icons/wi";
 import { BsStars } from "react-icons/bs";
 import { useMainUi } from "@/contexts/MainUiContext";
 import * as Constant from '@/lib/constants';

@@ -8,11 +8,11 @@ import { useMainUi } from "@/contexts/MainUiContext";
 import ExpensePage from "./expense/ExpensePage";
 
 export default function AppWrapper() {
-    const { mainPage } = useMainUi();
+    const { mainPage, subPage } = useMainUi();
     const { user } = useAuth();
 
     return (
-        <main className={`flex-1 overflow-auto ${user === null && "background-img"}`}>
+        <main className={`flex-1 overflow-auto ${(user === null || subPage == Constant.SUB_UI_ADD_FORM ) && "background-img"}`}>
             { mainPage == Constant.PAGE_LOGIN && <LoginForm /> }
 
             { mainPage == Constant.PAGE_USER_REGISTRATION && <RegisterForm /> }
