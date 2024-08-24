@@ -31,21 +31,21 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
     };
 
     return (
-        <nav className="relative bg-teal-green px-4 py-1 shadow-lg text-white flex flex-row">
+        <nav className="relative bg-background-color px-4 py-1 shadow-lg text-gray-600 flex flex-row border border-gray-300">
             <button
                 onClick={scrollLeft}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 px-2 py-2 hover:bg-teal-700"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 px-2 py-2 hover:bg-teal-700 hover:text-white"
             >
                 <IoIosArrowBack />
             </button>
 
-            <div className="min-w-max bg-ultra-violet hover:bg-slate-blue cursor-pointer px-3 rounded-sm ml-5" onClick={() => onSelect("")}>
+            <div className="min-w-max bg-ultra-violet hover:bg-slate-blue cursor-pointer px-3 rounded-sm ml-5 text-white" onClick={() => onSelect("")}>
                 All
             </div>
 
             <ul
                 ref={scrollRef}
-                className="flex space-x-5 overflow-x-hidden scroll-smooth mx-10 w-full items-start"
+                className="flex space-x-5 overflow-x-hidden scroll-smooth mx-10 w-full items-start text-sm"
             >
                 {categoryList?.slice(0, 10).map((category: JSONObject, idx: number) => (
                     <li
@@ -60,7 +60,7 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
 
             <button
                 onClick={scrollRight}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 px-2 py-2 hover:bg-teal-700 ml-2"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 px-2 py-2 hover:bg-teal-700 hover:text-white ml-2"
             >
                 <IoIosArrowForward />
             </button>

@@ -53,23 +53,6 @@ export default function ExpenseList() {
 		<div className="w-full flex flex-col">
 			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 ">
-				{/* <div>
-					<label className="block mb-2 text-sm" htmlFor='categoryFilter'>Category Filter</label>
-					<select
-						id="categoryFilter"
-						// value={selectedReportType}
-						onChange={e => setCategoryFilter(e.target.value)}
-						className="w-full p-2 border border-gray-300 rounded"
-					>
-						<option value="">All</option>
-						{categoryList != null && categoryList.map((caterogy, index) => (
-							<option key={index} value={caterogy._id}>
-								{caterogy.name}
-							</option>
-						))}
-					</select>
-				</div> */}
-
 				{/* For date range */}
 				<CustomDatePicker
 					label="Start Date"
@@ -101,7 +84,7 @@ export default function ExpenseList() {
 				{/* <div className=" overflow-y-auto h-[calc(100vh-270px)]"> */}
 				<div className=" overflow-y-auto ">
 					{/* <div className="overflow-y-auto"> */}
-					<table className="min-w-full border border-red-800 text-white">
+					<table className="min-w-full border border-red-800 text-gray-600">
 						<thead className="bg-teal-green">
 							<tr className="border border-sky-blue">
 								<th className="px-4 py-2 text-left font-normal">Date</th>

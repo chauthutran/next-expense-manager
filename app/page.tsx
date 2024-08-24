@@ -16,9 +16,7 @@ export default function Home() {
 					<CategoryProvider>
 						<div className="h-screen flex flex-col">
 							<Header />
-							<main className={`flex-1 overflow-auto background-img`}>
 								<AppWrapper />
-							</main> 
 							<Footer />
 						</div>
 					</CategoryProvider>

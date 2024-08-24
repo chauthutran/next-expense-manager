@@ -10,8 +10,9 @@ import ExpensePage from "./expense/ExpensePage";
 export default function AppWrapper() {
     const { mainPage } = useMainUi();
     const { user } = useAuth();
+
     return (
-        <>
+        <main className={`flex-1 overflow-auto ${user === null && "background-img"}`}>
             { mainPage == Constant.PAGE_LOGIN && <LoginForm /> }
 
             { mainPage == Constant.PAGE_USER_REGISTRATION && <RegisterForm /> }
@@ -20,6 +21,6 @@ export default function AppWrapper() {
             {user != null && <>
                 { mainPage == Constant.PAGE_EXPENSE && <ExpensePage /> }
             </> }
-        </>
+        </main>
     )
 }
