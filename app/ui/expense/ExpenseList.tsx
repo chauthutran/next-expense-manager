@@ -53,7 +53,7 @@ export default function ExpenseList() {
 		<div className="w-full flex flex-col bg-background-color">
 			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
 
-			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-5 gap-x-3 mb-4">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-5 mt-5 gap-x-3 mb-4">
 				{/* For date range */}
 				<CustomDatePicker
 					label="Start Date"
@@ -72,7 +72,14 @@ export default function ExpenseList() {
 				<div className="flex flex-col justify-end">
 					<label className="block text-gray-700 text-sm ">&nbsp;</label>
 					<button
-						className="bg-bright-lime-green text-gray-800 px-10 py-2 rounded-md mt-auto w-32"
+						className="bg-mint-green text-gray-800 px-10 py-2 rounded-md mt-auto"
+						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Chart</button>
+				</div>
+
+				<div className="flex flex-col justify-end">
+					<label className="block text-gray-700 text-sm ">&nbsp;</label>
+					<button
+						className="bg-grandpa-orange text-gray-800 px-10 py-2 rounded-md mt-auto"
 						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Add</button>
 				</div>
 			</div>
