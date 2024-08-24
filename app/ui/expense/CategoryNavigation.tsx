@@ -31,7 +31,7 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
     };
 
     return (
-        <nav className="relative bg-background-color px-4 py-1 shadow-lg text-gray-600 flex flex-row border border-gray-300">
+        <nav className="relative bg-background-color px-4 py-1 shadow-lg text-gray-600 flex flex-row border border-gray-300 items-center">
             <button
                 onClick={scrollLeft}
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 px-2 py-2 hover:bg-teal-700 hover:text-white"
@@ -50,7 +50,7 @@ export default function CategoryNav({onSelect}: {onSelect: (id: string) => void}
                 {categoryList?.slice(0, 10).map((category: JSONObject, idx: number) => (
                     <li
                         key={`category_${category._id}`}
-                        className="min-w-max hover:bg-soft-peach hover:text-gray-600 px-3 cursor-pointer hover:rounded-sm"
+                        className="min-w-max hover:bg-soft-peach hover:text-gray-600 px-3 cursor-pointer hover:rounded-sm py-1"
                         onClick={() => onSelect(category._id)}
                     >
                         {category.name}

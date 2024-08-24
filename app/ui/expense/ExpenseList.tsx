@@ -52,7 +52,8 @@ export default function ExpenseList() {
 	return (
 		<div className="w-full flex flex-col">
 			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 ">
+
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 bg-background-color ">
 				{/* For date range */}
 				<CustomDatePicker
 					label="Start Date"
