@@ -22,9 +22,12 @@ export default function Header() {
 
 	return ( 
 		<header className={`p-4 shadow-md`}>
-			<div className="flex justify-between items-center mx-3">
+			<div className="flex justify-between items-center ">
 				<div className="flex flex-row">
-					<div className="uppercase text-xl tracking-wider" style={{ letterSpacing: "8px" }}>
+					<div className="uppercase text-xl tracking-wider hidden mx-3 md:block" style={{ letterSpacing: "8px" }}>
+						Personal Expense Management
+					</div>
+					<div className="uppercase text-xs tracking-wider md:hidden" style={{ letterSpacing: "3px" }}>
 						Personal Expense Management
 					</div>
 					<div className="flex flex-col text-secondary uppercase text-xs">

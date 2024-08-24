@@ -20,22 +20,31 @@ import { MdOutlineSchool } from "react-icons/md";
 import { SiInstacart } from "react-icons/si";
 import { MdDevicesOther } from "react-icons/md";
 import { FaTheaterMasks } from "react-icons/fa";
+import { PiBowlFoodFill } from "react-icons/pi";
+import { TbTruckDelivery } from "react-icons/tb";
+import { IoBagHandleSharp } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
+import { MdHouseSiding } from "react-icons/md";
+import { PiHouseLineDuotone } from "react-icons/pi";
+import { GiEarrings } from "react-icons/gi";
+import { GiPiggyBank } from "react-icons/gi";
 
 
 const categoryIcons: Record<string, IconType> = {
-	'Groceries': FaHome,
-	'Rent/Mortgage': FaHome,
-	'Utilities': FaHome,
-	'Transportation': FaCar,
-
-	'Food': FaUtensils,
-	'Health & Wellness': SiInstacart,
-	'Dining Out': RiHealthBookFill,
+	'Utilities': PiHouseLineDuotone,
+	'Groceries': GiEarrings,
 	'Entertainment': FaTheaterMasks,
+	'Transportation': FaCar,
+	'Dining Out': PiBowlFoodFill,
+	'Rent/Mortgage': TbTruckDelivery,
+
+	'Health & Wellness': SiInstacart,
 	'Education': MdOutlineSchool,
-	'Savings & Investments': FcDebt,
+	// 'Clothing & Accessories': GiEarrings,
+
 	'Clothing & Accessories': GiClothes,
-	'Other Expenses': MdDevicesOther
+	'Savings & Investments': GiPiggyBank,
+	'Food': FaUtensils
 };
 
 
@@ -66,29 +75,39 @@ export default function ExpenseItem({ data, style = "large", index }: { data: JS
 			{processingStatus == Constant.DELETE_BUDGET_SUCCESS && <Alert type={Constant.ALERT_TYPE_INFO} message={`Deleted successfully.`} />}
 			{processingStatus == Constant.DELETE_BUDGET_FAILURE && <Alert type={Constant.ALERT_TYPE_ERROR} message={`Deleted Failed. ${error}`} />}
 
-			{style == "large" && <tr className="hover:bg-red-100 border border-red-300 odd:bg-red-50 even:bg-white">
-				<td className="px-4 py-2" onClick={() => setSelectedExpense()}>{dateStr}</td>
-				<td className="px-4 py-2 flex space-x-3" onClick={() => setSelectedExpense()}>
-					<Icon className="text-red-500 w-6 h-6" />
+			{style == "large" && <>
+
+				<div className="px-4 py-2 border-b border-gray-300" onClick={() => setSelectedExpense()}>{dateStr}</div>
+				<div className="px-4 py-2 flex space-x-3 border-b border-gray-300 whitespace-nowrap" onClick={() => setSelectedExpense()}>
+					<span><Icon className="w-6 h-6" /></span>
 					<span>{Utils.findItemFromList(categoryList!, data.categoryId, "_id")!.name}</span>
-				</td>
-				<td className="px-4 py-2 font-bold" onClick={() => setSelectedExpense()}>{data.amount} $</td>
-				<td className="px-4 py-2" onClick={() => setSelectedExpense()}>{data.description}</td>
-				<td className="px-4 py-2 text-center">
+				</div>
+				<div className="px-4 py-2 font-bold border-b border-gray-300" onClick={() => setSelectedExpense()}>{data.amount} $</div>
+				<div className="px-4 py-2 border-b border-gray-300 whitespace-nowrap" onClick={() => setSelectedExpense()}>{data.description}</div>
+				<div className="px-4 py-2 border-b border-gray-300 col-start-5 col-end-6 text-right">
 					<button
 						onClick={() => handleOnDelete()}
-						className="text-red-500 hover:text-red-700 w-6"
+						className="text-living-coral hover:text-red-700 w-6"
 					>
-						<FaTrash className="w-6 h-6" />
+						<MdDeleteOutline className="w-6 h-6" />
 					</button>
-				</td>
-			</tr>}
+				</div>
+			</>}
 
-			{style == "small" && <div className={`m-2 flex px-4 py-2 items-center border border-red-200 rounded ${index % 2 === 0 ? "bg-white" : "bg-red-50"}`}
+			{style == "small" && <div className={`m-2 flex px-4 py-2 items-center border border-gray-300 rounded}`}
 				onClick={() => setSelectedExpense()} >
-				<Icon className="text-red-500 w-6 h-6 mr-5" />
+				<Icon className="w-6 h-6 mr-5" />
 				<div className="flex-1">
-					<div className="mb-2">{dateStr}</div>
+					<div className="mb-2 flex flex-row items-center">
+						<span>{dateStr}</span>
+						<button
+							onClick={() => handleOnDelete()}
+							className="text-living-coral hover:text-red-700 w-6 ml-auto flex items-center justify-center"
+						>
+							<MdDeleteOutline className="w-6 h-6" />
+						</button>
+					</div>
+
 					<div className="mb-2 italic text-sm flex flex-row space-x-3">
 						<span>{Utils.findItemFromList(categoryList!, data.categoryId, "_id")!.name}</span>
 						{data.description && <> <span>-</span> <span>{data.description}</span></>}

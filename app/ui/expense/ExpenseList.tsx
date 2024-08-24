@@ -50,10 +50,10 @@ export default function ExpenseList() {
 	const filteredList = filterExpenseList();
 
 	return (
-		<div className="w-full flex flex-col">
+		<div className="w-full flex flex-col bg-background-color">
 			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 bg-background-color ">
+			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-5 gap-x-3">
 				{/* For date range */}
 				<CustomDatePicker
 					label="Start Date"
@@ -69,39 +69,30 @@ export default function ExpenseList() {
 					onDateChange={(date: Date | null) => { setEndDate(date) }}
 				/>
 
-				<div>
-					<label className="block text-gray-700 mb-2 text-sm">&nbsp;</label>
+				<div className="flex flex-col justify-end">
+					<label className="block text-gray-700 text-sm ">&nbsp;</label>
 					<button
-						className="bg-gold text-gray-600 px-10 py-2 rounded-md"
+						className="bg-bright-lime-green text-gray-800 px-10 py-2 rounded-md mt-auto w-32"
 						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Add</button>
 				</div>
-
-				<div className="italic text-teal-green">
-					<span>There is {filteredList.length} item(s)</span></div>
 			</div>
 
 			{/* <!-- Table for larger screens --> */}
-			<div className="flex-1 p-3 hidden md:block">
+			<div className="flex-1 py-3 hidden md:block shadow-lg bg-white mt-4">
 				{/* <div className=" overflow-y-auto h-[calc(100vh-270px)]"> */}
-				<div className=" overflow-y-auto ">
-					{/* <div className="overflow-y-auto"> */}
-					<table className="min-w-full border border-red-800 text-gray-600">
-						<thead className="bg-teal-green">
-							<tr className="border border-sky-blue">
-								<th className="px-4 py-2 text-left font-normal">Date</th>
-								<th className="px-4 py-2 text-left font-normal">Category</th>
-								<th className="px-4 py-2 text-left font-normal">Amount</th>
-								<th className="px-4 py-2 text-left font-normal">Description</th>
-								<th className="px-4 py-2 text-left font-normal">Budget related</th>
-								<th className="px-4 py-2 font-normal">#</th>
-							</tr>
-						</thead>
-						<tbody>
-							{filteredList.map((expense: JSONObject, index: number) => (
-								<ExpenseItem style="large" key={expense._id} data={expense} index={index} />
-							))}
-						</tbody>
-					</table>
+				<div className=" overflow-y-auto">
+					<div className="grid grid-cols-5 gap-y-4">
+						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>
+						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Category</div>
+						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Amount</div>
+						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Description</div>
+						<div className="px-4 py-2 font-medium border-b border-gray-300 col-start-5 col-end-6 text-right">#</div> 
+						
+
+						{filteredList.map((expense: JSONObject, index: number) => (
+							<ExpenseItem style="large" key={expense._id} data={expense} index={index} />
+						))}
+					</div>
 				</div>
 			</div>
 
