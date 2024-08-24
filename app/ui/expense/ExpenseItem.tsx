@@ -6,28 +6,22 @@ import { JSONObject } from "@/lib/definations";
 import * as Utils from "@/lib/utils";
 import * as AppStore from "@/lib/appStore";
 import * as Constant from "@/lib/constants";
-import { AiFillDollarCircle } from "react-icons/ai";
-import { useMainUi } from "@/contexts/MainUiContext";
-import { FaTrash, FaShoppingCart, FaUtensils, FaHome, FaCar } from 'react-icons/fa';
+import { FaShoppingCart, FaUtensils, FaHome, FaCar } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { useExpense } from "@/contexts/ExpenseContext";
 import Alert from "../basics/Alert";
 import { useCategory } from "@/contexts/CategoryContext";
-import { RiHealthBookFill } from "react-icons/ri";
-import { FcDebt } from "react-icons/fc";
 import { GiClothes } from "react-icons/gi";
 import { MdOutlineSchool } from "react-icons/md";
-import { SiInstacart } from "react-icons/si";
-import { MdDevicesOther } from "react-icons/md";
 import { FaTheaterMasks } from "react-icons/fa";
 import { PiBowlFoodFill } from "react-icons/pi";
 import { TbTruckDelivery } from "react-icons/tb";
-import { IoBagHandleSharp } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
-import { MdHouseSiding } from "react-icons/md";
 import { PiHouseLineDuotone } from "react-icons/pi";
 import { GiEarrings } from "react-icons/gi";
 import { GiPiggyBank } from "react-icons/gi";
+import { GiHealthNormal } from "react-icons/gi";
+import { useMainUi } from "@/contexts/MainUiContext";
 
 
 const categoryIcons: Record<string, IconType> = {
@@ -38,7 +32,7 @@ const categoryIcons: Record<string, IconType> = {
 	'Dining Out': PiBowlFoodFill,
 	'Rent/Mortgage': TbTruckDelivery,
 
-	'Health & Wellness': SiInstacart,
+	'Health & Wellness': GiHealthNormal,
 	'Education': MdOutlineSchool,
 	// 'Clothing & Accessories': GiEarrings,
 

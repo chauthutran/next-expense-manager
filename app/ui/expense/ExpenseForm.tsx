@@ -156,7 +156,7 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 						<div className="grid grid-cols-3 gap-x-3">
 							<button
 								type="submit"
-								className="bg-gold px-4 py-2 rounded hover:bg-yellow-300"
+								className="bg-mint-green px-4 py-2 rounded hover:bg-green-300"
 								onClick={(e) => handleOnSave(e, false)}
 							>
 								Save & Go back
@@ -171,7 +171,7 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 							<button
 								type="button"
 								onClick={() => setSubPage(null)}
-								className="bg-gray-400 px-4 py-2 rounded hover:bg-gray-500"
+								className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
 							>
 								Go Back
 							</button>
