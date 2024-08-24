@@ -53,7 +53,7 @@ export default function ExpenseList() {
 		<div className="w-full flex flex-col bg-background-color">
 			<CategoryNavigation onSelect={(id: string) => setCategoryFilter(id)}/>
 
-			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-5 gap-x-3">
+			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-5 gap-x-3 mb-4">
 				{/* For date range */}
 				<CustomDatePicker
 					label="Start Date"
@@ -97,7 +97,7 @@ export default function ExpenseList() {
 			</div>
 
 			{/* <!-- Divs for smaller screens --> */}
-			<div className="md:hidden">
+			<div className="md:hidden bg-white">
 				{filteredList.map((expense: JSONObject, index: number) => (
 					<ExpenseItem style="small" key={expense._id} data={expense} index={index} />
 				))}
