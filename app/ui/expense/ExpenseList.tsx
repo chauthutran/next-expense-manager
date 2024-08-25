@@ -11,22 +11,19 @@ import * as AppStore from "@/lib/appStore";
 import { useCategory } from "@/contexts/CategoryContext";
 import CustomDatePicker from "@/ui/basics/DatePicker";
 import * as Utils from "@/lib/utils";
-import CategoryNavigation from "./CategoryNavigation";
+import FilterNavigation from "./FilterNavigation";
 
 export default function ExpenseList() {
 
-	const { setSubPage } = useMainUi();
 	const { expenseList } = useExpense();
-	const { categoryList } = useCategory();
 
 	const [categoryFilter, setCategoryFilter] = useState("");
 	const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateOfCurrentDate());
 	const [endDate, setEndDate] = useState<Date | null>(new Date());
-	const [hasBudget, setHasBudget] = useState(false);
 	const [dataVisualization, setDataVisualization] = useState<string>(Constant.DATA_VISUALIZATION_DATA_LIST);
 
-
 	const filterExpenseList = () => {
+		console.log("categoryFilter: " + categoryFilter);
 		let filteredList = expenseList?.filter((item) => {
 
 			if (categoryFilter != "" && item.categoryId != categoryFilter) {
@@ -36,9 +33,6 @@ export default function ExpenseList() {
 				return false;
 			}
 			if (endDate != null && item.date > Utils.formatDateObjToDbDate(endDate)) {
-				return false;
-			}
-			if (hasBudget && item.budgetId === undefined) {
 				return false;
 			}
 
@@ -51,44 +45,18 @@ export default function ExpenseList() {
 	const filteredList = filterExpenseList();
 
 	return (
-		<div className="w-full flex flex-col bg-background-color">
-			<CategoryNavigation 
-				onCategorySelect={(id: string) => setCategoryFilter(id)}
-				onSeleteDataVisualization={(name: string) => setDataVisualization(name)} />
-
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-5 mt-5 gap-x-3 mb-4">
-				{/* For date range */}
-				<CustomDatePicker
-					label="Start Date"
-					id="startDate"
-					selectedDate={startDate}
-					onDateChange={(date: Date | null) => { setStartDate(date) }}
-				/>
-
-				<CustomDatePicker
-					label="End Date"
-					id="endDate"
-					selectedDate={endDate}
-					onDateChange={(date: Date | null) => { setEndDate(date) }}
-				/>
-
-				<div className="flex flex-col justify-end">
-					<label className="block text-gray-700 text-sm ">&nbsp;</label>
-					<button
-						className="bg-teal-green text-gray-800 px-10 py-2 rounded-md mt-auto"
-						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Chart</button>
-				</div>
-
-				<div className="flex flex-col justify-end">
-					<label className="block text-gray-700 text-sm ">&nbsp;</label>
-					<button
-						className="bg-grandpa-orange text-gray-800 px-10 py-2 rounded-md mt-auto"
-						onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}>Add</button>
-				</div>
-			</div>
+		<div className="w-full flex flex-col">
+			<FilterNavigation 
+				onSelectCategory={(id: string) => setCategoryFilter(id)}
+				onSeleteDataVisualization={(name: string) => setDataVisualization(name)}
+				onSeleteStartDate={(date: Date | null) => setStartDate( date )}
+				onSelectEndDate={(date: Date | null) => setEndDate( date )}
+			/>
+			
+			
 
 			{/* <!-- Table for larger screens --> */}
-			<div className="flex-1 py-3 hidden md:block shadow-lg bg-white mt-4">
+			<div className="flex-1 py-3 hidden md:block bg-white mt-4">
 				<div className=" overflow-y-auto">
 					<div className="grid grid-cols-5 gap-y-4">
 						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>
