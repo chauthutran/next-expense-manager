@@ -31,14 +31,10 @@ const categoryIcons: Record<string, IconType> = {
 	'Transportation': FaCar,
 	'Dining Out': PiBowlFoodFill,
 	'Rent/Mortgage': TbTruckDelivery,
-
 	'Health & Wellness': GiHealthNormal,
 	'Education': MdOutlineSchool,
-	// 'Clothing & Accessories': GiEarrings,
-
 	'Clothing & Accessories': GiClothes,
-	'Savings & Investments': GiPiggyBank,
-	'Food': FaUtensils
+	'Savings & Investments': GiPiggyBank
 };
 
 

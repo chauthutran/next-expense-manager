@@ -71,11 +71,11 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
     ];
 
     return (
-        <nav className="bg-background-color text-gray-700">
-            <div className="relative pl-4 pr-2 flex flex-row border border-gray-300 items-center">
+        <nav className="bg-background-color">
+            <div className="relative text-gray-100 bg-teal-green pl-4 pr-2 flex flex-row border border-gray-200 items-center py-1">
                 <button
                     onClick={scrollLeft}
-                    className="text-living-coral hover:text-deep-coral"
+                    className="text-gold hover:text-yellow-200"
                 >
                     <TiMediaPlayReverse size={25} />
                 </button>
@@ -94,14 +94,14 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
 
                 <button
                     onClick={scrollRight}
-                    className="text-living-coral px-2 py-2 hover:text-deep-coral font-bold ml-2"
+                    className="text-gold hover:text-yellow-200"
                 >
                     <TiMediaPlay size={25} />
                 </button>
 
                 <button
                     className="ml-2 items-center justify-center"
-                    onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}><MdPostAdd className="text-black" size={25} /></button>
+                    onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}><MdPostAdd className="text-soft-coral" size={25} /></button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-3 gap-x-3 mb-4  text-gray-600 items-center">

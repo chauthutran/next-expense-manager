@@ -24,7 +24,6 @@ export default function ExpenseList() {
 	const [dataVisualization, setDataVisualization] = useState<string>(Constant.DATA_VISUALIZATION_DATA_LIST);
 
 	const filterExpenseList = () => {
-		console.log("categoryFilter: " + categoryFilter);
 		let filteredList = expenseList?.filter((item) => {
 
 			if (categoryFilter != "" && item.categoryId != categoryFilter) {
@@ -84,9 +83,10 @@ export default function ExpenseList() {
 				</div>
 			</>}
 
-			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DAILY_EXPENSE && <>
-				<DailyExpense data={filteredList} startDate={startDate!}/>
-			</>}
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DAILY_EXPENSE && 
+				<div className="m-5">
+					<DailyExpense data={filteredList} startDate={startDate!}/>
+				</div>}
 		</div>
 	)
 }
