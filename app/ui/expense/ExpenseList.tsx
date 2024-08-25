@@ -52,34 +52,36 @@ export default function ExpenseList() {
 				onSeleteStartDate={(date: Date | null) => setStartDate( date )}
 				onSelectEndDate={(date: Date | null) => setEndDate( date )}
 			/>
-			
-			
 
-			{/* <!-- Table for larger screens --> */}
-			<div className="flex-1 py-3 hidden md:block bg-white mt-4">
-				<div className=" overflow-y-auto">
-					<div className="grid grid-cols-5 gap-y-4">
-						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>
-						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Category</div>
-						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Amount</div>
-						<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Description</div>
-						<div className="px-4 py-2 font-medium border-b border-gray-300 col-start-5 col-end-6 text-right">#</div> 
-						
+			{filteredList.length == 0 && <div className="p-5 text-red-500 italic text-lg">* No data found</div>}
+			
+			{filteredList.length > 0 && <>
 
-						{filteredList.map((expense: JSONObject, index: number) => (
-							<ExpenseItem style="large" key={expense._id} data={expense} index={index} />
-						))}
+				{/* <!-- Table for larger screens --> */}
+				<div className="flex-1 py-3 hidden md:block bg-white mt-4">
+					<div className=" overflow-y-auto">
+						<div className="grid grid-cols-5 gap-y-4">
+							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>
+							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Category</div>
+							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Amount</div>
+							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Description</div>
+							<div className="px-4 py-2 font-medium border-b border-gray-300 col-start-5 col-end-6 text-right">#</div> 
+							
+
+							{filteredList.map((expense: JSONObject, index: number) => (
+								<ExpenseItem style="large" key={expense._id} data={expense} index={index} />
+							))}
+						</div>
 					</div>
 				</div>
-			</div>
 
-			{/* <!-- Divs for smaller screens --> */}
-			<div className="md:hidden bg-white">
-				{filteredList.map((expense: JSONObject, index: number) => (
-					<ExpenseItem style="small" key={expense._id} data={expense} index={index} />
-				))}
-			</div>
-
+				{/* <!-- Divs for smaller screens --> */}
+				<div className="md:hidden bg-white">
+					{filteredList.map((expense: JSONObject, index: number) => (
+						<ExpenseItem style="small" key={expense._id} data={expense} index={index} />
+					))}
+				</div>
+			</>}
 		</div>
 	)
 }
