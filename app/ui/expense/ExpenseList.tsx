@@ -12,6 +12,7 @@ import { useCategory } from "@/contexts/CategoryContext";
 import CustomDatePicker from "@/ui/basics/DatePicker";
 import * as Utils from "@/lib/utils";
 import FilterNavigation from "./FilterNavigation";
+import DailyExpense from "./charts/DailyExpense";
 
 export default function ExpenseList() {
 
@@ -55,7 +56,7 @@ export default function ExpenseList() {
 
 			{filteredList.length == 0 && <div className="p-5 text-red-500 italic text-lg">* No data found</div>}
 			
-			{filteredList.length > 0 && <>
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DATA_LIST && <>
 
 				{/* <!-- Table for larger screens --> */}
 				<div className="flex-1 py-3 hidden md:block bg-white mt-4">
@@ -81,6 +82,10 @@ export default function ExpenseList() {
 						<ExpenseItem style="small" key={expense._id} data={expense} index={index} />
 					))}
 				</div>
+			</>}
+
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DAILY_EXPENSE && <>
+				<DailyExpense data={filteredList} startDate={startDate!}/>
 			</>}
 		</div>
 	)

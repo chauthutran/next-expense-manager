@@ -43,10 +43,30 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
 
     const dataVisualizationList = [
         {id: Constant.DATA_VISUALIZATION_DATA_LIST, name: "Table List"},
+
+        // Daily Expenses (Heatmap Calendar)
+        // Purpose: Shows the amount spent each day on a calendar heatmap.
+        // Use Case: Helps users identify spending patterns, such as high-expense days or weeks.
         {id: Constant.DATA_VISUALIZATION_DAILY_EXPENSE, name: "Daily Expenses"},
+
+        // Expense Distribution by Category (Pie/Donut Chart)
+        // Purpose: Shows how a user’s expenses are distributed across different categories (e.g., food, rent, utilities, entertainment).
+        // Use Case: Helps users identify which categories consume the largest portion of their budget.
         {id: Constant.DATA_VISUALIZATION_DISTRIBUTION_BY_CATEGORY, name: "Expense Distribution by Category"},
+
+        // 2. Monthly Expense Trends (Line Chart)
+        // Purpose: Displays expenses over time, typically on a monthly basis.
+        // Use Case: Helps users track changes in their spending over time, identify trends, and plan future budgets.
         {id: Constant.DATA_VISUALIZATION_MONTHLT_EXPENSE_TRENDS, name: "Monthly Expense Trends"},
+
+        // 4. Expenses Over Time by Category (Stacked Area Chart)
+        // Purpose: Displays how spending in different categories changes over time.
+        // Use Case: Allows users to see which categories are growing or shrinking and adjust their budget accordingly.
         {id: Constant.DATA_VISUALIZATION_EXPENSE_OVERTIME_BY_CATEGORY, name: "Expenses Over Time by Category"},
+
+        // Top 5 Expense Categories (Horizontal Bar Chart)
+        // Purpose: Highlights the top 5 categories where users spend the most.
+        // Use Case: Helps users quickly see which areas are driving the majority of their expenses.
         {id: Constant.DATA_VISUALIZATION_TOP_5_EXPENSE_CATEGORY, name: "Top 5 Expense Categories"}
     ];
 
