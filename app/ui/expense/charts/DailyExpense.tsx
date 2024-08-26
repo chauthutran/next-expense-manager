@@ -8,20 +8,7 @@ import * as Utils from "@/lib/utils";
 import { EventType } from "nextjs-jc-component-libs/dist/libs/definations";
 import { useEffect, useState } from "react";
 import Modal from "@/ui/basics/Modal";
-import ExpenseItem from "../ExpenseItem";
-
-const categoryColors: Record<string, string> = {
-	'Utilities': "#FFD700",
-	'Groceries': "#FFA07A",
-	'Entertainment': "#9370DB",
-	'Transportation': "#20B2AA",
-	'Dining Out': "#FF4500",
-	'Rent/Mortgage': "#4682B4",
-	'Health & Wellness': "#32CD32",
-	'Education': "#8A2BE2",
-	'Clothing & Accessories': "#FF69B4",
-	'Savings & Investments': "#2E8B57"
-};
+import * as Colors from "@/lib/colors";
 
 
 export default function DailyExpense({startDate, data}: {startDate: Date, data: JSONObject[]}) {
@@ -42,7 +29,7 @@ export default function DailyExpense({startDate, data}: {startDate: Date, data: 
                 title: `${category.name} - ${item.description}: ${item.amount}$`,
                 start: Utils.convertDateStrToObj(item.date), // YYYY, MM, DD, HH, MM
                 end: Utils.convertDateStrToObj(item.date),
-                color: categoryColors[category.name]
+                color: Colors.categoryColors[category.name]
             };
 
             events.push(event);
@@ -83,7 +70,7 @@ export default function DailyExpense({startDate, data}: {startDate: Date, data: 
                     <ul className="m-3 space-y-3">
                         {detailsEvents!.events.map((expense, index) => {
                             const category = Utils.findItemFromList(categoryList!, expense.categoryId, "_id")!;
-                            return ( <li key={`details_${index}`} className="p-2" style={{backgroundColor: categoryColors[category.name]}}>
+                            return ( <li key={`details_${index}`} className="p-2" style={{backgroundColor: Colors.categoryColors[category.name]}}>
                                 {category.name} - {expense.description} : <span>{expense.amount}$</span>
                             </li> )
                             })}
