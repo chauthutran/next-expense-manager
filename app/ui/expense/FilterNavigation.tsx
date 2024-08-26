@@ -57,7 +57,7 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
         // 2. Monthly Expense Trends (Line Chart)
         // Purpose: Displays expenses over time, typically on a monthly basis.
         // Use Case: Helps users track changes in their spending over time, identify trends, and plan future budgets.
-        {id: Constant.DATA_VISUALIZATION_MONTHLT_EXPENSE_TRENDS, name: "Monthly Expense Trends"},
+        {id: Constant.DATA_VISUALIZATION_MONTHLY_EXPENSE_TRENDS, name: "Monthly Expense Trends"},
 
         // 4. Expenses Over Time by Category (Stacked Area Chart)
         // Purpose: Displays how spending in different categories changes over time.
@@ -72,10 +72,10 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
 
     return (
         <nav className="bg-background-color">
-            <div className="relative text-gray-100 bg-teal-green pl-4 pr-2 flex flex-row border border-gray-200 items-center py-1">
+            <div className="relative text-gray-800 bg-soft-pink pl-4 pr-2 flex flex-row border border-gray-200 items-center py-1">
                 <button
                     onClick={scrollLeft}
-                    className="text-gold hover:text-yellow-200"
+                    className="text-teal-green hover:text-teal-700"
                 >
                     <TiMediaPlayReverse size={25} />
                 </button>
@@ -94,7 +94,7 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
 
                 <button
                     onClick={scrollRight}
-                    className="text-gold hover:text-yellow-200"
+                    className="text-teal-green hover:text-teal-700"
                 >
                     <TiMediaPlay size={25} />
                 </button>

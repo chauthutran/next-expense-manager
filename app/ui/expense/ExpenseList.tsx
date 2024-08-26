@@ -14,6 +14,7 @@ import * as Utils from "@/lib/utils";
 import FilterNavigation from "./FilterNavigation";
 import DailyExpense from "./charts/DailyExpense";
 import DistributionByCatergories from "./charts/DistributionByCatergories";
+import MontlyExpenseTrend from "./charts/MonthlyExpenseTrends";
 
 export default function ExpenseList() {
 
@@ -95,9 +96,9 @@ export default function ExpenseList() {
 					<DistributionByCatergories data={filteredList} />
 				</div>}
 
-			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DISTRIBUTION_BY_CATEGORY && 
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_MONTHLY_EXPENSE_TRENDS && 
 				<div className="mb-5">
-					<DistributionByCatergories data={filteredList} />
+					<MontlyExpenseTrend data={filteredList} />
 				</div>}
 		</div>
 	)

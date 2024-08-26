@@ -1,23 +1,28 @@
+// Expense Distribution by Category (Pie/Donut Chart)
+// Purpose: Shows how a user’s expenses are distributed across different categories (e.g., food, rent, utilities, entertainment).
+// Use Case: Helps users identify which categories consume the largest portion of their budget.
+
+'use client'
+
 import { JSONObject } from "@/lib/definations";
 import React from "react";
-import { PieChart, Pie, Cell, Legend, ResponsiveContainer, Tooltip } from "recharts";
-import * as Colors from "@/lib/colors";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { useCategory } from "@/contexts/CategoryContext";
 import * as Utils from "@/lib/utils";
-
+import CategoryLegend from "./CategoryLegend";
 
 export default function DistributionByCatergories({ data }: { data: JSONObject[] }) {
 
 	const { categoryList } = useCategory();
-
+ 
 	const transformedData = data.reduce((acc: JSONObject[], expense: JSONObject) => {
 		const { categoryId, amount } = expense;
-		const categoryName = Utils.findItemFromList(categoryList!, categoryId, "_id")!.name;
-		const existingCategory = acc.find(item => item.categoryId === categoryId);
+		const category = Utils.findItemFromList(categoryList!, categoryId, "_id")!;
+		const existingCategory = acc.find(item => item.categoryName === category.name);
 		if (existingCategory) {
 			existingCategory.total += amount;
 		} else {
-			acc.push({ categoryName, total: amount });
+			acc.push({ categoryName: category.name, total: amount, color: category.color });
 		}
 		return acc;
 	}, []) as JSONObject[];
@@ -37,8 +42,8 @@ export default function DistributionByCatergories({ data }: { data: JSONObject[]
 								cy={200}
 								label
 							>
-								{transformedData.map((entry, index) => (
-									<Cell key={`cell-${JSON.stringify(entry)}`} fill={Colors.categoryColors[entry.categoryName]} />
+								{categoryList!.map((category, index) => (
+									<Cell key={`cell-${category._id}`} fill={category.color} />
 								))}
 							</Pie>
 							<Tooltip />
@@ -49,12 +54,7 @@ export default function DistributionByCatergories({ data }: { data: JSONObject[]
 
 			{/* Category List - Place in the second column */}
 			<div className="flex flex-col items-start justify-between">
-				{Object.keys(Colors.categoryColors).map((categoryName, idx) => (
-					<div className="flex flex-row m-1 items-center justify-between" key={categoryName}>
-						<div style={{ backgroundColor: Colors.categoryColors[categoryName] }} className="w-4 h-4 rounded-full"></div>
-						<div className="px-3 text-right whitespace-nowrap">{categoryName}</div>
-					</div>
-				))}
+				<CategoryLegend />
 			</div>
 		</div>
 	);

@@ -1,3 +1,9 @@
+
+
+// Daily Expenses (Heatmap Calendar)
+// Purpose: Shows the amount spent each day on a calendar heatmap.
+// Use Case: Helps users identify spending patterns, such as high-expense days or weeks.
+
 'use client'
 
 
@@ -8,7 +14,6 @@ import * as Utils from "@/lib/utils";
 import { EventType } from "nextjs-jc-component-libs/dist/libs/definations";
 import { useEffect, useState } from "react";
 import Modal from "@/ui/basics/Modal";
-import * as Colors from "@/lib/colors";
 
 
 export default function DailyExpense({startDate, data}: {startDate: Date, data: JSONObject[]}) {
@@ -25,7 +30,7 @@ export default function DailyExpense({startDate, data}: {startDate: Date, data: 
                 title: `${category.name} - ${item.description}: ${item.amount}$`,
                 start: Utils.convertDateStrToObj(item.date), // YYYY, MM, DD, HH, MM
                 end: Utils.convertDateStrToObj(item.date),
-                color: Colors.categoryColors[category.name]
+                color: category.color
             };
 
             events.push(event);
@@ -66,7 +71,7 @@ export default function DailyExpense({startDate, data}: {startDate: Date, data: 
                     <ul className="m-3 space-y-3">
                         {detailsEvents!.events.map((expense, index) => {
                             const category = Utils.findItemFromList(categoryList!, expense.categoryId, "_id")!;
-                            return ( <li key={`details_${index}`} className="p-2" style={{backgroundColor: Colors.categoryColors[category.name]}}>
+                            return ( <li key={`details_${index}`} className="p-2" style={{backgroundColor: category.color}}>
                                 {category.name} - {expense.description} : <span>{expense.amount}$</span>
                             </li> )
                             })}
