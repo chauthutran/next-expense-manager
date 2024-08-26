@@ -6,9 +6,7 @@ import { useCategory } from "@/contexts/CategoryContext";
 import * as Utils from "@/lib/utils";
 
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-export default function PieChartDistributionByCatrgories({ data }: { data: JSONObject[] }) {
+export default function DistributionByCatergories({ data }: { data: JSONObject[] }) {
 
 	const { categoryList } = useCategory();
 

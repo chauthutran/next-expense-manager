@@ -13,7 +13,7 @@ import CustomDatePicker from "@/ui/basics/DatePicker";
 import * as Utils from "@/lib/utils";
 import FilterNavigation from "./FilterNavigation";
 import DailyExpense from "./charts/DailyExpense";
-import PieChartDistributionByCatrgories from "./charts/PieChartDistributionByCatrgories";
+import DistributionByCatergories from "./charts/DistributionByCatergories";
 
 export default function ExpenseList() {
 
@@ -83,16 +83,21 @@ export default function ExpenseList() {
 					))}
 				</div>
 			</>}
+			
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DAILY_EXPENSE && 
 				<div className="m-5">
 					<DailyExpense data={filteredList} startDate={startDate!}/>
 				</div>}
 
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DISTRIBUTION_BY_CATEGORY && 
+				<div className="mb-5">
+					<DistributionByCatergories data={filteredList} />
+				</div>}
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DISTRIBUTION_BY_CATEGORY && 
 				<div className="mb-5">
-					<PieChartDistributionByCatrgories data={filteredList} />
+					<DistributionByCatergories data={filteredList} />
 				</div>}
 		</div>
 	)

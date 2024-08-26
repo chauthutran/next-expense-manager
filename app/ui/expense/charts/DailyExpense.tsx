@@ -16,10 +16,6 @@ export default function DailyExpense({startDate, data}: {startDate: Date, data: 
 	const { categoryList } = useCategory();
     const [detailsEvents, setDetailsEvents] = useState<JSONObject | null>(null);
 
-    useEffect(()=> {
-
-    },[data, startDate]);
-
     const transformData = (): EventType[] => {
         let events: EventType[] = [];
         for( var i = 0; i<data.length; i++ ) {

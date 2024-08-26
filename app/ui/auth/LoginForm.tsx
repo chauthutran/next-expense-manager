@@ -35,8 +35,8 @@ export default function LoginForm() {
 
 	return (
 		<div className="max-w-md mx-auto p-8 flex flex-col">
-			<h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
+			<h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 			<div className="mb-4">
 				<label
 					className="block text-xs font-medium text-gray-900"
