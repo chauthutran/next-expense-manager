@@ -16,6 +16,7 @@ import DailyExpense from "./charts/DailyExpense";
 import DistributionByCatergories from "./charts/DistributionByCatergories";
 import MontlyExpenseTrend from "./charts/MonthlyExpenseTrends";
 import ExpensesOverTimeByCategory from "./charts/ExpensesOverTimeByCategory";
+import { Top5ExpenseCategories } from "./charts/Top5ExpenseCategories";
 
 export default function ExpenseList() {
 
@@ -105,8 +106,11 @@ export default function ExpenseList() {
 				<div className="mb-5">
 					<ExpensesOverTimeByCategory data={filteredList} />
 				</div>}
-
 				
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_TOP_5_EXPENSE_CATEGORY && 
+				<div className="mb-5">
+					<Top5ExpenseCategories data={filteredList} />
+				</div>}
 		</div>
 	)
 }
