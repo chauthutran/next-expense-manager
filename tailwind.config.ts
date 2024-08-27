@@ -9,41 +9,51 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "background-color": "#E4EDED",
-        "bright-lime-green": "#89fa19",
-        'gold': '#FFD700',
-        "gainsboro": "#E4EDED",
-        "hightlight-green": "#59ce8f",
-        "brutal-blue": "#0049B7",
-        "grandpa-orange": "#ffb766",
-        "blue-greeny": "#5cbdb9",
         "teeny-greeny": "#ebf6f5",
-        "yellow-gloves": "#f2d53c",
+        "gainsboro": "#E4EDED",
+        "background-color": "#E4EDED",
+        "light-sand": "#F4EDE8",
+        'soft-coral': "##fff6f5",
+        "brutal-blue": "#0049B7",
+
+        'ultra-violet': '#6A0DAD',
         "purple-mountains-majesty": "#8076a3",
+        'slate-blue': '#6A5ACD',
 
-
-
-        'light-coral': "#fc7e6e", // Header
-        'warm-gray': '#A9A9A9',
-        'deep-coral': "#D96A5B", // Footer
-        'soft-peach': "#FFD3B4", // Primary Button
-        'muted-salmon': "#FFAD91", // Secondary Button
-        "teal-green": "#2A9D8F", // Accent Button:
-        "light-sand": "#F4EDE8", // Background
+        "paradise-pink": "#f44566",
+        "deep-pink": "##f25394",
+        "hot-pink": "#f476af",
         'soft-pink': '#FFB6C1',
 
-        'soft-coral': "##fff6f5",
-        'tiffany-blue': '#23aaa6',
-        
-        'living-coral': '#FF6F61',
-        'ultra-violet': '#6A0DAD',
-        'pale-yellow': '#FFFACD',
-        'bright-yellow': '#FFD700',
-        'mint-green': '#98FF98',
-        'sky-blue': '#87CEEB',
-        'dark-teal': '#008080',
         'sunset-orange': '#FD5E53',
-        'slate-blue': '#6A5ACD',
+        'deep-coral': "#D96A5B",
+        'living-coral': '#FF6F61',
+        'light-coral': "#fc7e6e",
+
+        'sunny-yellow': "#F2D86D",
+        'gold': '#FFD700',
+        'bright-yellow': '#FFD700',
+        "yellow-gloves": "#f2d53c",
+        "sandstorm": "#f4db71",
+
+        'pale-yellow': '#FFFACD',
+        'soft-peach': "#FFD3B4",
+        'muted-salmon': "#FFAD91",
+        "grandpa-orange": "#ffb766",
+
+        'warm-gray': '#A9A9A9',
+
+        'dark-teal': '#008080',
+        "teal-green": "#2A9D8F",
+        'tiffany-blue': '#23aaa6',
+        "blue-greeny": "#5cbdb9",
+        "hightlight-green": "#59ce8f",
+        'mint-green': '#98FF98',
+        "bright-lime-green": "#89fa19",
+        "dark-slate": "#1A2A2A",
+        
+        'sky-blue': '#87CEEB',
+        "blue-navy": "#1d3a82"
       },
     },
   },

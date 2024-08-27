@@ -11,6 +11,7 @@ import * as Utils from "@/lib/utils";
 import * as AppStore from "@/lib/appStore";
 import { useMainUi } from '@/contexts/MainUiContext';
 import { MdPostAdd } from "react-icons/md";
+import { MdFormatListBulletedAdd } from "react-icons/md";
 
 
 export default function FilterNavigation({ onSelectCategory, onSeleteDataVisualization, onSeleteStartDate, onSelectEndDate }: { onSelectCategory: (id: string) => void, onSeleteDataVisualization: (name: string) => void, onSeleteStartDate: (date: Date | null) => void, onSelectEndDate: (date: Date | null) => void }) {
@@ -72,20 +73,20 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
 
     return (
         <nav className="bg-background-color">
-            <div className="relative text-gray-800 bg-soft-pink pl-4 pr-2 flex flex-row border border-gray-200 items-center py-1">
+            <div className="relative text-gray-800 bg-dark-slate pl-4 pr-2 flex flex-row border border-gray-200 items-center py-1">
                 <button
                     onClick={scrollLeft}
-                    className="text-teal-green hover:text-teal-700"
+                    className="text-bright-lime-green hover:text-hightlight-green"
                 >
                     <TiMediaPlayReverse size={25} />
                 </button>
 
-                <ul className="flex space-x-5 overflow-x-hidden scroll-smooth w-full items-start text-sm" ref={scrollRef}>
+                <ul className="flex space-x-5 overflow-x-hidden scroll-smooth w-full items-start text-sm text-white" ref={scrollRef}>
                     {dataVisualizationList.map((item: JSONObject, idx: number) => (
                         <li
                             key={`dataVisual_${idx}`}
                             onClick={() => {setDataVisualization(item.id); onSeleteDataVisualization(item.id);}}
-                            className={`min-w-max hover:bg-slate-blue hover:text-white px-3 cursor-pointer hover:rounded-sm py-1 border-r border-gray-400 justify-center ${dataVisualization == item.id && "bg-slate-blue text-gray-100"}`}>
+                            className={`min-w-max hover:bg-slate-blue px-3 cursor-pointer hover:rounded-sm py-1 border-r border-gray-400 justify-center ${dataVisualization == item.id && "bg-slate-blue text-gray-100"}`}>
                                 {item.name}
                         </li>
                     ))}
@@ -94,17 +95,17 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
 
                 <button
                     onClick={scrollRight}
-                    className="text-teal-green hover:text-teal-700"
+                    className="text-bright-lime-green hover:text-hightlight-green"
                 >
                     <TiMediaPlay size={25} />
                 </button>
 
                 <button
-                    className="ml-2 items-center justify-center"
-                    onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}><MdPostAdd className="text-soft-coral" size={25} /></button>
+                    className="ml-2 items-center justify-center bg-white rounded-md"
+                    onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}><MdFormatListBulletedAdd className="text-paradise-pink" size={25} /></button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-3 gap-x-3 mb-4  text-gray-600 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-3 gap-x-3 mb-4 text-gray-600 items-center">
 
                 <div className="mb-3">
                     <CustomDatePicker

@@ -2,12 +2,14 @@ import { BsStars } from "react-icons/bs";
 import { useMainUi } from "@/contexts/MainUiContext";
 import * as Constant from '@/lib/constants';
 import { useAuth } from "@/contexts/AuthContext";
+import { useEffect, useState } from "react";
 
 
 export default function Header() {
 	
 	const { mainPage, setMainPage } = useMainUi();
 	const { user, logout } = useAuth();
+	const [scrolled, setScrolled] = useState(false);
 
 	const handleLogout = () => {
 		const ok = confirm("are you sure you want to logout ?");
@@ -18,7 +20,7 @@ export default function Header() {
 	}
 
 	return ( 
-		<header className={`p-4 shadow-md`}>
+		<header className={`p-4 shadow-md border-b-2 border-slate-300`}>
 			<div className="flex justify-between items-center ">
 				<div className="flex flex-row">
 					<div className="uppercase text-xl tracking-wider hidden mx-3 md:block" style={{ letterSpacing: "8px" }}>
