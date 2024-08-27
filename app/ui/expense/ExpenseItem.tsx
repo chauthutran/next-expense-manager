@@ -24,20 +24,6 @@ import { GiHealthNormal } from "react-icons/gi";
 import { useMainUi } from "@/contexts/MainUiContext";
 
 
-const categoryIcons: Record<string, IconType> = {
-	'Utilities': PiHouseLineDuotone,
-	'Groceries': GiEarrings,
-	'Entertainment': FaTheaterMasks,
-	'Transportation': FaCar,
-	'Dining Out': PiBowlFoodFill,
-	'Rent/Mortgage': TbTruckDelivery,
-	'Health & Wellness': GiHealthNormal,
-	'Education': MdOutlineSchool,
-	'Clothing & Accessories': GiClothes,
-	'Savings & Investments': GiPiggyBank
-};
-
-
 export default function ExpenseItem({ data, style = "large", index }: { data: JSONObject, style: string, index: number }) {
 
 	const { setSubPage } = useMainUi();
@@ -57,7 +43,6 @@ export default function ExpenseItem({ data, style = "large", index }: { data: JS
 		}
 	}
 
-	const Icon = categoryIcons[Utils.findItemFromList(categoryList!, data.categoryId, "_id")!.name] || FaShoppingCart;
 	const dateStr = Utils.formatDisplayDateObj(Utils.convertDateStrToObj(data.date));
 
 	return (
@@ -68,12 +53,10 @@ export default function ExpenseItem({ data, style = "large", index }: { data: JS
 			{style == "large" && <>
 
 				<div className="px-4 py-2 border-b border-gray-300" onClick={() => setSelectedExpense()}>{dateStr}</div>
-				<div className="px-4 py-2 flex space-x-3 border-b border-gray-300" onClick={() => setSelectedExpense()}>
-					<span><Icon className="w-6 h-6" /></span>
-					<span>{Utils.findItemFromList(categoryList!, data.categoryId, "_id")!.name}</span>
+				<div className="px-4 py-2 flex space-x-3 border-b border-gray-300 col-span-2" onClick={() => setSelectedExpense()}>
+					{Utils.findItemFromList(categoryList!, data.categoryId, "_id")!.name} - {data.description}
 				</div>
 				<div className="px-4 py-2 font-bold border-b border-gray-300" onClick={() => setSelectedExpense()}>{data.amount} $</div>
-				<div className="px-4 py-2 border-b border-gray-300 whitespace-nowrap" onClick={() => setSelectedExpense()}>{data.description}</div>
 				<div className="px-4 py-2 border-b border-gray-300 text-right">
 					<button
 						onClick={() => handleOnDelete()}
@@ -86,7 +69,6 @@ export default function ExpenseItem({ data, style = "large", index }: { data: JS
 
 			{style == "small" && <div className={`m-2 flex px-4 py-2 items-center border border-gray-300 rounded bg-white}`}
 				>
-				<Icon className="w-6 h-6 mr-5"  onClick={() => setSelectedExpense()}  />
 				<div className="flex-1">
 					<div className="mb-2 flex flex-row items-center">
 						<span onClick={() => setSelectedExpense()} >{dateStr}</span>

@@ -90,7 +90,6 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
                                 {item.name}
                         </li>
                     ))}
-                   
                 </ul>
 
                 <button
@@ -104,6 +103,7 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
                     className="ml-2 items-center justify-center bg-white rounded-md"
                     onClick={() => { AppStore.setSelected(null); setSubPage(Constant.SUB_UI_ADD_FORM) }}><MdFormatListBulletedAdd className="text-paradise-pink" size={25} /></button>
             </div>
+
 
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-5 mt-3 gap-x-3 mb-4 text-gray-600 items-center">
 

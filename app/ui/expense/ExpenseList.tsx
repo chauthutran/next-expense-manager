@@ -15,6 +15,7 @@ import FilterNavigation from "./FilterNavigation";
 import DailyExpense from "./charts/DailyExpense";
 import DistributionByCatergories from "./charts/DistributionByCatergories";
 import MontlyExpenseTrend from "./charts/MonthlyExpenseTrends";
+import ExpensesOverTimeByCategory from "./charts/ExpensesOverTimeByCategory";
 
 export default function ExpenseList() {
 
@@ -64,9 +65,8 @@ export default function ExpenseList() {
 					<div className=" overflow-y-auto">
 						<div className="grid grid-cols-5 gap-y-4">
 							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>
-							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Category</div>
+							<div className="px-4 py-2 text-left font-medium border-b border-gray-300 col-span-2">Description</div>
 							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Amount</div>
-							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Description</div>
 							<div className="px-4 py-2 font-medium border-b border-gray-300 col-start-5 col-end-6 text-right">#</div> 
 							
 
@@ -100,6 +100,13 @@ export default function ExpenseList() {
 				<div className="mb-5">
 					<MontlyExpenseTrend data={filteredList} />
 				</div>}
+
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_EXPENSE_OVERTIME_BY_CATEGORY && 
+				<div className="mb-5">
+					<ExpensesOverTimeByCategory data={filteredList} />
+				</div>}
+
+				
 		</div>
 	)
 }

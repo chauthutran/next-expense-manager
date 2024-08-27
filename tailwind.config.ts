@@ -50,10 +50,11 @@ const config: Config = {
         "hightlight-green": "#59ce8f",
         'mint-green': '#98FF98',
         "bright-lime-green": "#89fa19",
-        "dark-slate": "#1A2A2A",
         
         'sky-blue': '#87CEEB',
-        "blue-navy": "#1d3a82"
+        "blue-navy": "#1d3a82",
+        
+        "dark-slate": "#1A2A2A"
       },
     },
   },
