@@ -13,7 +13,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function LoginForm() {
 
-	const { setMainPage } = useMainUi();
+	const { setMainPage, setSubPage } = useMainUi();
 	const { user, login, loading, error } = useAuth();
 
 	const [email, setEmail] = useState("test1@gmail.com");
@@ -23,6 +23,7 @@ export default function LoginForm() {
 	useEffect(() => {
 		if (user != null) {
 			setMainPage( Constant.PAGE_EXPENSE );
+			setSubPage(null);
 		}
 	}, [user])
 

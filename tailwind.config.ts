@@ -21,7 +21,7 @@ const config: Config = {
         'slate-blue': '#6A5ACD',
 
         "paradise-pink": "#f44566",
-        "deep-pink": "##f25394",
+        "deep-pink": "#f25394",
         "hot-pink": "#f476af",
         'soft-pink': '#FFB6C1',
 

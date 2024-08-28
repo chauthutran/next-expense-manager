@@ -2,7 +2,7 @@
 
 import { useCategory } from '@/contexts/CategoryContext';
 import { JSONObject } from '@/lib/definations';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TiMediaPlayReverse } from "react-icons/ti";
 import { TiMediaPlay } from "react-icons/ti";
 import * as Constant from "@/lib/constants";
@@ -12,18 +12,24 @@ import * as AppStore from "@/lib/appStore";
 import { useMainUi } from '@/contexts/MainUiContext';
 import { MdPostAdd } from "react-icons/md";
 import { MdFormatListBulletedAdd } from "react-icons/md";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { IoIosArrowDropupCircle } from "react-icons/io";
 
 
 export default function FilterNavigation({ onSelectCategory, onSeleteDataVisualization, onSeleteStartDate, onSelectEndDate }: { onSelectCategory: (ids: string[]) => void, onSeleteDataVisualization: (name: string) => void, onSeleteStartDate: (date: Date | null) => void, onSelectEndDate: (date: Date | null) => void }) {
     const { categoryList } = useCategory();
+    const { setSubPage } = useMainUi();
 
     const [dataVisualization, setDataVisualization] = useState<string>(Constant.DATA_VISUALIZATION_DATA_LIST);
     const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateOfCurrentDate());
     const [endDate, setEndDate] = useState<Date | null>(new Date());
-    const { setSubPage } = useMainUi();
+
+    const [showReduceFilterBar, setShowReduceFilterBar] = useState(false);
 
     const checkboxRefs = useRef<(HTMLInputElement | null)[]>([]);
     const scrollRef = useRef<HTMLUListElement>(null);
+
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -72,15 +78,44 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
         { id: Constant.DATA_VISUALIZATION_TOP_5_EXPENSE_CATEGORY, name: "Top 5 Expense Categories" }
     ];
 
+    useEffect(() => {
+        // Initialize "All" checkbox as checked
+        if (checkboxRefs.current[0]) {
+            checkboxRefs.current[0].checked = true;
+        }
+    }, []);
+
     const handleSelectCategoryItem = () => {
-        const checkedCategories = checkboxRefs.current
-        .filter((checkbox) => checkbox?.checked)
-        .map((checkbox) => checkbox?.value)
-        .filter((value): value is string => value !== undefined); // Filter out undefined values
-console.log(checkedCategories);
-        onSelectCategory(checkedCategories); 
+        const checkedCategories = getCategoryIdList();
+        onSelectCategory(checkedCategories);
     }
 
+    const getCategoryIdList = (): string[] => {
+        const checkedCategories = checkboxRefs.current
+            .filter((checkbox) => checkbox?.checked)
+            .map((checkbox) => checkbox?.value)
+            .filter((value): value is string => value !== undefined); // Filter out undefined values
+
+        return checkedCategories;
+    }
+
+    const getCategoryNameList = (): string[] => {
+        let categoryNames: string[] = [];
+
+        const checkedCategories = getCategoryIdList();
+        for (var i = 0; i < checkedCategories.length; i++) {
+            const categoryId = checkedCategories[i];
+            if (categoryId === "") {
+                categoryNames.push("All");
+            }
+            else {
+                const category = Utils.findItemFromList(categoryList!, categoryId, "_id")!;
+                categoryNames.push(category.name);
+            }
+        }
+
+        return categoryNames;
+    }
 
     return (
         <nav className="bg-background-color">
@@ -97,7 +132,7 @@ console.log(checkedCategories);
                         <li
                             key={`dataVisual_${idx}`}
                             onClick={() => { setDataVisualization(item.id); onSeleteDataVisualization(item.id); }}
-                            className={`min-w-max hover:bg-slate-blue px-3 cursor-pointer hover:rounded-sm py-1 border-r border-gray-400 justify-center ${dataVisualization == item.id && "bg-slate-blue text-gray-100"}`}>
+                            className={`min-w-max hover:bg-slate-blue px-3 cursor-pointer rounded-sm py-1 border-r border-gray-400 justify-center ${dataVisualization == item.id && "bg-slate-blue text-gray-100"}`}>
                             {item.name}
                         </li>
                     ))}
@@ -116,26 +151,37 @@ console.log(checkedCategories);
             </div>
 
 
-            <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 px-5 mt-3 gap-x-3 mb-4 text-gray-600 items-start">
+            {/* {!showReduceFilterBar && <div className="flex flex-row justify-end items-center w-full m-auto">
+                <IoIosArrowDropupCircle className="text-blue-navy mx-3 my-2 cursor-pointer" size={20} onClick={() => setShowReduceFilterBar(true)}/>
+            </div>} */}
+
+            {showReduceFilterBar && <div className="flex flex-row bg-sunny-yellow cursor-pointer" onClick={() => setShowReduceFilterBar(false)}>
+                <div className='italic p-2 text-sm'>Expense data is from <span className="font-semibold">{Utils.formatDisplayDateObj(startDate!)}</span> to <span className="font-semibold">{Utils.formatDisplayDateObj(endDate!)}</span> of categories <span className="font-semibold">{getCategoryNameList().join(", ")}</span></div>
+
+                <div className="m-auto"></div>
+                <IoIosArrowDropdownCircle className="text-blue-navy mx-3 mt-2 cursor-pointer" size={20} />
+            </div>}
+
+            <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 px-5 mt-3 gap-x-3 mb-4 text-gray-600 items-start" style={{ display: showReduceFilterBar ? "none" : "" }}>
 
                 {/* Category list with checkboxes */}
                 <div className="mb-3 col-span-3">
                     <label className="block text-gray-700 mb-2 text-sm" htmlFor="category">Category</label>
                     <div id="category" className="w-full border border-gray-300 rounded-md p-3 max-h-36 overflow-y-auto grid grid-cols-1 md:grid-cols-3">
                         <div className="flex items-center mb-2">
-                                    <input
-                                        type="checkbox"
-                                        id={`category_all`}
-                                        value=""
-                                        onChange={() => handleSelectCategoryItem()}
-                                        ref={(el) => { checkboxRefs.current[categoryList!.length] = el; }}
-                                        className="mr-2"
-                                    />
-                                    <label htmlFor={`category_all`} className="text-sm cursor-pointer">
-                                        All
-                                    </label>
-                                </div>
-                                
+                            <input
+                                type="checkbox"
+                                id={`category_all`}
+                                value={""}
+                                onChange={() => handleSelectCategoryItem()}
+                                ref={(el) => { checkboxRefs.current[0] = el; }}
+                                className="mr-2"
+                            />
+                            <label htmlFor={`category_all`} className="text-sm cursor-pointer">
+                                All
+                            </label>
+                        </div>
+
                         {categoryList?.map((category: JSONObject, idx: number) => (
                             <div key={`category_${category._id}`} className="flex items-center mb-2">
                                 <input
@@ -143,7 +189,7 @@ console.log(checkedCategories);
                                     id={`category_${category._id}`}
                                     value={category._id}
                                     onChange={() => handleSelectCategoryItem()}
-                                    ref={(el) => { checkboxRefs.current[idx] = el; }}
+                                    ref={(el) => { checkboxRefs.current[idx + 1] = el; }}
                                     className="mr-2"
                                 />
                                 <label htmlFor={`category_${category._id}`} className="text-sm cursor-pointer">
@@ -155,25 +201,40 @@ console.log(checkedCategories);
                 </div>
 
                 <div className="mb-3 col-span-2">
-                    {/* Start Date Picker */}
-                    <CustomDatePicker
-                        label="Start Date"
-                        id="startDate"
-                        selectedDate={startDate}
-                        onDateChange={(date: Date | null) => { setStartDate(date); onSeleteStartDate(date); }}
-                    />
-                
-                    {/* End Date Picker */}
-                    <CustomDatePicker
-                        label="End Date"
-                        id="endDate"
-                        selectedDate={endDate}
-                        onDateChange={(date: Date | null) => { setEndDate(date); onSelectEndDate(date) }}
-                    />
+                    <div>
+                        <div className="relative flex items-center">
+                            <label className="flex-1 whitespace-nowrap text-gray-700 mb-2 text-sm">Start Date</label>
+                            {!showReduceFilterBar && (
+                                <div className="absolute top-0 right-0 mr-2 flex items-center">
+                                    <IoIosArrowDropupCircle
+                                        className="text-blue-navy cursor-pointer"
+                                        size={20}
+                                        onClick={() => setShowReduceFilterBar(true)}
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Start Date Picker */}
+                        <CustomDatePicker
+                            id="startDate"
+                            selectedDate={startDate}
+                            onDateChange={(date: Date | null) => { setStartDate(date); onSeleteStartDate(date); }}
+                        />
+                    </div>
+
+                    <div className="mt-3">
+                        <label className="block text-gray-700 mb-2 text-sm" htmlFor="endDate">End Date</label>
+                        {/* End Date Picker */}
+                        <CustomDatePicker
+                            id="endDate"
+                            selectedDate={endDate}
+                            onDateChange={(date: Date | null) => { setEndDate(date); onSelectEndDate(date) }}
+                        />
+                    </div>
                 </div>
 
             </div>
-
         </nav>
     );
 }
