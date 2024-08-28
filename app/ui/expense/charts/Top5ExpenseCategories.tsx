@@ -53,41 +53,14 @@ console.log(chartData);
                         layout="vertical"
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        {/* <XAxis
-                            dataKey="name"
-                            interval={0}
-                            angle={-45}
-                            textAnchor="end"
-                            tick={{ fontSize: 12 }}
-                        />
-                        <YAxis /> */}
-
                         <XAxis type="number"  />
                         <YAxis type="category" 
                             dataKey="categoryName" 
-                            interval={0}
-                            // angle={-45}
-                            textAnchor="end"
                             tick={{ fontSize: 12 }}/>
                         <Tooltip />
-                        <Bar
-                                    dataKey={"totalAmount"}
-                                    // stackId="a"
-                                    // fill={"red"}
-                                >
-                                </Bar>
-                        
-                        {/* {categoryList!.map((category: JSONObject, idx: number) => {
-                            return (
-                                <Bar
-                                    key={`key_${idx}`}
-                                    dataKey={"totalAmount"}
-                                    stackId="a"
-                                    fill={category.color}
-                                >
-                                </Bar>
-                            );
-                        })}  */}
+                        <Bar dataKey={"totalAmount"} >
+                            <LabelList dataKey="totalAmount" position="center" fill="#f44566" />
+                        </Bar>
                     </BarChart>
                 </ResponsiveContainer>
             </div>
