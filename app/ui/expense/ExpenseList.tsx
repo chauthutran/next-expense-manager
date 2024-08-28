@@ -6,10 +6,6 @@ import ExpenseItem from "./ExpenseItem"
 import { JSONObject } from "@/lib/definations";
 import * as Constant from "@/lib/constants";
 import { useExpense } from "@/contexts/ExpenseContext";
-import { useMainUi } from "@/contexts/MainUiContext";
-import * as AppStore from "@/lib/appStore";
-import { useCategory } from "@/contexts/CategoryContext";
-import CustomDatePicker from "@/ui/basics/DatePicker";
 import * as Utils from "@/lib/utils";
 import FilterNavigation from "./FilterNavigation";
 import DailyExpense from "./charts/DailyExpense";
@@ -17,6 +13,7 @@ import DistributionByCatergories from "./charts/DistributionByCatergories";
 import MontlyExpenseTrend from "./charts/MonthlyExpenseTrends";
 import ExpensesOverTimeByCategory from "./charts/ExpensesOverTimeByCategory";
 import { Top5ExpenseCategories } from "./charts/Top5ExpenseCategories";
+import DataList from "./charts/DataList";
 
 export default function ExpenseList() {
 
@@ -59,32 +56,10 @@ export default function ExpenseList() {
 
 			{filteredList.length == 0 && <div className="p-5 text-red-500 italic text-lg">* No data found</div>}
 			
-			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DATA_LIST && <>
-
-				{/* <!-- Table for larger screens --> */}
-				<div className="flex-1 py-3 hidden md:block bg-white mt-4">
-					<div className=" overflow-y-auto">
-						<div className="grid grid-cols-5 gap-y-4">
-							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>
-							<div className="px-4 py-2 text-left font-medium border-b border-gray-300 col-span-2">Description</div>
-							<div className="px-4 py-2 text-left font-medium border-b border-gray-300">Amount</div>
-							<div className="px-4 py-2 font-medium border-b border-gray-300 col-start-5 col-end-6 text-right">#</div> 
-							
-
-							{filteredList.map((expense: JSONObject, index: number) => (
-								<ExpenseItem style="large" key={expense._id} data={expense} index={index} />
-							))}
-						</div>
-					</div>
-				</div>
-
-				{/* <!-- Divs for smaller screens --> */}
-				<div className="md:hidden bg-white">
-					{filteredList.map((expense: JSONObject, index: number) => (
-						<ExpenseItem style="small" key={expense._id} data={expense} index={index} />
-					))}
-				</div>
-			</>}
+			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DATA_LIST &&
+				<div className="m-5">
+					<DataList data={filteredList} />
+				</div>}
 			
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DAILY_EXPENSE && 
