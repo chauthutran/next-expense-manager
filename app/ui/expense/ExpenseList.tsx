@@ -19,7 +19,7 @@ export default function ExpenseList() {
 
 	const { expenseList } = useExpense();
 
-	const [categoryFilter, setCategoryFilter] = useState("");
+	const [categoriesFilter, setCategoriesFilter] = useState([""]);
 	const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateOfCurrentDate());
 	const [endDate, setEndDate] = useState<Date | null>(new Date());
 	const [dataVisualization, setDataVisualization] = useState<string>(Constant.DATA_VISUALIZATION_DATA_LIST);
@@ -27,7 +27,7 @@ export default function ExpenseList() {
 	const filterExpenseList = () => {
 		let filteredList = expenseList?.filter((item) => {
 
-			if (categoryFilter != "" && item.categoryId != categoryFilter) {
+			if (categoriesFilter.length == 0 || ( categoriesFilter.indexOf("" ) < 0 && categoriesFilter.indexOf(item.categoryId) < 0)) {
 				return false;
 			}
 			if (startDate != null && item.date < Utils.formatDateObjToDbDate(startDate)) {
@@ -48,7 +48,7 @@ export default function ExpenseList() {
 	return (
 		<div className="w-full flex flex-col">
 			<FilterNavigation 
-				onSelectCategory={(id: string) => setCategoryFilter(id)}
+				onSelectCategory={(ids: string[]) => setCategoriesFilter(ids)}
 				onSeleteDataVisualization={(name: string) => setDataVisualization(name)}
 				onSeleteStartDate={(date: Date | null) => setStartDate( date )}
 				onSelectEndDate={(date: Date | null) => setEndDate( date )}
