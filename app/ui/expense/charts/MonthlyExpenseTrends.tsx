@@ -100,7 +100,7 @@ export default function MontlyExpenseTrend({ data }: { data: JSONObject[] }) {
                                         stackId="a"
                                         fill={category.color}
                                     >
-                                        <LabelList
+                                        {/* <LabelList
                                         content={renderCustomLabel}
                                             dataKey={(entry: JSONObject) => {
                                                 console.log(entry);
@@ -113,7 +113,7 @@ export default function MontlyExpenseTrend({ data }: { data: JSONObject[] }) {
                                                 return isLastWithData ? entry.total : null;
                                             }}
                                             position="top"
-                                        />
+                                        /> */}
                                     </Bar>
                                 );
                             })}
