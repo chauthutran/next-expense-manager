@@ -71,7 +71,7 @@ export default function DailyExpense({startDate, data}: {startDate: Date, data: 
                     <ul className="m-3 space-y-3">
                         {detailsEvents!.events.map((expense, index) => {
                             const category = Utils.findItemFromList(categoryList!, expense.categoryId, "_id")!;
-                            return ( <li key={`details_${index}`} className="p-2" style={{backgroundColor: category.color}}>
+                            return ( <li key={`details_${index}`} className="p-2" style={{backgroundColor: category.color, color: Utils.getContrastColor(category.color)}}>
                                 {category.name} - {expense.description} : <span>{expense.amount}$</span>
                             </li> )
                             })}

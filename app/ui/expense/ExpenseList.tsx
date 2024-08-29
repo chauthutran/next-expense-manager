@@ -57,33 +57,33 @@ export default function ExpenseList() {
 			{filteredList.length == 0 && <div className="p-5 text-red-500 italic text-lg">* No data found</div>}
 			
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DATA_LIST &&
-				<div className="m-5">
+				<div className="m-3">
 					<DataList data={filteredList} />
 				</div>}
 			
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DAILY_EXPENSE && 
-				<div className="m-5">
+				<div className="m-3">
 					<DailyExpense data={filteredList} startDate={startDate!}/>
 				</div>}
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_DISTRIBUTION_BY_CATEGORY && 
-				<div className="mb-5">
+				<div className="mb-3">
 					<DistributionByCatergories data={filteredList} />
 				</div>}
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_MONTHLY_EXPENSE_TRENDS && 
-				<div className="mb-5">
+				<div className="mb-3">
 					<MontlyExpenseTrend data={filteredList} />
 				</div>}
 
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_EXPENSE_OVERTIME_BY_CATEGORY && 
-				<div className="mb-5">
+				<div className="mb-3">
 					<ExpensesOverTimeByCategory data={filteredList} />
 				</div>}
 				
 			{filteredList.length > 0 && dataVisualization === Constant.DATA_VISUALIZATION_TOP_5_EXPENSE_CATEGORY && 
-				<div className="mb-5">
+				<div className="mb-3">
 					<Top5ExpenseCategories data={filteredList} />
 				</div>}
 		</div>

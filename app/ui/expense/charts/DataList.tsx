@@ -9,7 +9,7 @@ export default function DataList({ data }: { data: JSONObject[] }) {
     return (
         <>
         {/* <!-- Table for larger screens --> */}
-            <div className="flex-1 py-3 hidden md:block bg-white mt-4">
+            <div className="flex-1 hidden md:block bg-white">
                 <div className=" overflow-y-auto">
                     <div className="grid grid-cols-5 gap-y-4">
                         <div className="px-4 py-2 text-left font-medium border-b border-gray-300">Date</div>

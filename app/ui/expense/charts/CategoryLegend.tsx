@@ -12,7 +12,7 @@ export default function CategoryLegend() {
         {categoryList!.map((category, idx) => (
             <div className="flex flex-row m-1 items-center justify-between" key={category._id}>
                 <div style={{ backgroundColor: category.color }} className="w-4 h-4 rounded-full"></div>
-                <div className="px-3 text-right whitespace-nowrap">{category.name} --- {category.color}</div>
+                <div className="px-3 text-right whitespace-nowrap">{category.name}</div>
             </div>
         ))}
         </>
