@@ -151,9 +151,9 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
             </div>
 
 
-            {/* {!showReduceFilterBar && <div className="flex flex-row justify-end items-center w-full m-auto">
+            {!showReduceFilterBar && <div className="flex flex-row justify-end items-center w-full m-auto">
                 <IoIosArrowDropupCircle className="text-blue-navy mx-3 my-2 cursor-pointer" size={20} onClick={() => setShowReduceFilterBar(true)}/>
-            </div>} */}
+            </div>}
 
             {showReduceFilterBar && <div className="flex flex-row bg-sunny-yellow cursor-pointer" onClick={() => setShowReduceFilterBar(false)}>
                 <div className='italic p-2 text-sm'>Expense data is from <span className="font-semibold">{Utils.formatDisplayDateObj(startDate!)}</span> to <span className="font-semibold">{Utils.formatDisplayDateObj(endDate!)}</span> of categories <span className="font-semibold">{getCategoryNameList().join(", ")}</span></div>
@@ -204,15 +204,6 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
                     <div>
                         <div className="relative flex items-center">
                             <label className="flex-1 whitespace-nowrap text-gray-700 mb-2 text-sm">Start Date</label>
-                            {!showReduceFilterBar && (
-                                <div className="absolute top-0 right-0 mr-2 flex items-center">
-                                    <IoIosArrowDropupCircle
-                                        className="text-blue-navy cursor-pointer"
-                                        size={20}
-                                        onClick={() => setShowReduceFilterBar(true)}
-                                    />
-                                </div>
-                            )}
                         </div>
 
                         {/* Start Date Picker */}

@@ -21,7 +21,10 @@ export default function DistributionByCatergories({ data }: { data: JSONObject[]
 		const existingCategory = acc.find(item => item.categoryName === category.name);
 		if (existingCategory) {
 			existingCategory.total += amount;
+			console.log(existingCategory);
+
 		} else {
+			console.log("========== " +  category.name + " --- " + category.color);
 			acc.push({ categoryName: category.name, total: amount, color: category.color });
 		}
 		return acc;
@@ -42,8 +45,11 @@ export default function DistributionByCatergories({ data }: { data: JSONObject[]
 								cy={200}
 								label
 							>
-								{categoryList!.map((category, index) => (
+								{/* {categoryList!.map((category, index) => (
 									<Cell key={`cell-${category._id}`} fill={category.color} />
+								))} */}
+								{transformedData.map((entry, index) => (
+									<Cell key={`cell-${index}`} fill={entry.color} />
 								))}
 							</Pie>
 							<Tooltip />
