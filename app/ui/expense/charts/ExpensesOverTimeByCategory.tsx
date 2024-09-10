@@ -67,7 +67,7 @@ export default function ExpensesOverTimeByCategory({ data }: { data: JSONObject[
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 px-5 mt-3 gap-x-3 mb-4 items-center">
             {/* Pie Chart Container - Place in the first column */}
             <div className="flex justify-end items-center">
-                <div className="w-full max-w-[500px]"> {/* Adjust max-width as needed */}
+                <div className="w-full">
                     <ResponsiveContainer width="100%" height={400}>
                         <ComposedChart
                             width={500}

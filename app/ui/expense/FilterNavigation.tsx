@@ -22,7 +22,7 @@ export default function FilterNavigation({ onSelectCategory, onSeleteDataVisuali
     const { setSubPage } = useMainUi();
 
     const [dataVisualization, setDataVisualization] = useState<string>(Constant.DATA_VISUALIZATION_DATA_LIST);
-    const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateOfCurrentDate());
+    const [startDate, setStartDate] = useState<Date | null>(Utils.getStartDateWithHasData());
     const [endDate, setEndDate] = useState<Date | null>(new Date());
 
     const [showReduceFilterBar, setShowReduceFilterBar] = useState(false);

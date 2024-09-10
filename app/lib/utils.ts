@@ -52,9 +52,13 @@ export const sortArrayByDate  = (list: JSONObject): JSONObject[] => {
  * Relate to DATE 
  * */ 
 
-export const getStartDateOfCurrentDate = () => {
+export const getStartDateOfCurrentMonth = () => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1); // Set to the first day of the current month
+}
+
+export const getStartDateWithHasData = () => {
+    return new Date(2023, 0, 1); // Set to the first day of the current month
 }
 
 export const convertDateStrToObj = ( dateStr: string) : Date => {
