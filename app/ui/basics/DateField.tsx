@@ -1,4 +1,3 @@
-import React from 'react';  // Import React
 import { ChangeEvent, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; // Need to import this lib so that the calendar is showed  properly
