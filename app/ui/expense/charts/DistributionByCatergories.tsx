@@ -21,8 +21,6 @@ export default function DistributionByCatergories({ data }: { data: JSONObject[]
 		const existingCategory = acc.find(item => item.categoryName === category.name);
 		if (existingCategory) {
 			existingCategory.total += amount;
-			console.log(existingCategory);
-
 		} else {
 			acc.push({ categoryName: category.name, total: amount, color: category.color });
 		}

@@ -61,7 +61,6 @@ export default function ExpenseForm({ data = {} as JSONObject }) {
 			saveExpense(expense);
 		}
 		else {
-			console.log(errMsg);
 			setErrMsg("Please check red fields.")
 		}
 	};

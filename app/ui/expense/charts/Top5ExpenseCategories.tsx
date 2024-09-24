@@ -38,8 +38,7 @@ export function Top5ExpenseCategories({ data }: { data: JSONObject[] }) {
         return sortedCategories.slice(0, 5);
     }
 
-    const chartData = getTop5ExpenseCategories();  
-console.log(chartData);
+    const chartData = getTop5ExpenseCategories();
     
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 px-5 mt-3 gap-x-3 mb-4 items-center">

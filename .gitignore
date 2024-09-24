@@ -2,3 +2,7 @@
 /.next
 /node_modules
 .env.local
+
+# Auto Generated PWA files
+/public/sw.js
+/public/workbox-*.js

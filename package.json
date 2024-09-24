@@ -1,6 +1,6 @@
 {
-  "name": "pwa-nextjs-app",
-  "version": "0.1.0",
+  "name": "nextjs-expense-management-app",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -22,6 +22,7 @@
     "mongoose": "^8.4.0",
     "next": "^14.2.4",
     "next-auth": "^4.24.7",
+    "next-pwa": "^5.6.0",
     "nextjs-jc-component-libs": "^0.0.10",
     "npm": "^10.8.1",
     "react": "^18",

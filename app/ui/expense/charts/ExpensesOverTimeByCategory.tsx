@@ -61,7 +61,6 @@ export default function ExpensesOverTimeByCategory({ data }: { data: JSONObject[
     }
 
     const transformedData = transformData();
-    console.log(transformedData);
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 px-5 mt-3 gap-x-3 mb-4 items-center">
