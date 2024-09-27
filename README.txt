@@ -18,10 +18,12 @@
     yarn dev
 
 ###################################################
+# URL: https://blog.avneesh.tech/how-to-create-a-pwa-with-nextjs
 ### Install a NextJS project with PWA ###
     #1. Install dependency
         > yarn add next-pwa
-
+        > yarn add lighthouse chrome-launcher
+        
             The next-pwa package provides a number of features that make it easy to create PWAs, including:
             - Service worker generation and registration
             - Caching

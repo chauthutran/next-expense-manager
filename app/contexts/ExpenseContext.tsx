@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import { JSONObject } from '@/lib/definations';
 import * as Utils from '@/lib/utils';
 import * as Constant from '@/lib/constants';
+import { saveData, getData } from '@/lib/indexedDb';
 
 interface ExpenseContextProps {
     userId: string,
@@ -52,17 +53,23 @@ export const ExpenseProvider = ({ userId, children }: { userId: string, children
         setProcessingStatus(Constant.FETCH_EXPENSE_lIST_REQUEST);
         setError(null);
 		try {
-			const response = await fetch(`api/expense?userId=${userId}`);
-            if (!response.ok) {
-                setError("Network response was not ok");
-                setProcessingStatus(Constant.FETCH_EXPENSE_lIST_FAILURE);
+            const cachedData = await getData(Constant.INDEXED_DB_EXPENSE_LIST);
+            if (cachedData) {
+                setExpenseList(cachedData);
             }
             else {
-                const list = await response.json();
-				setExpenseList(list);
-                setProcessingStatus(Constant.FETCH_EXPENSE_lIST_SUCCESS);
-            }
-
+                const response = await fetch(`api/expense?userId=${userId}`);
+                if (!response.ok) {
+                    setError("Network response was not ok");
+                    setProcessingStatus(Constant.FETCH_EXPENSE_lIST_FAILURE);
+                }
+                else {
+                    const list = await response.json();
+                    setExpenseList(list);
+                    setProcessingStatus(Constant.FETCH_EXPENSE_lIST_SUCCESS);
+                    await saveData(Constant.INDEXED_DB_EXPENSE_LIST, list); // Save fresh data to IndexedDB
+                }
+            }   
 		} catch (err) {
 			setError(Utils.getErrMessage(err));
             setProcessingStatus(Constant.FETCH_EXPENSE_lIST_FAILURE);
