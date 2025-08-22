@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AppWrapper from "@/components/AppWrapper";
+import RouterLoader from "@/components/RouterLoader";
+import AppApolloProvider from "./AppApolloProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -10,16 +13,9 @@ export const metadata: Metadata = {
 	title: 'Expense Management Application',
 	description: 'Expense Management Application',
 	themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
-	// themeColor: '#000000', // Set theme color for your PWA
 	generator: "Next.js",
 	manifest: "/manifest.json",
 	keywords: ["nextjs", "next14", "pwa", "next-pwa"],
-	authors: [
-		{
-			name: "imvinojanv",
-			url: "https://www.linkedin.com/in/imvinojanv/",
-		},
-	],
 	viewport:
 		"minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
 	icons: [
@@ -35,8 +31,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en-us">
-			<body className={`flex flex-col min-h-screen ${inter.className}`}>
-				{children}
+			<body className="mx-5">
+				<AppWrapper>
+					<RouterLoader />
+					<div className={`flex flex-col ${inter.className}`}>
+						{children}
+					</div>
+				</AppWrapper>
 			</body>
 		</html>
 	);

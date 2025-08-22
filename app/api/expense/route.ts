@@ -1,8 +1,8 @@
 
-import connectToDatabase from "@/lib/db";
-import { JSONObject } from "@/lib/definations";
-import Expense from "@/lib/schemas/Expense.schema";
-import * as Utils from "@/lib/utils";
+import connectToDatabase from "@/libs/db";
+import { JSONObject } from "@/libs/definations";
+import Expense from "@/libs/schemas/Expense.schema";
+import * as Utils from "@/utils";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 	return NextResponse.json(newTransaction, { status: 200 })
 }
 
-export async function PUT(request: NextRequest, { params }) {
+export async function PUT(request: NextRequest) {
 
 	const payload: JSONObject = await request.json();
 

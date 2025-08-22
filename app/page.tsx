@@ -1,15 +1,17 @@
 "use client";
 
-import Header from "./ui/layout/Header";
-import Footer from "./ui/layout/Footer";
-import AppWrapper from "./ui/AppWrapper";
-import { MainUiProvider } from "./contexts/MainUiContext";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+import AppWrapper from "../components/AppWrapper";
+import { MainUiProvider } from "../contexts/MainUiContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { CategoryProvider } from "./contexts/CategoryContext";
-import PushNotificationManager from "./pwa/PushNotificationManager";
-import InstallPrompt from "./pwa/InstallPrompt";
+import { CategoryProvider } from "../contexts/CategoryContext";
+import PushNotificationManager from "../pwa/PushNotificationManager";
+import InstallPrompt from "../pwa/InstallPrompt";
 import { useEffect, useState } from "react";
-import usePWAInstallPrompt from "./pwa/hook/PWAInstallPromptHook";
+import usePWAInstallPrompt from "../pwa/hook/PWAInstallPromptHook";
+import LoginForm from "@/components/auth/LoginForm";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Home() {
 	const [isOffline, setIsOffline] = useState<boolean>(false);
@@ -36,9 +38,10 @@ export default function Home() {
 
 	return (
 		<>
-		 {isOffline && <p>You are offline. Some features may not be available.</p>}
-
-			<div>
+			{/* {isOffline && <p>You are offline. Some features may not be available.</p>} */}
+			<LoginForm />
+			
+			{/* <div>
 				<PushNotificationManager />
 				<InstallPrompt />
 			</div>
@@ -55,7 +58,7 @@ export default function Home() {
 						</CategoryProvider>
 					</AuthProvider>
 				</MainUiProvider>
-			</main>
+			</main> */}
 		</>
 	)
 }

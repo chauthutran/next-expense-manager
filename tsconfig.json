@@ -32,7 +32,7 @@
     ],
     "paths": {
       "@/*": [
-        "./app/*"
+        "./*"
       ]
     }
   },
@@ -42,7 +42,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-],
+, "components", "contexts", "pwa"],
   "include_BK": [
     "next-env.d.ts",
     "**/*.ts",

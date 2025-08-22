@@ -1,30 +1,29 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/idb
+  C:\Program Files\nodejs\node.exe C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;c:\WORKS\SOFTWARES\apache-maven-3.8.6\bin;C:\Program Files\Git\cmd;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\Users\cthut\AppData\Local\Microsoft\WindowsApps;C:\Users\cthut\AppData\Local\GitHubDesktop\bin;C:\Users\cthut\AppData\Local\Programs\Microsoft VS Code\bin;C:\Windows\system32;C:\Users\cthut\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-15.0.1\bin;c:\Program Files\PostgreSQL\10\bin\;;C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\bin;;C:\Users\cthut\AppData\Roaming\npm
+  C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Java\jdk-24.0.1\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;c:\WORKS\SOFTWARES\apache-maven-3.8.6\bin;C:\Program Files\Git\cmd;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Users\cthut\AppData\Local\Programs\Python\Python310;C:\Users\cthut\AppData\Local\Android\Sdk\platform-tools;C:\Users\cthut\AppData\Local\Android\Sdk\tools;C:\Program Files\Docker\Docker\resources\bin;C:\Users\cthut\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\dotnet\;C:\Program Files\Java\jdk-24.0.1\bin;C:\Users\cthut\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\cthut\AppData\Local\Programs\Python\Python313\;C:\Users\cthut\AppData\Local\Programs\Python\Launcher\;C:\Users\cthut\AppData\Local\Microsoft\WindowsApps;C:\Users\cthut\AppData\Local\GitHubDesktop\bin;C:\Users\cthut\AppData\Local\Programs\Microsoft VS Code\bin;C:\Windows\system32;C:\Users\cthut\AppData\Local\Microsoft\WindowsApps;c:\Program Files\PostgreSQL\10\bin\;C:\Program Files\JetBrains\IntelliJ IDEA 2023.3.2\bin;;C:\Users\cthut\AppData\Roaming\npm;C:\Users\cthut\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\cthut\.dotnet\tools;C:\Program Files\Java\jdk-24.0.1\bin;C:\Python27\;C:\Python27\Scripts;;c:\Users\cthut\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand
 
 Yarn version: 
   1.22.15
 
 Node version: 
-  20.11.1
+  22.9.0
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fidb: Not found
-      at params.callback [as _callback] (C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66140:18)
-      at self.callback (C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140885:22)
-      at Request.emit (node:events:518:28)
-      at Request.<anonymous> (C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141857:10)
-      at Request.emit (node:events:518:28)
-      at IncomingMessage.<anonymous> (C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141779:12)
-      at Object.onceWrapper (node:events:632:28)
-      at IncomingMessage.emit (node:events:530:35)
-      at endReadableNT (node:internal/streams/readable:1696:12)
-      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+  Error: https://registry.npmjs.org/date-fns/-/date-fns-3.6.0.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Users\cthut\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141512:19)
+      at Object.onceWrapper (node:events:633:28)
+      at ClientRequest.emit (node:events:519:28)
+      at TLSSocket.emitRequestTimeout (node:_http_client:851:9)
+      at Object.onceWrapper (node:events:633:28)
+      at TLSSocket.emit (node:events:531:35)
+      at Socket._onTimeout (node:net:595:8)
+      at listOnTimeout (node:internal/timers:594:17)
+      at process.processTimers (node:internal/timers:529:7)
 
 npm manifest: 
   {
