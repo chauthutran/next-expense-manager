@@ -108,7 +108,7 @@ export default function ExpensePage() {
             </div>
             
             <Modal isVisible={showForm}>
-                <div className="bg-white flex flex-col rounded-2xl shadow-md space-y-4 max-w-xl mx-auto">
+                <div className="bg-white flex flex-col rounded-2xl space-y-4 w-full max-w-lg">
                     {/* Header */}
                     <div className="bg-slate-100 text-blue-700 font-semibold text-lg px-6 py-3 rounded-t-2xl border-b border-blue-100 flex items-center justify-between">
                         <div>
@@ -124,7 +124,7 @@ export default function ExpensePage() {
                     </div>
 
                     {/* Form */}
-                    <div className="p-6">
+                    <div className="px-5 pb-5">
                         <ExpenseForm onSaved={handleOnSaved} data={selectedExpense} />
                     </div>
                 </div>

@@ -265,7 +265,7 @@ export default function BudgetForm({
                 {/* Submit Button */}
                 <div className="text-right">
                     <Button
-                        title={data?.id ? 'Update Budget' : 'Create Budget'}
+                        title={data?.id ? 'Update' : 'Create'}
                         type="submit"
                     />
                 </div>

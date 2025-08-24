@@ -40,6 +40,13 @@ export const getContrastColor = (hexColor: string): string => {
 }
 
 // Combine class names conditionally
-export function cn(...classes: (string | undefined | false | null)[]) {
+export const cn = (...classes: (string | undefined | false | null)[]) => {
   return classes.filter(Boolean).join(" ");
+}
+
+export const cleanSvg = (svg: string) => {
+  return svg
+    .replace(/(width|height)="[^"]*"/g, '') // remove width/height
+    .replace(/<svg/, '<svg class="w-full h-full"') // enforce sizing
+    .replace(/class=/g, 'className=');
 }

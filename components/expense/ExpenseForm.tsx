@@ -130,128 +130,106 @@ export default function ExpenseForm({
                 />
             )}
 
-            <form className="overflow-x-auto" onSubmit={handleSubmit}>
-                <div className="flex items-center justify-center">
-                    <div className="flex-1 px-3 my-2 py-2 rounded border border-gray-300 max-w-xl">
-                        <div>
-                            <div className="mb-2">
-                                <label
-                                    className="block text-gray-700 mb-2"
-                                    htmlFor="amount"
-                                >
-                                    Amount{' '}
-                                    <span className="text-red-600 ml-1">*</span>
-                                </label>
-                                <input
-                                    type="number"
-                                    id="amount"
-                                    value={formData.amount}
-                                    onChange={(e) =>
-                                        handleChange('amount', Number(e.target.value))
-                                    }
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                />
-                                {messages.amount && (
-                                    <p className="text-sm italic text-red-500">
-                                        {messages.amount}
-                                    </p>
-                                )}
-                            </div>
+            <form
+                className="space-y-6 w-full mx-auto bg-white"
+                onSubmit={handleSubmit}
+            >
+                <div>
+                    <label
+                        className="block font-medium text-gray-700 mb-1"
+                        htmlFor="amount"
+                    >
+                        Amount <span className="text-red-600 ml-1">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        id="amount"
+                        value={formData.amount}
+                        onChange={(e) =>
+                            handleChange('amount', Number(e.target.value))
+                        }
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    {messages.amount && (
+                        <p className="text-sm italic text-red-500">
+                            {messages.amount}
+                        </p>
+                    )}
+                </div>
 
-                            <div className="mb-2">
-                                <label
-                                    className="block text-gray-700 mb-2"
-                                    htmlFor="category"
-                                >
-                                    Category{' '}
-                                    <span className="text-red-600 ml-1">*</span>
-                                </label>
-                                <select
-                                    id="category"
-                                    value={formData.category}
-                                    onChange={(e) =>
-                                        handleChange('category', e.target.value)
-                                    }
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                >
-                                    <option value="">[Please select]</option>
-                                    {getCategoriesFromMap(categoryMap).map(
-                                        (item) => (
-                                            <option
-                                                key={item.id}
-                                                value={item.id}
-                                            >
-                                                {item.name}
-                                            </option>
-                                        )
-                                    )}
-                                </select>
-                                {messages.category && (
-                                    <p className="text-sm italic text-red-500">
-                                        {messages.category}
-                                    </p>
-                                )}
-                            </div>
+                <div>
+                   <label
+                        className="block font-medium text-gray-700 mb-1"
+                        htmlFor="category"
+                    >
+                        Category <span className="text-red-600 ml-1">*</span>
+                    </label>
+                    <select
+                        id="category"
+                        value={formData.category}
+                        onChange={(e) =>
+                            handleChange('category', e.target.value)
+                        }
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                        <option value="">[Please select]</option>
+                        {getCategoriesFromMap(categoryMap).map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                    {messages.category && (
+                        <p className="text-sm italic text-red-500">
+                            {messages.category}
+                        </p>
+                    )}
+                </div>
 
-                            <div className="mb-2">
-                                <label
-                                    className="block text-gray-700 mb-2"
-                                    htmlFor="date"
-                                >
-                                    Date{' '}
-                                    <span className="text-red-600 ml-1">*</span>
-                                </label>
-                                <input
-                                    type="date"
-                                    id="date"
-                                    value={Utils.formatDateForInput(
-                                        formData.date
-                                    )}
-                                    onChange={(e) =>
-                                        handleChange('date', e.target.value)
-                                    }
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                />
+                <div>
+                    <label
+                        className="block font-medium text-gray-700 mb-1"
+                        htmlFor="date"
+                    >
+                        Date <span className="text-red-600 ml-1">*</span>
+                    </label>
+                    <input
+                        type="date"
+                        id="date"
+                        value={Utils.formatDateForInput(formData.date)}
+                        onChange={(e) => handleChange('date', e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
 
-                                {messages.date && (
-                                    <p className="text-sm italic text-red-500">
-                                        {messages.date}
-                                    </p>
-                                )}
-                            </div>
+                    {messages.date && (
+                        <p className="text-sm italic text-red-500">
+                            {messages.date}
+                        </p>
+                    )}
+                </div>
 
-                            <div className="mb-2">
-                                <label
-                                    className="block text-gray-700 mb-2"
-                                    htmlFor="description"
-                                >
-                                    Description
-                                </label>
-                                <textarea
-                                    id="description"
-                                    value={formData.description}
-                                    onChange={(e) =>
-                                        handleChange(
-                                            'description',
-                                            e.target.value
-                                        )
-                                    }
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                />
-                            </div>
+                <div>
+                   <label
+                        className="block font-medium text-gray-700 mb-1"
+                        htmlFor="description"
+                    >
+                        Description
+                    </label>
+                    <textarea
+                        id="description"
+                        value={formData.description}
+                        onChange={(e) =>
+                            handleChange('description', e.target.value)
+                        }
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
 
-                            <div className="grid grid-cols-2 gap-x-3">
-                                <Button
-                                    title={
-                                        data?.id
-                                            ? 'Update Expense'
-                                            : 'Create Expense'
-                                    }
-                                    type="submit"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                <div className='text-right'>
+                    <Button
+                        title={data?.id ? 'Update' : 'Create'}
+                        type="submit"
+                    />
                 </div>
             </form>
         </>

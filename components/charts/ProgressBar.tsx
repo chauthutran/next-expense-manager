@@ -1,4 +1,4 @@
-import { calculatePercent, formatCurrency } from '@/utils';
+import { calculatePercent, cleanSvg, formatCurrency } from '@/utils';
 
 export default function ProgressBar({
     value,
@@ -16,7 +16,7 @@ export default function ProgressBar({
     icon: string;
 }) {
     const percent = calculatePercent({ value, min, max }).toFixed(2);
-    const sanitizedIcon = icon.replace(/class=/g, 'className=');
+    const sanitizedIcon = cleanSvg(icon);
 
     return (
         <div className="w-full">

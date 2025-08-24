@@ -1,6 +1,6 @@
 import { useCategory } from '@/contexts/CategoryContext';
 import { IBudget } from '@/libs/definations';
-import { calculatePercent } from '@/utils';
+import { calculatePercent, cleanSvg } from '@/utils';
 import Button from '../basics/Button';
 
 export default function BudgetItem({
@@ -22,7 +22,7 @@ export default function BudgetItem({
     });
     const isOverBudget = percentage > 100;
     const cappedPercent = Math.min(percentage, 100); // stop overflow
-    const sanitizedIcon = category.icon.replace(/class=/g, 'className=');
+    const sanitizedIcon = cleanSvg(category.icon);
 
     return (
         <div
