@@ -4,7 +4,7 @@ import { ExpenseService } from '@/services/expenseService';
 import SearchForm from '../layout/SearchForm';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
-import { IExpense, IMessage, SearchFilters } from '@/libs/definations';
+import { IBudget, IExpense, IMessage, SearchFilters } from '@/libs/definations';
 import FloatButton from '../basics/FloatButton';
 import Modal from '../basics/Modal';
 import * as Constant from '@/libs/constants';
@@ -13,6 +13,7 @@ import { createMessage } from '@/utils';
 import LoadingIcon from '../basics/LoadingIcon';
 import ExpenseList from './ExpenseList';
 import ExpenseForm from './ExpenseForm';
+import { BudgetService } from '@/services/budgetService';
 
 export default function ExpensePage() {
     const { user } = useAuth();
@@ -27,6 +28,7 @@ export default function ExpensePage() {
     const fetchExpenses = async (_filters: SearchFilters) => {
         setLoading(true);
         const responseData = await ExpenseService.findExpenses(_filters);
+        // const responseData = await BudgetService.findBudgets(_filters);
         if (responseData.success) {
             setData(responseData.data);
         } else {

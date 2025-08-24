@@ -25,7 +25,6 @@ export default function ExpenseList({
 			</p>
 
 			{/* List */}
-			{/* <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 divide-y divide-gray-300"> */}
 			<div className="space-y-2">
 				{data.map((expense: IExpense) => (
 					<ExpenseItem

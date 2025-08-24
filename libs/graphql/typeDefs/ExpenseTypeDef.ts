@@ -10,6 +10,7 @@ export const expenseTypeDefs = gql`
         description: String
         user: String!
         category: String!
+        budgets: [Budget!]!   # reference the existing Budget type
     }
         
     type Query {

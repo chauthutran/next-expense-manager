@@ -76,26 +76,31 @@ export default function BudgetForm({
             setMessages(newErrors);
         } else {
             setMessages({});
-            try {
-                const response = await BudgetService.save(formData);
-                if (response.success) {
-                    setMessages({ savedSuccess: 'The budget is saved !' });
-                    onSaved(response.data);
-                } else {
-                    setMessages({ savedError: response.message });
-                }
-            } catch (ex) {
-                console.log(ex.message);
+
+            const response = await BudgetService.save(formData);
+            if (response.success) {
+                setMessages({ savedSuccess: 'The budget is saved !' });
+                onSaved(response.data);
+            } else {
+                setMessages({ savedError: response.message });
             }
         }
 
-        return;
+        return false;
     };
 
     const validateField = (fieldName: string, value: any) => {
-        const fieldSchema = budgetValidationSchema.extract(fieldName);
-        const { error } = fieldSchema.validate(value, { abortEarly: true });
-        return error ? error.details[0].message : null;
+        const schemaKeys = Object.keys(
+            (budgetValidationSchema as any).$_terms.keys ?? {}
+        );
+
+        if (schemaKeys.includes(fieldName)) {
+            const fieldSchema = budgetValidationSchema.extract(fieldName);
+            const { error } = fieldSchema.validate(value, { abortEarly: true });
+            return error ? error.details[0].message : null;
+        }
+
+        return null;
     };
 
     const handleChange = (name: string, value: string | Number) => {

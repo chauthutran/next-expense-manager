@@ -1,6 +1,8 @@
 import connectToDatabase from '@/libs/db';
-import { IExpense } from '@/libs/definations';
+import { IBudget, IExpense } from '@/libs/definations';
+import Budget from '@/libs/schemas/Budget.schema';
 import Expense from '@/libs/schemas/Expense.schema';
+import DataLoader from 'dataloader';
 
 export const expenseResolvers = {
     Query: {
@@ -43,6 +45,9 @@ export const expenseResolvers = {
             return await Expense.find(query);
         }
     },
+    Expense: {
+        budgets: async (parent: IExpense) => await budgetLoader.load(parent),
+    },
     Mutation: {
         createExpense: async (
             _: any,
@@ -66,3 +71,22 @@ export const expenseResolvers = {
         }
     }
 };
+
+const budgetLoader = new DataLoader(async (expenses: IExpense[]) => {
+    const results = await Budget.find({
+        $or: expenses.map(b => ({
+            user: b.user,
+            category: b.category,
+            startDate: { $lte: b.date },
+            endDate: { $gte: b.date }
+        }))
+    });
+    
+    return expenses.map(expense => 
+        results.filter(e => 
+            e.user.toString() === expense.user.toString() &&
+            e.category.toString() === expense.category.toString() &&
+            e.startDate <= expense.date && e.endDate >= expense.date
+        )
+    );
+});

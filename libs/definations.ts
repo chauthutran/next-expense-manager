@@ -58,4 +58,5 @@ export interface IExpense {
     description: string;
     user: string;
     category: string;
+    budgets: IBudget[];
 }

@@ -9,6 +9,11 @@ export const FIND_EXPENSE_BY_ID = gql`
             amount
             description
             date
+            budgets {
+                id
+                name
+                totalLimit
+            }
         }
     }
 `;
@@ -32,6 +37,11 @@ export const FIND_EXPENSES = gql`
             amount
             description
             date
+            budgets {
+                id
+                name
+                totalLimit
+            }
         }
     }
 `;

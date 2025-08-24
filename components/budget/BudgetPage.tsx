@@ -15,30 +15,31 @@ import { createMessage } from '@/utils';
 import LoadingIcon from '../basics/LoadingIcon';
 
 export default function BudgetPage() {
-    const { user } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
     const [message, setMessage] = useState<IMessage>(createMessage());
     const [data, setData] = useState<IBudget[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [selectedBudget, setSelectedBudget] = useState<IBudget | null>(null);
     const [filters, setFilters] = useState<SearchFilters | null>(null); // keep last filters
-    
+
     const fetchBudgets = async (_filters: SearchFilters) => {
         setLoading(true);
         const responseData = await BudgetService.findBudgets(_filters);
         if (responseData.success) {
             setData(responseData.data);
         } else {
-            setError(responseData.message!);
+            setMessage({
+                type: Constant.ALERT_TYPE_ERROR,
+                msg: responseData.message!
+            });
         }
         setLoading(false);
-    }
+    };
 
     const handleOnSearch = async (filters: SearchFilters) => {
-        setError('');
+        setMessage(createMessage());
         setFilters(filters);
-        
+
         await fetchBudgets(filters);
     };
 
@@ -50,7 +51,7 @@ export default function BudgetPage() {
         setSelectedBudget(item);
         setShowForm(true);
     };
-    
+
     const handleOnSaved = async () => {
         setShowForm(false);
         if (filters) {
@@ -75,7 +76,7 @@ export default function BudgetPage() {
             } else {
                 setMessage({
                     type: Constant.ALERT_TYPE_ERROR,
-                    msg: response.message!,
+                    msg: response.message!
                 });
             }
         }
@@ -83,7 +84,7 @@ export default function BudgetPage() {
 
     return (
         <>
-            {message.type!= "" && (
+            {message.type != '' && (
                 <Alert type={message.type} message={message.msg} />
             )}
 
@@ -104,7 +105,7 @@ export default function BudgetPage() {
                     itemOnDelete={(item) => handleOnDelete(item)}
                 />
             </div>
-            
+
             <Modal isVisible={showForm}>
                 <div className="bg-white flex flex-col rounded-2xl shadow-md space-y-4 max-w-xl mx-auto">
                     {/* Header */}
@@ -123,11 +124,13 @@ export default function BudgetPage() {
 
                     {/* Form */}
                     <div className="p-6">
-                        <BudgetForm onSaved={handleOnSaved} data={selectedBudget} />
+                        <BudgetForm
+                            onSaved={handleOnSaved}
+                            data={selectedBudget}
+                        />
                     </div>
                 </div>
             </Modal>
-
         </>
     );
 }
