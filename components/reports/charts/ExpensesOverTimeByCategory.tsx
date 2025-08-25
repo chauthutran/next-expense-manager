@@ -34,7 +34,7 @@ export default function ExpensesOverTimeByCategory({ data }: { data: JSONObject[
 
         data.forEach((item) => {
             const date = new Date(item.date);
-            const category = categoryMap[item.categoryId];
+            const category = categoryMap[item.category];
             const monthYearStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01T00:00:00.Z`; // Extract month-year
             const monthYearObj = parseISO(monthYearStr);
             const monthYearName = format(date, 'MMM yyyy');

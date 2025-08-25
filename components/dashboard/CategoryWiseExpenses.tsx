@@ -1,14 +1,12 @@
 import { useCategory } from "@/contexts/CategoryContext";
 import { groupExpenseByCategories } from "@/utils/expenseUtils";
-import ProgressBar from "../charts/ProgressBar";
-import * as Utils from '@/utils';
+import ProgressBar from "../reports/charts/ProgressBar";
 import { IExpense } from "@/libs/definations";
 
-export default function CategoryWiseExpenses({ year, expenses }: { year: number, expenses: IExpense[] }) {
+export default function CategoryWiseExpenses({ expenses }: { expenses: IExpense[] }) {
     const { categoryMap} = useCategory();
         
-    const filterExpenseListByYear = Utils.filterExpenseListByYear(year, expenses);
-    const transformedData = groupExpenseByCategories(filterExpenseListByYear, categoryMap);
+    const transformedData = groupExpenseByCategories(expenses, categoryMap);
     const totalAmount = transformedData.reduce((sum: number, { total }) =>  sum + total, 0);
 
     return (

@@ -3,12 +3,12 @@ import ExpenseItem from './ExpenseItem';
 
 export default function ExpenseList({
 	data,
-	itemOnShowEditForm,
-	itemOnDelete
+	itemOnShowEditForm = () => {},
+	itemOnDelete = () => {},
 }: {
 	data: IExpense[];
-	itemOnShowEditForm: (item: IExpense) => void;
-	itemOnDelete: (item: IExpense) => void;
+	itemOnShowEditForm?: (item: IExpense) => void;
+	itemOnDelete?: (item: IExpense) => void;
 }) {
 	if (data.length === 0) return <p>No expenses found.</p>;
 

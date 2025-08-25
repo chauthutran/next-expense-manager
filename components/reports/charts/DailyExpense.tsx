@@ -13,7 +13,7 @@ import { Calendar } from "nextjs-jc-component-libs/dist/components";
 import * as Utils from "@/utils";
 import { EventType } from "nextjs-jc-component-libs/dist/libs/definations";
 import { useEffect, useState } from "react";
-import Modal from "../basics/Modal";
+import Modal from "../../basics/Modal";
 
 
 export default function DailyExpense({startDate, data}: {startDate: Date, data: IExpense[]}) {

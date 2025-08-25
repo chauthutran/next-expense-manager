@@ -23,7 +23,7 @@ export const FIND_EXPENSES = gql`
         $user: ID!
         $startDate: Date
         $endDate: Date
-        $categories: [ID!]!
+        $categories: [ID!]
     ) {
         findExpenses(
             user: $user

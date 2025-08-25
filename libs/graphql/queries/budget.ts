@@ -22,7 +22,7 @@ export const FIND_BUDGET_BY_ID = gql`
 `;
 
 export const FIND_BUDGETS = gql`
-    query FindBudgets($user: ID!, $startDate: Date, $endDate: Date, $categories: [ID!]!) {
+    query FindBudgets($user: ID!, $startDate: Date, $endDate: Date, $categories: [ID!]) {
         findBudgets(user: $user, startDate: $startDate, endDate: $endDate, categories: $categories) {
             id
             name

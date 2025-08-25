@@ -1,5 +1,5 @@
-import CategoryLegend from '@/components/charts/CategoryLegend';
-import DistributionByCatergories from '@/components/charts/DistributionByCatergories';
+import CategoryLegend from '@/components/reports/charts/CategoryLegend';
+import DistributionByCatergories from '@/components/reports/charts/DistributionByCatergories';
 import { IExpense } from '@/libs/definations';
 
 export default function ExpenseDistribution({
