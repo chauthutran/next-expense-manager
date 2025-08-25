@@ -49,7 +49,7 @@ export default function ReportsPage() {
                     </div>
 
                     {/* Charts Section */}
-                    <div className="bg-white shadow rounded-lg">
+                    <div className="bg-white rounded-lg">
                             <h2 className="text-lg font-semibold mb-4">
                                 Charts
                             </h2>
