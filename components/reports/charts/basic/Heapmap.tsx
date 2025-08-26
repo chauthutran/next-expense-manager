@@ -1,54 +1,15 @@
 import React from 'react';
-import { IExpense, JSONObject } from '@/libs/definations';
-import { format, parseISO } from 'date-fns';
+import { JSONObject } from '@/libs/definations';
 import { useCategory } from '@/contexts/CategoryContext';
 import { formatCurrency } from '@/utils';
 
 /**
  * Convert raw transactions to category x month data for heatmap
  */
-const transformForHeatmap = (data: IExpense[], categoryMap: JSONObject) => {
-    const result: Record<string, JSONObject> = {}; // monthYearStr -> category -> amount
-    const monthSet = new Set<string>();
-    const categorySet = new Set<string>();
 
-    data.forEach((tx) => {
-        const date = parseISO(tx.date);
-        const monthName = format(date, 'MMM yyyy'); // e.g. "Jan 2024"
-        monthSet.add(monthName);
-
-        const category = categoryMap[tx.category]?.name || tx.category;
-        categorySet.add(category);
-
-        if (!result[monthName]) result[monthName] = {};
-        if (!result[monthName][category]) result[monthName][category] = 0;
-
-        result[monthName][category] += tx.amount;
-    });
-
-    const months = Array.from(monthSet).sort(
-        (a, b) => new Date(`1 ${a}`).getTime() - new Date(`1 ${b}`).getTime()
-    );
-
-    const categories = Array.from(categorySet);
-
-    // Convert to heatmapData: category rows with month columns
-    const heatmapData: JSONObject[] = categories.map((cat) => {
-        const row: JSONObject = { category: cat };
-        months.forEach((month) => {
-            row[month] = result[month]?.[cat] || 0;
-        });
-        return row;
-    });
-
-    return { months, categories, heatmapData };
-};
-export default function Heatmap({ data }: { data: IExpense[] }) {
+export default function Heatmap({ data }: { data: JSONObject }) {
     const { categoryMap } = useCategory();
-    const { months, categories, heatmapData } = transformForHeatmap(
-        data,
-        categoryMap
-    );
+    const { months, categories, heatmapData } = data;
 
     // Find max value to scale colors
     const allValues = heatmapData.flatMap((row) =>

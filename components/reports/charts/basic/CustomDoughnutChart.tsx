@@ -1,24 +1,24 @@
-import { useCategory } from '@/contexts/CategoryContext';
-import { IExpense } from '@/libs/definations';
-import { groupExpenseByCategories } from '@/utils';
-import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { JSONObject } from '@/libs/definations';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
-export default function CustomDoughnutChart({ data }: { data: IExpense[] }) {
-    const { categoryMap } = useCategory();
-    const transformedData = groupExpenseByCategories(data, categoryMap);
-    
+export default function CustomDoughnutChart({ data }: { data: JSONObject[] }) {
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <PieChart width={400} height={400}>
+            <PieChart>
                <Pie
-                    dataKey="value"
-                    data={transformedData}
-                    cx={500}
-                    cy={200}
+                    dataKey="total"
+                    data={data}
+                    cx="50%"
+                    cy="50%"
                     innerRadius={40}
                     outerRadius={80}
                     fill="#82ca9d"
-                />
+                    label
+                >
+                    {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                </Pie>
                 <Tooltip />
             </PieChart>
         </ResponsiveContainer>

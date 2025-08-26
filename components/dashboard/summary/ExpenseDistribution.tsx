@@ -1,5 +1,5 @@
 import CategoryLegend from '@/components/reports/charts/CategoryLegend';
-import DistributionByCatergories from '@/components/reports/charts/DistributionByCatergories';
+import CategoryWiseExpenses from '@/components/reports/charts/CategoryWiseExpenses';
 import { IExpense } from '@/libs/definations';
 
 export default function ExpenseDistribution({
@@ -17,11 +17,8 @@ export default function ExpenseDistribution({
                 <div className="italic text-sm text-gray-500 px-2">
                     In year {year}
                 </div>
-                <DistributionByCatergories
+                <CategoryWiseExpenses
                     data={dataList}
-                    showLabels={false}
-                    width={200}
-                    heigh={200}
                 />
             </div>
             <div className="grid-cols-2 gap-1 text-xs space-y-1 justify-between mt-4">

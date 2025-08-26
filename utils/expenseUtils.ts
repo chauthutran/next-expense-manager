@@ -8,24 +8,6 @@ export const sortArrayByDate  = (list: IExpense[]): IExpense[] => {
       });
 };
 
-export const groupExpenseByCategories = (expenseList: IExpense[] | null, categoryMap: JSONObject | null) => {
-    if( !expenseList || !categoryMap ) {
-        return [];
-    }
-    
-    return expenseList.reduce((acc: JSONObject[], expense: IExpense) => {
-            const { category: categoryId, amount } = expense;
-            const category = categoryMap[categoryId];
-            const existingCategory = acc.find(item => item.categoryName === category.name);
-            if (existingCategory) {
-                existingCategory.total += amount;
-            } else {
-                acc.push({ categoryName: category.name, total: amount, color: category.color, icon: category.icon });
-            }
-            return acc;
-        }, []) as JSONObject[];
-}
-
 export const filterExpenseListByYear = (year: number, expenseList: IExpense[] | null) => (expenseList ?? []).reduce(
     (acc, curItem: IExpense) => {
         const { date } = curItem;

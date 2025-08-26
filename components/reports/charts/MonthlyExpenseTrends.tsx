@@ -5,120 +5,155 @@
 import { useCategory } from '@/contexts/CategoryContext';
 import { IExpense, JSONObject } from '@/libs/definations';
 import React from 'react';
-import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    AreaChart,
-    Area,
-    ResponsiveContainer,
-    LabelList
-} from 'recharts';
-import * as Utils from '@/utils';
-import CategoryLegend from './CategoryLegend';
 import { format, parseISO } from 'date-fns';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
-import CustomBarChart from './basic/CustomBarChart';
+import CustomStackBarChart from './basic/CustomStackBarChart';
 import CustomLineChart from './basic/CustomLineChart';
 import Heatmap from './basic/Heapmap';
+import { getCategoriesFromMap } from '@/utils/categoryUtil';
 
-// Custom render function for labels
-const renderCustomLabel = (props) => {
-    const { x, y, width, value } = props;
-    return (
-        <text
-            x={x + width / 2}
-            y={y - 10}
-            fill="#f44566" // Set your desired color
-            textAnchor="middle"
-            dominantBaseline="bottom"
-            fontSize="12px" // Set your desired font size
-            fontWeight="bold" // Set font weight
-        >
-            {value}
-        </text>
+const transformBarChartData = (
+    data: IExpense[],
+    categoryMap: JSONObject
+): JSONObject[] => {
+    const result = {};
+
+    data.forEach((item) => {
+        const date = new Date(item.date);
+        const category = categoryMap[item.category];
+        const monthYearStr = `${date.getFullYear()}-${String(
+            date.getMonth() + 1
+        ).padStart(2, '0')}-01T00:00:00.Z`; // Extract month-year
+        const monthYearObj = parseISO(monthYearStr);
+        const monthYearName = format(date, 'MMM yyyy');
+
+        // If the month-year doesn't exist in the result, initialize it
+        if (!result[monthYearStr]) {
+            result[monthYearStr] = {
+                monthYearStr,
+                time: monthYearObj,
+                name: monthYearName
+            };
+        }
+
+        // Accumulate totals by categoryId
+        if (result[monthYearStr][category.name]) {
+            result[monthYearStr][category.name] += item.amount;
+        } else {
+            result[monthYearStr][category.name] = item.amount;
+        }
+    });
+
+    // Compute the total value for each bar
+    const categoryList = getCategoriesFromMap(categoryMap);
+    const list = Object.values(result).map((entry: JSONObject) => {
+        return {
+            ...entry,
+            total: categoryList!.reduce(
+                (sum, category) => sum + (entry[category.name] || 0),
+                0
+            )
+        };
+    });
+
+    return list.sort(
+        (a: JSONObject, b: JSONObject) => a.time.getTime() - b.time.getTime()
     );
+};
+
+const transformLineChartData = (data: IExpense[]): JSONObject[] => {
+    const result: Record<string, JSONObject> = {};
+
+    data.forEach((item) => {
+        const date = new Date(item.date);
+        const monthYearStr = `${date.getFullYear()}-${String(
+            date.getMonth() + 1
+        ).padStart(2, '0')}-01T00:00:00.000Z`;
+
+        const monthYearObj = parseISO(monthYearStr);
+        const monthYearName = format(date, 'MMM yyyy');
+
+        if (!result[monthYearStr]) {
+            result[monthYearStr] = {
+                time: monthYearObj, // keep actual date for sorting
+                name: monthYearName,
+                value: 0
+            };
+        }
+
+        // accumulate totals
+        result[monthYearStr].value += item.amount;
+    });
+
+    // Convert object → array
+    const list = Object.values(result);
+
+    // Sort by actual date
+    return list.sort(
+        (a: JSONObject, b: JSONObject) => a.time.getTime() - b.time.getTime()
+    );
+};
+
+const transformHeatmapData = (data: IExpense[], categoryMap: JSONObject) => {
+    const result: Record<string, JSONObject> = {}; // monthYearStr -> category -> amount
+    const monthSet = new Set<string>();
+    const categorySet = new Set<string>();
+
+    data.forEach((tx) => {
+        const date = parseISO(tx.date);
+        const monthName = format(date, 'MMM yyyy'); // e.g. "Jan 2024"
+        monthSet.add(monthName);
+
+        const category = categoryMap[tx.category]?.name || tx.category;
+        categorySet.add(category);
+
+        if (!result[monthName]) result[monthName] = {};
+        if (!result[monthName][category]) result[monthName][category] = 0;
+
+        result[monthName][category] += tx.amount;
+    });
+
+    const months = Array.from(monthSet).sort(
+        (a, b) => new Date(`1 ${a}`).getTime() - new Date(`1 ${b}`).getTime()
+    );
+
+    const categories = Array.from(categorySet);
+
+    // Convert to heatmapData: category rows with month columns
+    const heatmapData: JSONObject[] = categories.map((cat) => {
+        const row: JSONObject = { category: cat };
+        months.forEach((month) => {
+            row[month] = result[month]?.[cat] || 0;
+        });
+        return row;
+    });
+
+    return { months, categories, heatmapData };
 };
 
 export default function MonthlyExpenseTrend({
     data,
-    config,
-    showLabels = true
+    chartType
 }: {
     data: IExpense[];
-    showLabels?: boolean;
-    config: JSONObject;
+    chartType: string;
 }) {
-    const [chartType, setChartType] = React.useState<
-        'bar' | 'line' | 'heatmap'
-    >('bar');
+    const { categoryMap } = useCategory();
 
-    return (
-        <div>
-            <div
-                className={`grid grid-cols-1 ${
-                    showLabels && 'md:grid-cols-2 lg:grid-cols-2'
-                } gap-x-3 mb-4`}
-            >
-                <h2 className="text-lg font-semibold mb-4">{config.name}</h2>
-                <div className="flex space-x-3 item-center justify-end">
-                    <div
-                        className={`cursor-pointer rounded-lg border py-2 px-3 ${
-                            chartType === 'bar' && 'bg-blue-200'
-                        }`}
-                        onClick={() => setChartType('bar')}
-                    >
-                        Bar
-                    </div>
-                    <div
-                        className={`cursor-pointer rounded-lg border py-2 px-3 ${
-                            chartType === 'line' && 'bg-blue-200'
-                        }`}
-                        onClick={() => setChartType('line')}
-                    >
-                        Line
-                    </div>
-                    <div
-                        className={`cursor-pointer rounded-lg border py-2 px-3 ${
-                            chartType === 'heatmap' && 'bg-blue-200'
-                        }`}
-                        onClick={() => setChartType('heatmap')}
-                    >
-                        Heatmap
-                    </div>
-                </div>
-            </div>
+    return ( 
+        <>
+            {chartType === 'bar' && (
+                <CustomStackBarChart
+                    data={transformBarChartData(data, categoryMap)}
+                />
+            )}
 
-            <div
-                className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${
-                    showLabels ? '' : 'md:grid-cols-1'
-                }`}
-            >
-                <div
-                    className={`${
-                        chartType === 'heatmap'
-                            ? 'col-span-3' // single column
-                            : showLabels
-                            ? 'md:col-span-2' // default for other charts
-                            : 'md:col-span-1'
-                    }`}
-                >
-                    {chartType === 'bar' && <CustomBarChart data={data} />}
-                    {chartType === 'line' && <CustomLineChart data={data} />}
-                    {chartType === 'heatmap' && <Heatmap data={data} />}
-                </div>
+            {chartType === 'line' && (
+                <CustomLineChart data={transformLineChartData(data)} />
+            )}
 
-                {/* Category List - Place in the second column */}
-                {showLabels && chartType !== 'heatmap' && (
-                    <div className="md:col-span-1">
-                        <CategoryLegend />
-                    </div>
-                )}
-            </div>
-        </div>
+            {chartType === 'heatmap' && (
+                <Heatmap data={transformHeatmapData(data, categoryMap)} />
+            )}
+        </>
     );
 }

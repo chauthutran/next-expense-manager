@@ -7,19 +7,21 @@ import { JSONObject } from '@/libs/definations';
 import React from 'react';
 import {
     BarChart,
+    Bar,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer,
-    Cell,
-    Bar
+    ResponsiveContainer
 } from 'recharts';
+import { format, parseISO } from 'date-fns';
 import { getCategoriesFromMap } from '@/utils/categoryUtil';
 
-export default function CustomBarChart({ data }: { data: JSONObject[] }) {
+export default function CustomStackBarChart({ data }: { data: JSONObject[] }) {
     const { categoryMap } = useCategory();
-    
+
+    const categoryList = getCategoriesFromMap(categoryMap);
+    console.log('================= BarChart data:', data);
     return (
         <ResponsiveContainer width="100%" height={400}>
             <BarChart
@@ -41,11 +43,15 @@ export default function CustomBarChart({ data }: { data: JSONObject[] }) {
                 />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="total">
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                </Bar>
+
+                {categoryList.map((category: JSONObject) => (
+                    <Bar
+                        key={category.name}
+                        dataKey={category.name}
+                        stackId="a"
+                        fill={category.color}
+                    ></Bar>
+                ))}
             </BarChart>
         </ResponsiveContainer>
     );

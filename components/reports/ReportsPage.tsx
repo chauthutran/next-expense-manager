@@ -1,39 +1,60 @@
 import { useState } from 'react';
 import ReportDetails from './ReportDetails';
 import ReportSummaryCards from './ReportSummaryCards';
-import { IExpense, IMessage, SearchFilters } from '@/libs/definations';
+import { IBudget, IExpense, IMessage, SearchFilters } from '@/libs/definations';
 import { createMessage } from '@/utils';
 import { ExpenseService } from '@/services/expenseService';
 import * as Constant from '@/libs/constants';
 import SearchForm from '../layout/SearchForm';
 import ReportChart from './ReportChart';
+import { BudgetService } from '@/services/budgetService';
 
 export default function ReportsPage() {
-    const [filters, setFilters] = useState<SearchFilters | null>(null); // keep last filters
     const [message, setMessage] = useState<IMessage>(createMessage());
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<IExpense[] | null>(null);
+    const [expenses, setExpenses] = useState<IExpense[]>([]);
+    const [budgets, setBudgets] = useState<IBudget[]>([]);
 
-    const fetchExpenses = async (_filters: SearchFilters) => {
+    const fetchData = async (_filters: SearchFilters) => {
         setLoading(true);
+        try {
+            // Fetch in parallel
+            const [expenseRes, budgetRes] = await Promise.all([
+                ExpenseService.findExpenses(_filters),
+                BudgetService.findBudgets(_filters)
+            ]);
 
-        const responseData = await ExpenseService.findExpenses(_filters);
-        if (responseData.success) {
-            setData(responseData.data);
-        } else {
+            if (expenseRes.success) {
+                setExpenses(expenseRes.data);
+            } else {
+                setMessage({
+                    type: Constant.ALERT_TYPE_ERROR,
+                    msg: expenseRes.message!
+                });
+            }
+
+            if (budgetRes.success) {
+                setBudgets(budgetRes.data);
+            } else {
+                setMessage({
+                    type: Constant.ALERT_TYPE_ERROR,
+                    msg: budgetRes.message!
+                });
+            }
+        } catch (error) {
             setMessage({
                 type: Constant.ALERT_TYPE_ERROR,
-                msg: responseData.message!
+                msg: 'Something went wrong while fetching data.'
             });
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const handleOnSearch = async (filters: SearchFilters) => {
         setMessage(createMessage());
-        setFilters(filters);
 
-        await fetchExpenses(filters);
+        await fetchData(filters);
     };
 
     return (
@@ -42,24 +63,22 @@ export default function ReportsPage() {
             <SearchForm onSearch={handleOnSearch} />
 
             {/* Summary Cards */}
-            {data && (
+            {expenses && budgets && (
                 <>
                     <div className="">
-                        <ReportSummaryCards data={data} />
+                        <ReportSummaryCards data={expenses} />
                     </div>
 
                     {/* Charts Section */}
                     <div className="bg-white rounded-lg">
-                            <h2 className="text-lg font-semibold mb-4">
-                                Charts
-                            </h2>
+                        <h2 className="text-lg font-semibold mb-4">Charts</h2>
                         <div>
-                            <ReportChart data={data} />
+                            <ReportChart expenses={expenses} budgets={budgets} />
                         </div>
                     </div>
 
                     {/* 📋 Detailed Table */}
-                    <ReportDetails data={data} />
+                    <ReportDetails data={expenses} />
                 </>
             )}
         </div>
