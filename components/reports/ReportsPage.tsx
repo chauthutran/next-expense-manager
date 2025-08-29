@@ -66,7 +66,7 @@ export default function ReportsPage() {
             {expenses && budgets && (
                 <>
                     <div className="">
-                        <ReportSummaryCards data={expenses} />
+                        <ReportSummaryCards expenses={expenses} budgets={budgets} />
                     </div>
 
                     {/* Charts Section */}
