@@ -1,5 +1,5 @@
 import { IExpense, JSONObject } from '@/libs/definations';
-import * as Utils from '@/utils';
+import * as Utils from '@/libs/utils';
 import UserSummary from './summary/UserSummary';
 import HighestCategory from './summary/HighestCategory';
 import ExpenseDistribution from './summary/ExpenseDistribution';

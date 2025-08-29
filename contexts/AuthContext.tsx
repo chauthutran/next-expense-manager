@@ -2,7 +2,7 @@
 
 import { IUser } from '@/libs/definations';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import * as Utils from "@/utils";
+import * as Utils from "@/libs/utils";
 import { LOGIN, REGISTER_USER } from '@/libs/graphql/queries/user';
 import { print } from 'graphql';
 import { UserService } from '@/services/userService';

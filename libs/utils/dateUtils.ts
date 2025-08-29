@@ -158,3 +158,13 @@ export const formatDateForInput = (isoDate?: string) => {
     const day = String(d.getDate()).padStart(2, '0');
     return `${d.getFullYear()}-${month}-${day}`;
 };
+
+export const resolveDateRangeForSearch = (startDate?: string, endDate?: string) => {
+    const start = startDate
+        ? startDate.substring(0, 10) + 'T00:00:00.000+00:00'
+        : null;
+    const end = endDate
+        ? endDate.substring(0, 10) + 'T23:59:59.000+00:00'
+        : null;
+    return { startDate: start, endDate: end };
+};

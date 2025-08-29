@@ -3,61 +3,43 @@
 // Use Case: Helps users track changes in their spending over time, identify trends, and plan future budgets.
 
 import { useCategory } from '@/contexts/CategoryContext';
-import { IExpense, JSONObject } from '@/libs/definations';
+import { IExpense, IViewChartOption, JSONObject } from '@/libs/definations';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
-import CustomStackBarChart from './basic/CustomStackBarChart';
-import CustomLineChart from './basic/CustomLineChart';
-import Heatmap from './basic/Heapmap';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
+import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
+import CustomStackBarChart from '../basic/CustomStackBarChart';
+import CustomBarChart from '../basic/CustomBarChart';
+import CustomLineChart from '../basic/CustomLineChart';
+import Heatmap from '../basic/Heapmap';
 
 const transformBarChartData = (
     data: IExpense[],
     categoryMap: JSONObject
 ): JSONObject[] => {
-    const result = {};
+    const grouped: Record<string, any> = {};
 
-    data.forEach((item) => {
-        const date = new Date(item.date);
-        const category = categoryMap[item.category];
-        const monthYearStr = `${date.getFullYear()}-${String(
-            date.getMonth() + 1
-        ).padStart(2, '0')}-01T00:00:00.Z`; // Extract month-year
-        const monthYearObj = parseISO(monthYearStr);
-        const monthYearName = format(date, 'MMM yyyy');
+    data.forEach((exp) => {
+        const date = new Date(exp.date);
+        const category = categoryMap[exp.category];
+        const monthKey = `${date.getFullYear()}-${date.getMonth() + 1}`; // e.g. "2024-1"
+        const timeLabel = date.toLocaleString('en-US', {
+            month: 'short',
+            year: 'numeric'
+        }); // e.g. "Jan 2024"
 
-        // If the month-year doesn't exist in the result, initialize it
-        if (!result[monthYearStr]) {
-            result[monthYearStr] = {
-                monthYearStr,
-                time: monthYearObj,
-                name: monthYearName
-            };
+        if (!grouped[monthKey]) {
+            grouped[monthKey] = { total: 0, name: timeLabel };
         }
 
-        // Accumulate totals by categoryId
-        if (result[monthYearStr][category.name]) {
-            result[monthYearStr][category.name] += item.amount;
-        } else {
-            result[monthYearStr][category.name] = item.amount;
-        }
+        // Add category amount
+        grouped[monthKey][category.name] =
+            (grouped[monthKey][category.name] || 0) + exp.amount;
+
+        // Add to total
+        grouped[monthKey].total += exp.amount;
     });
 
-    // Compute the total value for each bar
-    const categoryList = getCategoriesFromMap(categoryMap);
-    const list = Object.values(result).map((entry: JSONObject) => {
-        return {
-            ...entry,
-            total: categoryList!.reduce(
-                (sum, category) => sum + (entry[category.name] || 0),
-                0
-            )
-        };
-    });
-
-    return list.sort(
-        (a: JSONObject, b: JSONObject) => a.time.getTime() - b.time.getTime()
-    );
+    return Object.values(grouped);
 };
 
 const transformLineChartData = (data: IExpense[]): JSONObject[] => {
@@ -132,26 +114,35 @@ const transformHeatmapData = (data: IExpense[], categoryMap: JSONObject) => {
 
 export default function MonthlyExpenseTrend({
     data,
-    chartType
+    viewOptions
 }: {
     data: IExpense[];
-    chartType: string;
+    viewOptions: IViewChartOption;
 }) {
     const { categoryMap } = useCategory();
+  
+    if (!viewOptions || !data) return null;
 
-    return ( 
+    return (
         <>
-            {chartType === 'bar' && (
+            {viewOptions.type === 'bar' && viewOptions.viewMode === 'total' && (
                 <CustomStackBarChart
                     data={transformBarChartData(data, categoryMap)}
                 />
             )}
+            {viewOptions.type === 'bar' &&
+                viewOptions.viewMode === 'category' && (
+                    <CustomBarChart
+                        data={transformBarChartData(data, categoryMap)}
+                        dataKeys={getCategoriesFromMap(categoryMap)}
+                    />
+                )}
 
-            {chartType === 'line' && (
+            {viewOptions.type === 'line' && (
                 <CustomLineChart data={transformLineChartData(data)} />
             )}
 
-            {chartType === 'heatmap' && (
+            {viewOptions.type === 'heatmap' && (
                 <Heatmap data={transformHeatmapData(data, categoryMap)} />
             )}
         </>

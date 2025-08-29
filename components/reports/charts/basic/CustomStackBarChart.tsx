@@ -15,13 +15,14 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import { format, parseISO } from 'date-fns';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
+import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
+import { formatCurrency } from '@/libs/utils';
 
 export default function CustomStackBarChart({ data }: { data: JSONObject[] }) {
     const { categoryMap } = useCategory();
 
     const categoryList = getCategoriesFromMap(categoryMap);
-    console.log('================= BarChart data:', data);
+
     return (
         <ResponsiveContainer width="100%" height={400}>
             <BarChart
@@ -41,7 +42,10 @@ export default function CustomStackBarChart({ data }: { data: JSONObject[] }) {
                     textAnchor="end"
                     tick={{ fontSize: 12 }}
                 />
-                <YAxis />
+                <YAxis
+                    tickFormatter={(value: number) => formatCurrency(value)}
+                    tick={{ fontSize: 12 }}
+                />
                 <Tooltip />
 
                 {categoryList.map((category: JSONObject) => (

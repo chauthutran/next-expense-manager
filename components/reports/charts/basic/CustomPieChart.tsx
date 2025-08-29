@@ -3,6 +3,7 @@
 // Use Case: Helps users identify which categories consume the largest portion of their budget.
 
 import { JSONObject } from '@/libs/definations';
+import { formatCurrency } from '@/libs/utils';
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
@@ -20,13 +21,21 @@ export default function CustomPieChart({
                     dataKey="total"
                     cx="50%"
                     cy="50%"
-                    label
+                    label={({ name, total }) =>
+                        `${formatCurrency(total)}`
+                    }
                 >
                     {data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                 </Pie>
-                <Tooltip />
+               
+                <Tooltip
+                    formatter={(value: number, name: string) => [
+                        formatCurrency(value),
+                        name
+                    ]}
+                />
             </PieChart>
         </ResponsiveContainer>
     );

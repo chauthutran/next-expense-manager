@@ -1,7 +1,7 @@
 'use client';
 
 import { useCategory } from '@/contexts/CategoryContext';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
+import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
 
 export default function CategoryLegend() {
     const { categoryMap } = useCategory();

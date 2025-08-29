@@ -1,6 +1,6 @@
 import { useCategory } from '@/contexts/CategoryContext';
 import { JSONObject } from '@/libs/definations';
-import * as Utils from '@/utils';
+import * as Utils from '@/libs/utils';
 import { FiTrendingUp } from 'react-icons/fi';
 
 export default function HighestCategory({

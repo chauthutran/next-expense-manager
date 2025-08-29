@@ -15,11 +15,16 @@ import {
     Cell,
     Bar
 } from 'recharts';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
+import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
+import { capitalizeFirstLetter, formatCurrency } from '@/libs/utils';
 
-export default function CustomBarChart({ data }: { data: JSONObject[] }) {
-    const { categoryMap } = useCategory();
-    
+export default function CustomBarChart({
+    data,
+    dataKeys
+}: {
+    data: JSONObject[];
+    dataKeys: JSONObject[];
+}) {
     return (
         <ResponsiveContainer width="100%" height={400}>
             <BarChart
@@ -39,13 +44,28 @@ export default function CustomBarChart({ data }: { data: JSONObject[] }) {
                     textAnchor="end"
                     tick={{ fontSize: 12 }}
                 />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="total">
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                </Bar>
+                <YAxis
+                    tickFormatter={(value: number) => formatCurrency(value)}
+                    tick={{ fontSize: 12 }}
+                />
+                
+                {dataKeys.map((keyValue, index) => (
+                    <Bar dataKey={keyValue.name} key={keyValue.name}>
+                        {data.map((entry, index) => (
+                            <Cell
+                                key={`cell-${index}`}
+                                fill={entry.color || keyValue.color}
+                            />
+                        ))}
+                    </Bar>
+                ))}
+
+                <Tooltip
+                    formatter={(value: number, name: string) => [
+                        formatCurrency(value),
+                        capitalizeFirstLetter(name)
+                    ]}
+                />
             </BarChart>
         </ResponsiveContainer>
     );

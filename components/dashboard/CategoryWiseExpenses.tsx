@@ -1,9 +1,7 @@
 import { useCategory } from "@/contexts/CategoryContext";
-import { groupExpenseByCategories } from "@/utils/expenseUtils";
-import ProgressBar from "../reports/charts/ProgressBar";
-import { IExpense } from "@/libs/definations";
+import { IExpense, IViewChartOption } from "@/libs/definations";
 
-export default function CategoryWiseExpenses({ expenses }: { expenses: IExpense[] }) {
+export default function CategoryWiseExpenses({ expenses }: { expenses: IExpense[]}) {
     const { categoryMap} = useCategory();
         
     // const transformedData = groupExpenseByCategories(expenses, categoryMap);

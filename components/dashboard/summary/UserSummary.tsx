@@ -1,6 +1,6 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { JSONObject } from '@/libs/definations';
-import { formatCurrency, formatDisplayDateObj } from '@/utils';
+import { formatCurrency, formatDisplayDateObj } from '@/libs/utils';
 import Image from 'next/image';
 
 export default function UserSummary({

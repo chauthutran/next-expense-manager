@@ -8,9 +8,9 @@ import React, {
     useEffect
 } from 'react';
 import { ICategory, JSONObject } from '@/libs/definations';
-import * as Utils from '@/utils';
+import * as Utils from '@/libs/utils';
 import * as Constant from '@/libs/constants';;
-import { mapCategoriesById } from '@/utils/categoryUtil';
+import { mapCategoriesById } from '@/libs/utils/categoryUtil';
 import { CategoryService } from '@/services/categoryService';
 
 // categoryMap : { <category-id-1>: <category data>, ...}

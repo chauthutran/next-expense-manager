@@ -1,7 +1,9 @@
+import { convertDateStrToObj } from './../../utils/dateUtils';
 import connectToDatabase from '@/libs/db';
 import { IBudget, IExpense } from '@/libs/definations';
 import Budget from '@/libs/schemas/Budget.schema';
 import Expense from '@/libs/schemas/Expense.schema';
+import { isValidDate, resolveDateRangeForSearch } from '@/libs/utils';
 import DataLoader from 'dataloader';
 
 export const expenseResolvers = {
@@ -19,20 +21,19 @@ export const expenseResolvers = {
                 categories
             }: {
                 user: string;
-                startDate?: string;
-                endDate?: string;
+                startDate?: Date;
+                endDate?: Date;
                 categories?: string[];
             }
         ): Promise<IExpense[]> => {
-            const start = startDate ? new Date(startDate) : null;
-            const end = endDate ? new Date(endDate) : null;
+            const { startDate: start, endDate: end } = resolveDateRangeForSearch(startDate?.toISOString(), endDate?.toISOString());
 
             // Build dynamic query
             const query: any = { user };
             
             const dateFilter: any = {};
-            if (start && !isNaN(start.getTime())) dateFilter.$gte = start;
-            if (end && !isNaN(end.getTime())) dateFilter.$lte = end;
+            if (start && isValidDate(start)) dateFilter.$gte = convertDateStrToObj(start);
+            if (end && isValidDate(end)) dateFilter.$lte = convertDateStrToObj(end);
             if (Object.keys(dateFilter).length > 0) {
                 query.date = dateFilter;
             }
@@ -42,7 +43,7 @@ export const expenseResolvers = {
             }
             
             await connectToDatabase();
-            return await Expense.find(query);
+            return await Expense.find(query).sort({ date: 1 });
         }
     },
     Expense: {

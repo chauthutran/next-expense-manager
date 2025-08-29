@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ReportDetails from './ReportDetails';
 import ReportSummaryCards from './ReportSummaryCards';
 import { IBudget, IExpense, IMessage, SearchFilters } from '@/libs/definations';
-import { createMessage } from '@/utils';
+import { createMessage } from '@/libs/utils';
 import { ExpenseService } from '@/services/expenseService';
 import * as Constant from '@/libs/constants';
 import SearchForm from '../layout/SearchForm';

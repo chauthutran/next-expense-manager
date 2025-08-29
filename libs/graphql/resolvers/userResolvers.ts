@@ -1,7 +1,7 @@
 import connectToDatabase from '@/libs/db';
 import { JSONObject } from '@/libs/definations';
 import User from '@/libs/schemas/User.schema';
-import * as Encrypt from '@/utils/encryptPassword';
+import * as Encrypt from '@/libs/utils/encryptPassword';
 
 export const userResolvers = {
     Query: {

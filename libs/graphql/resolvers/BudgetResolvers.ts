@@ -1,9 +1,10 @@
 import connectToDatabase from '@/libs/db';
 import { dateScalar } from '../typeDefs/scalar/Date';
 import Budget from '@/libs/schemas/Budget.schema';
-import { IBudget } from '@/libs/definations';
+import { IBudget, IDbBudget } from '@/libs/definations';
 import Expense from '@/libs/schemas/Expense.schema';
 import DataLoader from 'dataloader';
+import { isValidDate, resolveDateRangeForSearch } from '@/libs/utils';
 
 export const budgetResolvers = {
     Date: dateScalar,
@@ -21,33 +22,32 @@ export const budgetResolvers = {
                 categories
             }: {
                 user: string;
-                startDate?: string;
-                endDate?: string;
+                startDate?: Date;
+                endDate?: Date;
                 categories?: string[];
             }
         ) => {
-            const start = startDate ? new Date(startDate) : null;
-            const end = endDate ? new Date(endDate) : null;
+            const dateRange = resolveDateRangeForSearch(startDate?.toISOString(), endDate?.toISOString());
 
             // Build dynamic query
             const query: any = { user };
-            if (start && !isNaN(start.getTime())) {
-                query.startDate = { $gte: start };
+            if (dateRange.startDate && isValidDate(dateRange.startDate)) {
+                query.startDate = { $gte: dateRange.startDate };
             }
-            if (end && !isNaN(end.getTime())) {
-                query.endDate = { $lte: end };
+            if (dateRange.endDate && isValidDate(dateRange.endDate)) {
+                query.endDate = { $lte: dateRange.endDate };
             }
             if (categories && categories.length > 0) {
                 query.category = { $in: categories };
             }
-            
+
             await connectToDatabase();
-            return await Budget.find(query);
+            return await Budget.find(query).sort({ startDate: 1 });;
         }
     },
     Budget: {
-        expenses: async (parent: IBudget) => await expenseLoader.load(parent),
-        totalExpenses: async (parent: IBudget) => {
+        expenses: async (parent: IDbBudget) => await expenseLoader.load(parent),
+        totalExpenses: async (parent: IDbBudget) => {
             const expenses = await expenseLoader.load(parent);
             return expenses.reduce((sum, e) => sum + e.amount, 0);
         }
@@ -70,20 +70,26 @@ export const budgetResolvers = {
     }
 };
 
-const expenseLoader = new DataLoader(async (budgets: IBudget[]) => {
+const expenseLoader = new DataLoader(async (budgets: IDbBudget[]) => {
     const results = await Expense.find({
-        $or: budgets.map(b => ({
-            user: b.user,
-            category: b.category,
-            date: { $gte: b.startDate, $lte: b.endDate }
-        }))
-    });
+        $or: budgets.map((b) => {
+            const dateRange = resolveDateRangeForSearch(b.startDate.toISOString(), b.endDate.toISOString());
+            return ({
+                user: b.user,
+                category: b.category,
+                date: { $gte: dateRange.startDate, $lte: dateRange.endDate }
+            })
+        }
+    )
+    }).sort({ date: 1 });
 
-    return budgets.map(budget => 
-        results.filter(e => 
-            e.user.toString() === budget.user.toString() &&
-            e.category.toString() === budget.category.toString() &&
-            e.date >= budget.startDate && e.date <= budget.endDate
+    return budgets.map((budget) =>
+        results.filter(
+            (e) =>
+                e.user.toString() === budget.user.toString() &&
+                e.category.toString() === budget.category.toString() &&
+                e.date >= budget.startDate &&
+                e.date <= budget.endDate
         )
     );
 });

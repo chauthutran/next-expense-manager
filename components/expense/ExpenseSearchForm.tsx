@@ -5,7 +5,7 @@ import { ICategory, SearchFilters } from '@/libs/definations';
 import { useState } from 'react';
 import CategoryItem from '../category/CategoryItem';
 import { useAuth } from '@/contexts/AuthContext';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
+import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
 
 
 interface Props {

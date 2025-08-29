@@ -11,7 +11,7 @@ import FloatButton from '../basics/FloatButton';
 import Modal from '../basics/Modal';
 import * as Constant from '@/libs/constants';
 import Alert from '../basics/Alert';
-import { createMessage } from '@/utils';
+import { createMessage } from '@/libs/utils';
 import LoadingIcon from '../basics/LoadingIcon';
 
 export default function BudgetPage() {

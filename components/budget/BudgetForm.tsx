@@ -6,9 +6,9 @@ import Joi from 'joi';
 import { useState } from 'react';
 import Alert from '../basics/Alert';
 import * as Constant from '@/libs/constants';
-import { getCategoriesFromMap } from '@/utils/categoryUtil';
+import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
 import Button from '../basics/Button';
-import { formatDateForInput } from '@/utils';
+import { formatDateForInput } from '@/libs/utils';
 
 const budgetValidationSchema = Joi.object({
     name: Joi.string().empty('').required().messages({

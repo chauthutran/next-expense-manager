@@ -8,7 +8,7 @@ import * as Constant from '@/libs/constants';
 import { useEffect, useState } from 'react';
 import { IExpense, IMessage, SearchFilters } from '@/libs/definations';
 import { ExpenseService } from '@/services/expenseService';
-import { createMessage } from '@/utils';
+import { createMessage } from '@/libs/utils';
 import { useCategory } from '@/contexts/CategoryContext';
 
 const DEMO_YEAR = 2024;

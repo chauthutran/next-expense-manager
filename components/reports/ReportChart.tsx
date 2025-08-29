@@ -1,12 +1,18 @@
-import { IBudget, IExpense, JSONObject } from '@/libs/definations';
-import MonthlyExpenseTrend from './charts/MonthlyExpenseTrends';
-import DataVisualizations from './charts/DataVisualizations';
+import {
+    IBudget,
+    IExpense,
+    IViewChartOption,
+    JSONObject
+} from '@/libs/definations';
+import DataVisualizations from './charts/basic/DataVisualizations';
 import { useState } from 'react';
-import CategoryWiseExpenses from './charts/CategoryWiseExpenses';
-import CategoryLegend from './charts/CategoryLegend';
-import ChartTypes from './charts/basic/ChartTypes';
-import Budget from '@/app/pages/budget/page';
-import BudgetVSExpense from './charts/BudgetVSExense';
+import ChartViewOptionsForm from './charts/basic/ViewChartOptionsForm';
+import BudgetVSExpense from './charts/features/BudgetVSExense';
+import ChartLegend from './charts/basic/ChartLegend';
+import CumulativeExpenses from './charts/features/CumulativeExpenses';
+import MonthlyExpenseTrend from './charts/features/MonthlyExpenseTrends';
+import CategoryWiseExpenses from './charts/features/CategoryWiseExpenses';
+import { TopExpenses } from './charts/features/TopExpenses';
 
 export default function ReportChart({
     expenses,
@@ -18,11 +24,15 @@ export default function ReportChart({
     showLabels?: boolean;
 }) {
     const [dataVisualization, setDataVisualization] = useState<JSONObject>({});
-    const [selectedChartType, setSelectedChartType] = useState('');
+    const [selectedViewOptions, setSelectedViewOptions] =
+        useState<IViewChartOption>({} as IViewChartOption);
 
     const handleOnSetDataVisualization = (dataVisualization: JSONObject) => {
         setDataVisualization(dataVisualization);
-        setSelectedChartType(dataVisualization.types[0]);
+        setSelectedViewOptions({
+            type: dataVisualization.viewOptions[0].type,
+            viewMode: dataVisualization.viewOptions[0].viewModes?.[0] ?? ''
+        });
     };
 
     return (
@@ -37,7 +47,7 @@ export default function ReportChart({
             </div>
 
             {/* Right side - Chart Content */}
-            {dataVisualization.types && (
+            {dataVisualization.viewOptions && (
                 <div className="lg:col-span-4">
                     <div
                         className={`bg-white rounded-2xl border p-6 h-full items-start justify-between`}
@@ -51,16 +61,16 @@ export default function ReportChart({
                                 {dataVisualization.name}
                             </h2>
                             <div className="flex space-x-3 item-center justify-end">
-                                <ChartTypes
-                                    types={dataVisualization.types}
-                                    selected={selectedChartType}
-                                    onItemClick={(type) =>
-                                        setSelectedChartType(type)
+                                <ChartViewOptionsForm
+                                    config={dataVisualization}
+                                    selected={selectedViewOptions}
+                                    onItemClick={(options) =>
+                                        setSelectedViewOptions(options)
                                     }
                                 />
                             </div>
                         </div>
-                        
+
                         {/* Chart Area */}
                         <div
                             className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${
@@ -69,7 +79,7 @@ export default function ReportChart({
                         >
                             <div
                                 className={`${
-                                    selectedChartType === 'heatmap'
+                                    selectedViewOptions.type === 'heatmap'
                                         ? 'col-span-3' // single column
                                         : showLabels
                                         ? 'md:col-span-2' // default for other charts
@@ -80,7 +90,7 @@ export default function ReportChart({
                                     'MONTHLY_SPENDING_OVERVIEW' && (
                                     <MonthlyExpenseTrend
                                         data={expenses}
-                                        chartType={selectedChartType}
+                                        viewOptions={selectedViewOptions}
                                     />
                                 )}
 
@@ -88,24 +98,41 @@ export default function ReportChart({
                                     'CATEGORY_WISE_EXPENSES' && (
                                     <CategoryWiseExpenses
                                         data={expenses}
-                                        chartType={selectedChartType}
+                                        viewOptions={selectedViewOptions}
                                     />
                                 )}
 
                                 {dataVisualization.id ===
-                                    'BUDGET_VS_ACTUAL_SPENDING' && (
+                                    'BUDGET_VS_ACTUAL' && (
                                     <BudgetVSExpense
                                         data={budgets}
-                                        chartType={selectedChartType}
+                                        viewOptions={selectedViewOptions}
+                                    />
+                                )}
+
+                                {dataVisualization.id ===
+                                    'CUMULATIVE_EXPENSES' && (
+                                    <CumulativeExpenses
+                                        data={budgets} 
+                                        viewOptions={selectedViewOptions}
+                                    />
+                                )}
+
+                                {dataVisualization.id ===
+                                    'TOP_EXPENSES' && (
+                                    <TopExpenses
+                                        data={expenses} 
+                                        viewOptions={selectedViewOptions}
                                     />
                                 )}
                             </div>
 
                             {/* Category List - Place in the second column */}
-                            {showLabels && selectedChartType !== 'heatmap' && (
-                                <div className="md:col-span-1">
-                                    <CategoryLegend />
-                                </div>
+                            {showLabels && (
+                                <ChartLegend
+                                    dataVisualization={dataVisualization}
+                                    viewOptions={selectedViewOptions}
+                                />
                             )}
                         </div>
                     </div>

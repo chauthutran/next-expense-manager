@@ -1,7 +1,7 @@
 import React from 'react';
 import { JSONObject } from '@/libs/definations';
 import { useCategory } from '@/contexts/CategoryContext';
-import { formatCurrency } from '@/utils';
+import { formatCurrency } from '@/libs/utils';
 
 /**
  * Convert raw transactions to category x month data for heatmap

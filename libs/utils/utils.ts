@@ -50,3 +50,7 @@ export const cleanSvg = (svg: string) => {
     .replace(/<svg/, '<svg class="w-full h-full"') // enforce sizing
     .replace(/class=/g, 'className=');
 }
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

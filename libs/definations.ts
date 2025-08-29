@@ -38,6 +38,19 @@ export interface ICategory extends Document {
 }
 
 
+export interface IDbBudget {
+    id?: string;
+    name: string;
+    user: string;         // string ID
+    startDate: Date;    // ISO string
+    endDate: Date;      // ISO string
+    totalLimit: number;
+    description?: string;
+    category: string;     // string ID
+    expenses: IExpense[];
+    totalExpenses?: number;
+}
+
 export interface IBudget {
     id?: string;
     name: string;
@@ -59,4 +72,9 @@ export interface IExpense {
     user: string;
     category: string;
     budgets: IBudget[];
+}
+
+export interface IViewChartOption {
+    type: string,
+    viewMode?: string
 }

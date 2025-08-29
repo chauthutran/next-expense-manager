@@ -1,6 +1,6 @@
 import { useCategory } from '@/contexts/CategoryContext';
 import { IBudget } from '@/libs/definations';
-import { calculatePercent, cleanSvg } from '@/utils';
+import { calculatePercent, cleanSvg } from '@/libs/utils';
 import Button from '../basics/Button';
 
 export default function BudgetItem({

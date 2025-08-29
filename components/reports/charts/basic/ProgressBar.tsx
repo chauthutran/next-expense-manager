@@ -1,4 +1,4 @@
-import { calculatePercent, cleanSvg, formatCurrency } from '@/utils';
+import { calculatePercent, cleanSvg, formatCurrency } from '@/libs/utils';
 
 export default function ProgressBar({
     value,
