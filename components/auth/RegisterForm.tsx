@@ -5,11 +5,10 @@
 import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { IoKeyOutline } from 'react-icons/io5';
-import * as Constant from '@/libs/constants';
-import { useMainUi } from '@/contexts/MainUiContext';
 import { useAuth } from '@/contexts/AuthContext';
 import Joi from 'joi';
 import { IUser, JSONObject } from '@/libs/definations';
+import { useRouter } from 'next/navigation';
 
 const registerSchema = Joi.object({
     email: Joi.string()
@@ -40,7 +39,7 @@ const registerSchema = Joi.object({
 });
 
 export default function RegisterForm() {
-    const { setMainPage } = useMainUi();
+	const router = useRouter();
     const { loading, error, user, register } = useAuth();
 
     const [email, setEmail] = useState('');
@@ -51,7 +50,9 @@ export default function RegisterForm() {
 
     useEffect(() => {
         if (user != null) {
-            setMainPage(Constant.PAGE_EXPENSE);
+            if (user != null) {
+			router.push("/pages/dashboard");
+        }
         }
     }, [user]);
 

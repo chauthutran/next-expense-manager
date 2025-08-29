@@ -1,17 +1,13 @@
 /** Form component for setting or updating the user's expense */
 
 'use client';
-import { ICategory, IExpense, IMessage, JSONObject } from '@/libs/definations';
-import React, { useEffect, useState } from 'react';
+import { IExpense, JSONObject } from '@/libs/definations';
+import React, { useState } from 'react';
 import * as Utils from '@/libs/utils';
-import DateField from '../basics/DateField';
 import Alert from '../basics/Alert';
 import * as Constant from '@/libs/constants';
-import { useMainUi } from '@/contexts/MainUiContext';
 import { useCategory } from '@/contexts/CategoryContext';
-import { IoIosArrowForward } from 'react-icons/io';
-import { AiFillHome } from 'react-icons/ai';
-import Joi, { date } from 'joi';
+import Joi from 'joi';
 import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
 import { ExpenseService } from '@/services/expenseService';
 import { useAuth } from '@/contexts/AuthContext';

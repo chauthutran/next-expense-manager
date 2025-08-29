@@ -1,8 +1,4 @@
 import { BsStars, BsThreeDots } from 'react-icons/bs';
-import { useMainUi } from '@/contexts/MainUiContext';
-import * as Constant from '@/libs/constants';
-import { useAuth } from '@/contexts/AuthContext';
-import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import NavMenu from './NavMenu';
 

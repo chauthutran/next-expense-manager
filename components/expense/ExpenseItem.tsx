@@ -8,57 +8,45 @@ import Button from '../basics/Button';
 export default function ExpenseItem({
     data,
     itemOnShowEditForm,
-    itemOnDelete,
+    itemOnDelete
 }: {
     data: IExpense;
     itemOnShowEditForm: (item: IExpense) => void;
     itemOnDelete: (item: IExpense) => void;
 }) {
-    // const { setSubPage } = useMainUi();
     const { categoryMap } = useCategory();
 
     const category = categoryMap[data.category];
-
-    // const setSelectedExpense = () => {
-    //     AppStore.setSelected(data);
-    //     setSubPage(Constant.SUB_UI_EDIT_FORM);
-    // };
-
-    // const handleOnDelete = () => {
-    //     const ok = confirm(
-    //         `Are you sure you want to delete this expense ${data.description} ?`
-    //     );
-    //     if (ok) {
-    //         // deleteExpense(data.id!);
-    //     }
-    // };
 
     const dateStr = Utils.formatDisplayDateObj(
         Utils.convertDateStrToObj(data.date)
     );
 
     return (
-        <div
-            className="flex flex-col sm:flex-row sm:items-center p-4 border-b border-gray-100 rounded-lg shadow-sm hover:bg-gray-100 bg-white cursor-pointer gap-2 sm:gap-4"
-        
-                // style={{color: category?.color}}
-            >
+        <div className="flex flex-col sm:flex-row sm:items-center p-4 border-b border-gray-100 rounded-lg shadow-sm hover:bg-gray-100 bg-white cursor-pointer gap-2 sm:gap-4">
             <div className="text-sm font-semibold text-gray-500 w-20">
                 {dateStr}
             </div>
-            
+
             <div className="flex flex-1 space-x-2 font-medium text-gray-500">
-                 <div
+                <div
                     className="w-4 h-4"
                     dangerouslySetInnerHTML={{ __html: category.icon }}
                 />
                 <div>{data.description || category?.name}</div>
             </div>
-            
+
             <div className="flex flex-1 space-x-2 font-medium">
-                {data.budgets.map((budget: IBudget) => `${Utils.formatCurrency(budget.totalLimit)} for budget ${budget.name}`).join(', ')} 
+                {data.budgets
+                    .map(
+                        (budget: IBudget) =>
+                            `${Utils.formatCurrency(
+                                budget.totalLimit
+                            )} for budget ${budget.name}`
+                    )
+                    .join(', ')}
             </div>
-            
+
             <div className="flex flex-1 text-gray-700 font-bold">
                 {Utils.formatCurrency(data.amount)}
             </div>
