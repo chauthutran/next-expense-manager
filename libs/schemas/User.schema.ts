@@ -1,18 +1,19 @@
-"use server";
+'use server';
 
-import mongoose, { Schema } from "mongoose";
-import { IUser } from "../definations";
-
+import mongoose, { Schema } from 'mongoose';
+import { IUser } from '../definations';
 
 const UserSchema = new Schema<IUser>(
-	{
-		email: { type: String, required: true, unique: true },
-		password: { type: String, required: true }
-	},
-	{
-		timestamps: true,
-	}
-)
+    {
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        resetPasswordToken: { type: String },
+        resetPasswordExpires: { type: Date }
+    },
+    {
+        timestamps: true
+    }
+);
 const User = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
 
 export default User;

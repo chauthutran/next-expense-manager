@@ -6,26 +6,26 @@ import {
     FIND_BUDGETS,
     UPDATE_BUDGET
 } from '@/libs/graphql/queries/budget';
-import { sendRequest } from './requestService';
+import { sendGraphQLRequest } from './requestService';
 
 export const BudgetService = {
     findBudgetId: async (id: string): Promise<ResponseData> => {
-        return sendRequest(FIND_BUDGET_BY_ID, { id }, 'findBudgetById');
+        return sendGraphQLRequest(FIND_BUDGET_BY_ID, { id }, 'findBudgetById');
     },
     findBudgets: async (filters: SearchFilters): Promise<ResponseData> => {
-        return sendRequest(FIND_BUDGETS, filters, 'findBudgets');
+        return sendGraphQLRequest(FIND_BUDGETS, filters, 'findBudgets');
     },
     save: async (data: IBudget): Promise<ResponseData> => {
         // Create new budget
         if (!data.id || data.id === '') {
-            return sendRequest(CREATE_BUDGET, data, 'createBudget');
+            return sendGraphQLRequest(CREATE_BUDGET, data, 'createBudget');
         }
 
         // Update existing budget
-        return sendRequest(UPDATE_BUDGET, data, 'updateBudget');
+        return sendGraphQLRequest(UPDATE_BUDGET, data, 'updateBudget');
     },
     delete: async (id: string): Promise<ResponseData> => {
-        return sendRequest(DELETE_BUDGET, { id }, 'deleteBudget');
+        return sendGraphQLRequest(DELETE_BUDGET, { id }, 'deleteBudget');
     },
     createEmptyBudget: (userId: string): IBudget => {
         return {

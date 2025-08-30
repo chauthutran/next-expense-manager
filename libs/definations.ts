@@ -27,6 +27,8 @@ export type IMessage = {type: string, msg: string};
 export interface IUser extends Document {
     email: string;
     password: string;
+    resetPasswordToken: string;
+    resetPasswordExpires: Date;
 }
 
 export interface ICategory extends Document {

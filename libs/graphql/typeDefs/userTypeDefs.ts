@@ -17,6 +17,9 @@ export const userTypeDefs = gql`
             oldPassword: String!
             newPassword: String!
         ): User!
+        requestToResetPassword(
+            email: String!
+        ): Boolean
         deleteUser(id: ID!): Boolean!
     }
 `;

@@ -6,7 +6,9 @@ import ReportsPage from '@/components/reports/ReportsPage';
 export default function Reports() {
     return (
         <ProtectedRoute>
-            <ReportsPage />
+            <div className="mx-5">
+                <ReportsPage />
+            </div>
         </ProtectedRoute>
     );
 }

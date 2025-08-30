@@ -1,7 +1,9 @@
+import crypto from 'crypto';
 import connectToDatabase from '@/libs/db';
 import { JSONObject } from '@/libs/definations';
 import User from '@/libs/schemas/User.schema';
 import * as Encrypt from '@/libs/utils/encryptPassword';
+import nodemailer from 'nodemailer';
 
 export const userResolvers = {
     Query: {
@@ -75,10 +77,66 @@ export const userResolvers = {
 
             return user;
         },
+        requestToResetPassword: async (
+            _: any,
+            { email }: { email: string }
+        ) => {
+            // STEP 1: Create "Reset password token"
+            const { resetPasswordToken, resetPasswordExpires } =
+                createResetPasswordToken();
+
+            // STEP 2. Check if email 'to' is existing
+            const updatedUser = await User.findOneAndUpdate(
+                { email },
+                {
+                    resetPasswordToken,
+                    resetPasswordExpires
+                },
+                { new: true }
+            );
+
+            if (updatedUser) {
+                // STEP 3. Send email
+                const subject = "[Expense Management Application] Request to reset password";
+                const text = `Please click on this link http://localhost:3000/pages/reset-password?token=${resetPasswordToken} to reset your password. \n Please don't reply this email.`
+                    
+                await sendEmail({ to: email, subject, text });
+                return true;
+            }
+            return false;
+        },
         deleteUser: async (_: any, { id }: { id: string }) => {
             await connectToDatabase();
             const deleted = await User.findByIdAndDelete(id);
             return !!deleted; // true if deleted, false if not found
         }
     }
+};
+
+const createResetPasswordToken = (): JSONObject => {
+    const token = crypto.randomBytes(32).toString('hex');
+
+    return {
+        resetPasswordToken: token,
+        resetPasswordExpires: Date.now() + 3600000 // 1 hour,
+    };
+};
+
+const sendEmail = async ({ to, subject, text }: {to: string, subject: string, text: string}) => {
+    // Setup transporter (use your SMTP service, e.g., Gmail, Outlook, SendGrid, etc.)
+    const transporter = nodemailer.createTransport({
+        service: 'gmail', // or use "smtp.yourprovider.com"
+        auth: {
+            user: process.env.EMAIL_USER, // your email
+            pass: process.env.EMAIL_PASS // app password
+        }
+    });
+
+    // Send email
+    await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject,
+        text
+    });
 };

@@ -1,10 +1,12 @@
-import DashboardPage from "@/components/dashboard/DashboardPage";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import DashboardPage from '@/components/dashboard/DashboardPage';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function Dashboard() {
     return (
         <ProtectedRoute>
-            <DashboardPage />
+            <div className="mx-5">
+                <DashboardPage />
+            </div>
         </ProtectedRoute>
-    )
+    );
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import usePWAInstallPrompt from "../pwa/hook/PWAInstallPromptHook";
-import LoginForm from "@/components/auth/LoginForm";
+import LoginPage from "@/components/auth/login/LoginPage";
 
 export default function Home() {
 	const [isOffline, setIsOffline] = useState<boolean>(false);
@@ -30,7 +30,7 @@ export default function Home() {
 	return (
 		<>
 			{/* {isOffline && <p>You are offline. Some features may not be available.</p>} */}
-			<LoginForm />
+			<LoginPage />
 			
 			{/* <div>
 				<PushNotificationManager />

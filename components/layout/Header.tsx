@@ -1,4 +1,4 @@
-import { BsStars, BsThreeDots } from 'react-icons/bs';
+import { BsStars, BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 import { usePathname } from 'next/navigation';
 import NavMenu from './NavMenu';
 
@@ -8,17 +8,17 @@ export default function Header({
     handleOpenSlideBar: () => void;
 }) {
     const pathname = usePathname();
-    const isLoginPage = pathname === '/';
+    const hideMenus = ['/', '/pages/register', '/pages/forgot-password'].includes(pathname);
 
     return (
         <header className={`py-4`}>
             <div className="flex justify-between items-center flex-col">
                 <div className="flex flex-row">
-                    {!isLoginPage && <button
-                        className="flex lg:hidden md:hidden"
+                    {!hideMenus && <button
+                        className="flex lg:hidden md:hidden px-4"
                         onClick={handleOpenSlideBar}
                     >
-                        <BsThreeDots />
+                        <BsThreeDotsVertical />
                     </button>}
 
                     <div
@@ -38,7 +38,7 @@ export default function Header({
                     </div>
                 </div>
 
-                {!isLoginPage && (
+                {!hideMenus && (
                     <nav className='hidden lg:flex md:flex'>
                         <NavMenu direction="horizontal" />
                     </nav>

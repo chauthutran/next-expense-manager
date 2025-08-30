@@ -6,7 +6,9 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 export default function TableList() {
     return (
         <ProtectedRoute>
-            <ExpensePage />
+            <div className="mx-5">
+                <ExpensePage />
+            </div>
         </ProtectedRoute>
     );
 }

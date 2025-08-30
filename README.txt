@@ -1,3 +1,27 @@
+Architecture Diagram
+                        ┌────────────────────┐
+                        │   Next.js Frontend │
+                        │ (Pages + API Routes│
+                        └─────────┬──────────┘
+                                  │
+                    fetch("/api/expenses", ...)
+                                  │
+                  ┌───────────────▼──────────────┐
+                  │       API Gateway (REST/GraphQL) │
+                  └───────┬─────────┬────────────┘
+                          │         │
+        ┌─────────────────▼─┐     ┌─▼─────────────────┐
+        │ User Service      │     │ Expense Service    │
+        │ (Auth, Profile)   │     │ (Expenses CRUD)    │
+        └───────────┬───────┘     └──────────┬────────┘
+                    │                        │
+        ┌───────────▼───────┐     ┌──────────▼────────┐
+        │ Budget Service    │     │ Report Service     │
+        │ (Limits, Alerts)  │     │ (Analytics, Charts)│
+        └───────────────────┘     └────────────────────┘
+        
+*************************************************************************************
+
 🔹 Core Features (MVP)
 
 Expense Tracking

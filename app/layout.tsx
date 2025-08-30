@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en-us">
-			<body className="mx-5">
+			<body>
 				<AppWrapper>
 					<RouterLoader />
 					<div className={`flex flex-col ${inter.className}`}>

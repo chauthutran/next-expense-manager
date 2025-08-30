@@ -40,3 +40,9 @@ export const DELETE_USER = gql`
         deleteUser(id: $id)
     }
 `;
+
+export const REQUEST_TO_RESET_PASSWORD = gql`
+    mutation RequestToResetPassword($email: String!) {
+        requestToResetPassword(email: $email)
+    }
+`;

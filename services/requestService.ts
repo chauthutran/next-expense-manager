@@ -1,15 +1,15 @@
-import { ResponseData } from "@/libs/definations";
-import { print } from "graphql";
+import { ResponseData } from '@/libs/definations';
+import { print } from 'graphql';
 
-const API_BASE = '../api/graphql';
+const GRAPHQL_API_BASE = `../api/graphql`;
 
-export const sendRequest = async (
+export const sendGraphQLRequest = async (
     query: any,
     variables: Record<string, any> = {},
     dataWrapperName
 ): Promise<ResponseData> => {
     try {
-        const response = await fetch(API_BASE, {
+        const response = await fetch(GRAPHQL_API_BASE, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -40,8 +40,7 @@ export const sendRequest = async (
         }
 
         return { success: true, data: result.data[dataWrapperName] };
-    }
-    catch(ex) {
+    } catch (ex) {
         return { success: false, message: ex.message };
     }
 };

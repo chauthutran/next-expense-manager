@@ -1,22 +1,23 @@
 import { ResponseData } from '@/libs/definations';
-import { sendRequest } from './requestService';
+import { sendGraphQLRequest } from './requestService';
 import {
     CHANGE_PASSWORD,
     DELETE_USER,
     LOGIN,
-    REGISTER_USER
+    REGISTER_USER,
+    REQUEST_TO_RESET_PASSWORD
 } from '@/libs/graphql/queries/user';
 
 export const UserService = {
     login: async (email: string, password: string): Promise<ResponseData> => {
-        return sendRequest(LOGIN, { email, password }, 'login');
+        return sendGraphQLRequest(LOGIN, { email, password }, 'login');
     },
     changePassword: async (
         id: string,
         oldPassword: string,
         newPassword: string
     ): Promise<ResponseData> => {
-        return sendRequest(
+        return sendGraphQLRequest(
             CHANGE_PASSWORD,
             { id, oldPassword, newPassword },
             'changePassword'
@@ -26,9 +27,14 @@ export const UserService = {
         email: string,
         password: string
     ): Promise<ResponseData> => {
-        return sendRequest(REGISTER_USER, { email, password }, 'createUser');
+        return sendGraphQLRequest(REGISTER_USER, { email, password }, 'createUser');
+    },
+    requestToResetPassword: async (
+        email: string
+    ): Promise<ResponseData> => {
+        return sendGraphQLRequest(REQUEST_TO_RESET_PASSWORD, { email }, 'requestToResetPassword');
     },
     deleteUser: async (id: string) => {
-        return sendRequest(DELETE_USER, { id }, 'deleteUser');
+        return sendGraphQLRequest(DELETE_USER, { id }, 'deleteUser');
     }
 };
