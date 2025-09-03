@@ -1,7 +1,8 @@
 import * as Constant from "@/libs/constants";
+import { IMessage } from "@/libs/definations";
 import { useState } from "react";
 
-export default function Alert({type = "", message=""}) {
+export default function Alert({type = "", message=""}: {type: string, message: string}) {
 
     const [visible, setVisible] = useState(true);
 

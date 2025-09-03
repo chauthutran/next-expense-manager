@@ -6,7 +6,7 @@ const GRAPHQL_API_BASE = `../api/graphql`;
 export const sendGraphQLRequest = async (
     query: any,
     variables: Record<string, any> = {},
-    dataWrapperName
+    dataWrapperName: string,
 ): Promise<ResponseData> => {
     try {
         const response = await fetch(GRAPHQL_API_BASE, {
@@ -40,7 +40,7 @@ export const sendGraphQLRequest = async (
         }
 
         return { success: true, data: result.data[dataWrapperName] };
-    } catch (ex) {
+    } catch (ex: any) {
         return { success: false, message: ex.message };
     }
 };

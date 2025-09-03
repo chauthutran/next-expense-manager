@@ -1,4 +1,12 @@
-export default function FloatButton({title, className, onClick}: {title: string, className?: string, onClick: () => void}) {
+export default function FloatButton({
+    title,
+    className,
+    onClick
+}: {
+    title: string;
+    className?: string;
+    onClick: () => void;
+}) {
     return (
         <button
             onClick={onClick} // your click handler

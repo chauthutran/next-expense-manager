@@ -9,7 +9,7 @@ import { isValidDate, resolveDateRangeForSearch } from '@/libs/utils';
 export const budgetResolvers = {
     Date: dateScalar,
     Query: {
-        findBudgetById: async (_: any, { id }) => {
+        findBudgetById: async (_: any, { id }: { id: string }) => {
             await connectToDatabase();
             return await Budget.findById(id);
         },
@@ -27,7 +27,10 @@ export const budgetResolvers = {
                 categories?: string[];
             }
         ) => {
-            const dateRange = resolveDateRangeForSearch(startDate?.toISOString(), endDate?.toISOString());
+            const dateRange = resolveDateRangeForSearch(
+                startDate?.toISOString(),
+                endDate?.toISOString()
+            );
 
             // Build dynamic query
             const query: any = { user };
@@ -42,7 +45,7 @@ export const budgetResolvers = {
             }
 
             await connectToDatabase();
-            return await Budget.find(query).sort({ startDate: 1 });;
+            return await Budget.find(query).sort({ startDate: 1 });
         }
     },
     Budget: {
@@ -53,16 +56,19 @@ export const budgetResolvers = {
         }
     },
     Mutation: {
-        createBudget: async (_, args) => {
+        createBudget: async (_: unknown, args: IBudget) => {
             await connectToDatabase();
             const budget = new Budget(args);
             return await budget.save();
         },
-        updateBudget: async (_, { id, ...updates }) => {
+        updateBudget: async (
+            _: unknown,
+            { id, ...updates }: { id: string; [key: string]: any }
+        ) => {
             await connectToDatabase();
             return await Budget.findByIdAndUpdate(id, updates, { new: true });
         },
-        deleteBudget: async (_, { id }) => {
+        deleteBudget: async (_: unknown, { id }: { id: string }) => {
             await connectToDatabase();
             const deleted = await Budget.findByIdAndDelete(id);
             return !!deleted; // true if deleted, false if not found
@@ -70,26 +76,30 @@ export const budgetResolvers = {
     }
 };
 
-const expenseLoader = new DataLoader(async (budgets: IDbBudget[]) => {
-    const results = await Expense.find({
-        $or: budgets.map((b) => {
-            const dateRange = resolveDateRangeForSearch(b.startDate.toISOString(), b.endDate.toISOString());
-            return ({
-                user: b.user,
-                category: b.category,
-                date: { $gte: dateRange.startDate, $lte: dateRange.endDate }
+const expenseLoader = new DataLoader<IDbBudget, any[]>(
+    async (budgets: readonly IDbBudget[]) => {
+        const results = await Expense.find({
+            $or: budgets.map((b) => {
+                const dateRange = resolveDateRangeForSearch(
+                    b.startDate.toISOString(),
+                    b.endDate.toISOString()
+                );
+                return {
+                    user: b.user,
+                    category: b.category,
+                    date: { $gte: dateRange.startDate, $lte: dateRange.endDate }
+                };
             })
-        }
-    )
-    }).sort({ date: 1 });
+        }).sort({ date: 1 });
 
-    return budgets.map((budget) =>
-        results.filter(
-            (e) =>
-                e.user.toString() === budget.user.toString() &&
-                e.category.toString() === budget.category.toString() &&
-                e.date >= budget.startDate &&
-                e.date <= budget.endDate
-        )
-    );
-});
+        return budgets.map((budget) =>
+            results.filter(
+                (e) =>
+                    e.user.toString() === budget.user.toString() &&
+                    e.category.toString() === budget.category.toString() &&
+                    e.date >= budget.startDate &&
+                    e.date <= budget.endDate
+            )
+        );
+    }
+);

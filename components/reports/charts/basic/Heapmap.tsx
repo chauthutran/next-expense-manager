@@ -12,8 +12,8 @@ export default function Heatmap({ data }: { data: JSONObject }) {
     const { months, categories, heatmapData } = data;
 
     // Find max value to scale colors
-    const allValues = heatmapData.flatMap((row) =>
-        months.map((month) => row[month] || 0)
+    const allValues = heatmapData.flatMap((row: JSONObject) =>
+        months.map((month: string) => row[month] || 0)
     );
     const maxValue = Math.max(...allValues);
 
@@ -33,7 +33,7 @@ export default function Heatmap({ data }: { data: JSONObject }) {
                             <th className="text-left p-3 font-semibold text-gray-600">
                                 Category
                             </th>
-                            {months.map((month) => (
+                            {months.map((month: string) => (
                                 <th
                                     key={month}
                                     className="text-center p-3 font-semibold text-gray-600"
@@ -44,7 +44,7 @@ export default function Heatmap({ data }: { data: JSONObject }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {heatmapData.map((row, indx) => (
+                        {heatmapData.map((row: JSONObject, indx: number) => (
                             <tr
                                 key={`row-${indx}`}
                                 className="border-b border-gray-100 hover:bg-gray-50 transition"
@@ -55,7 +55,7 @@ export default function Heatmap({ data }: { data: JSONObject }) {
                                 </td>
 
                                 {/* Heatmap Cells */}
-                                {months.map((month) => {
+                                {months.map((month: string) => {
                                     const value = row[month] || 0;
                                     const intensity = value / maxValue; // 0 → 1
                                     const bgColor = `rgba(59, 130, 246, ${Math.min(

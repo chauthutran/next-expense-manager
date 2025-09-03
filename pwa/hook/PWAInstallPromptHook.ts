@@ -1,12 +1,19 @@
 'use client';
 
 import { useEffect } from 'react';
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+}
 
 const usePWAInstallPrompt = () => {
   useEffect(() => {
-    let deferredPrompt;
+    
 
-    const handleBeforeInstallPrompt = (event) => {
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
+
+
+    const handleBeforeInstallPrompt = (event: BeforeInstallPromptEvent) => {
       event.preventDefault();
       deferredPrompt = event;
       console.log('PWA can be installed!');

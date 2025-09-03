@@ -2,70 +2,86 @@ import { JSONObject } from '@/libs/definations';
 import React, { useState, useEffect, useRef } from 'react';
 
 interface DropdownProps {
-	options: string[];
+    options: JSONObject[];
+    handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    [key: string]: any; // for ...rest
 }
 
-export default function Dropdown({ options, handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => { }, ...rest})  {
-	const initValue = ( rest.value == undefined ) ? "" : rest.value;
+export default function Dropdown({
+    options,
+    handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {},
+    ...rest
+}: DropdownProps) {
+    const initValue = rest.value == undefined ? '' : rest.value;
 
-	const [isOpen, setIsOpen] = useState(false);
-	const [filteredOptions, setFilteredOptions] = useState<JSONObject[]>(options);
-	const [inputValue, setInputValue] = useState(initValue);
-	const dropdownRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [filteredOptions, setFilteredOptions] =
+        useState<JSONObject[]>(options);
+    const [inputValue, setInputValue] = useState(initValue);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-				setIsOpen(false);
-			}
-		};
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        };
 
-		document.addEventListener('click', handleClickOutside);
-		return () => {
-			document.removeEventListener('click', handleClickOutside);
-		};
-	}, []);
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
-		setInputValue(value);
-		setFilteredOptions(options.filter(option => option.toLowerCase().includes(value.toLowerCase())));
-		setIsOpen(true);
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setInputValue(value);
+        setFilteredOptions(
+            options.filter((option) =>
+                option.toLowerCase().includes(value.toLowerCase())
+            )
+        );
+        setIsOpen(true);
 
-		handleOnChange(event);
-	};
+        handleOnChange(event);
+    };
 
-	const handleOptionClick = (option: JSONObject) => {
-		setInputValue(option);
-		setIsOpen(false);
+    const handleOptionClick = (option: JSONObject) => {
+        setInputValue(option);
+        setIsOpen(false);
 
-		let e = {target: {value: option._id }} as React.ChangeEvent<HTMLInputElement>;
-		handleOnChange(e);
-	};
+        let e = {
+            target: { value: option._id }
+        } as React.ChangeEvent<HTMLInputElement>;
+        handleOnChange(e);
+    };
 
-	return (
-		<div className={`relative w-full`} ref={dropdownRef}>
-			<input
-				{...rest}
-				type="text"
-				value={inputValue}
-				onChange={handleInputChange}
-				onClick={() => setIsOpen(true)}
-				placeholder="Select or type..."
-			/>
-			{isOpen && (
-				<div className="absolute mt-1 w-full bg-white border rounded">
-					{filteredOptions.map((option, index) => (
-						<div
-							key={index}
-							className="p-2 cursor-pointer hover:bg-gray-200"
-							onClick={() => handleOptionClick(option)}
-						>
-							{option.name}
-						</div>
-					))}
-				</div>
-			)}
-		</div>
-	);
-};
+    return (
+        <div className={`relative w-full`} ref={dropdownRef}>
+            <input
+                {...rest}
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                onClick={() => setIsOpen(true)}
+                placeholder="Select or type..."
+            />
+            {isOpen && (
+                <div className="absolute mt-1 w-full bg-white border rounded">
+                    {filteredOptions.map((option, index) => (
+                        <div
+                            key={index}
+                            className="p-2 cursor-pointer hover:bg-gray-200"
+                            onClick={() => handleOptionClick(option)}
+                        >
+                            {option.name}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}

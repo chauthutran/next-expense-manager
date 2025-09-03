@@ -51,7 +51,7 @@ export default function BudgetVSExpense({
             {viewOptions.type === 'variance' && (
                 <VarianceBarChart data={chartData} />
             )}
-            
+
             {viewOptions.type === 'bar' && (
                 <CustomBarChartByCategory data={chartData} />
             )}
@@ -59,13 +59,12 @@ export default function BudgetVSExpense({
             {viewOptions.type === 'composed' && (
                 <CustomComposedChart data={chartData} />
             )}
-
         </>
     );
 }
 
 const CustomBarChartByCategory = ({ data }: { data: JSONObject[] }) => {
-    console.log("===== data", data);
+    console.log('===== data', data);
     return (
         <ResponsiveContainer width="100%" height={400}>
             <BarChart
@@ -173,7 +172,7 @@ const CustomComposedChart = ({ data }: { data: JSONObject[] }) => {
     );
 };
 
-const VarianceBarChart = ({ data }) => {
+const VarianceBarChart = ({ data }: { data: JSONObject[] }) => {
     // Transform data to calculate variance (budget - actual)
     const transformedData = data.map((item) => {
         const { category, color, budgetedAmount, totalExpenses } = item;
@@ -182,7 +181,10 @@ const VarianceBarChart = ({ data }) => {
     });
 
     // Find the min value for the negative ReferenceArea
-    const minValue = Math.min(...transformedData.map((d) => d.value), 0);
+    const minValue = Math.min(
+        ...transformedData.map((d: JSONObject) => d.value),
+        0
+    );
 
     return (
         <ResponsiveContainer width="100%" height={400}>

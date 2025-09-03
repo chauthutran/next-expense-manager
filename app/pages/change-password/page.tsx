@@ -1,6 +1,7 @@
 "use client";
 
-import ChangePasswordPage from "@/components/auth/changePassword/changePasswordPage";
+import ChangePasswordPage from "@/components/auth/changePassword/ChangePasswordPage";
+
 
 export default function ChangePassword () {
     
