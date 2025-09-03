@@ -1,0 +1,37 @@
+name: Expense Management Next.js App
+
+on:
+  push:
+    branches:
+      - main # triggers when code is pushed to main
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        
+      - name: Install dependencies
+        run: npm Install
+        with:
+          node-version: 22
+          
+      - name: Build Next.js App
+        run: npm run build
+      
+      - name: Run tests
+        uses: npm run test
+        
+      # Deploy to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{secrets.VERCEL_TOKEN}}
+          vercel-org-id: ${{secrets.VERCEL-ORG_ID}}
+          vercel-project-id: ${{secrets.VERCEL-PROJECT-ID}}
+          vercel-args: "--prod"
