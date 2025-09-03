@@ -2,14 +2,13 @@
 
 'use client';
 
-import { CiUser } from 'react-icons/ci';
 import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { IoKeyOutline } from 'react-icons/io5';
 import { useAuth } from '@/contexts/AuthContext';
 import Joi from 'joi';
 import { JSONObject } from '@/libs/definations';
 import { useRouter } from 'next/navigation';
+import useFormValidation from '@/hooks/useFormValidation';
 
 const loginSchema = Joi.object({
     email: Joi.string()
@@ -39,7 +38,7 @@ export default function LoginForm() {
 
     const [email, setEmail] = useState('test1@gmail.com');
     const [password, setPassword] = useState('1234');
-    const [errors, setErrors] = useState<JSONObject>({});
+    const { errors, validateForm } = useFormValidation(loginSchema);
 
     useEffect(() => {
         if (user != null) {
@@ -50,19 +49,8 @@ export default function LoginForm() {
     const handleLoginBtn = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const { error } = loginSchema.validate(
-            { email, password },
-            { abortEarly: false }
-        );
-        if (error) {
-            const newErrors = {};
-            error.details.forEach((err) => {
-                newErrors[err.path[0]] = err.message;
-            });
-
-            setErrors(newErrors);
-        } else {
-            setErrors({});
+        const isValid = validateForm({ email, password });
+        if (isValid) {
             login(email, password);
         }
 
@@ -70,7 +58,11 @@ export default function LoginForm() {
     };
 
     return (
-        <form className="space-y-5" onSubmit={handleLoginBtn}>
+        <form
+            aria-label="login form"
+            className="space-y-5"
+            onSubmit={handleLoginBtn}
+        >
             {/* Email */}
             <div>
                 <label
@@ -136,7 +128,11 @@ export default function LoginForm() {
             >
                 <span className="flex-1">Login</span>
                 {loading && (
-                    <FaSpinner className="ml-auto h-5 animate-spin" size={20} />
+                    <FaSpinner
+                        aria-label="login button"
+                        className="ml-auto h-5 animate-spin"
+                        size={20}
+                    />
                 )}
             </button>
             <div className="flex h-8 items-end space-x-1 text-sm italic text-red-500">

@@ -1,6 +1,5 @@
-/** Form component for setting or updating the user's expense */
-
 'use client';
+
 import { IExpense, JSONObject } from '@/libs/definations';
 import React, { useState } from 'react';
 import * as Utils from '@/libs/utils';
@@ -12,6 +11,7 @@ import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
 import { ExpenseService } from '@/services/expenseService';
 import { useAuth } from '@/contexts/AuthContext';
 import Button from '../basics/Button';
+import useFormValidation from '@/hooks/useFormValidation';
 
 const expenseSchema = Joi.object({
     amount: Joi.number()
@@ -39,10 +39,11 @@ export default function ExpenseForm({
     onSaved
 }: {
     data?: IExpense | null;
-    onSaved: (item) => void;
+    onSaved: (item: IExpense) => void;
 }) {
     const { user } = useAuth();
     const { categoryMap } = useCategory();
+    const { errors, validateForm, validateField } = useFormValidation(expenseSchema);
 
     const [formData, setFormData] = useState<IExpense>(
         data || ExpenseService.createEmptyExpense(user!.id)
@@ -52,23 +53,13 @@ export default function ExpenseForm({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const { error } = expenseSchema.validate(
-            {
-                amount: formData.amount,
-                category: formData.category,
-                date: formData.date
-            },
-            { abortEarly: false }
-        );
-
-        if (error) {
-            const newErrors = {};
-            error.details.forEach((err) => {
-                newErrors[err.path[0]] = err.message;
-            });
-
-            setMessages(newErrors);
-        } else {
+        const isValid = validateForm({
+            amount: formData.amount,
+            category: formData.category,
+            date: formData.date
+        });
+        
+        if (isValid) {
             setMessages({});
 
             const response = await ExpenseService.save(formData);
@@ -97,19 +88,6 @@ export default function ExpenseForm({
         }));
     };
 
-    const validateField = (fieldName: string, value: any) => {
-        const schemaKeys = Object.keys(
-            (expenseSchema as any).$_terms.keys ?? {}
-        );
-
-        if (schemaKeys.includes(fieldName)) {
-            const fieldSchema = expenseSchema.extract(fieldName);
-            const { error } = fieldSchema.validate(value, { abortEarly: true });
-            return error ? error.details[0].message : null;
-        }
-
-        return null;
-    };
 
     return (
         <>
@@ -146,15 +124,15 @@ export default function ExpenseForm({
                         }
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
-                    {messages.amount && (
+                    {errors.amount && (
                         <p className="text-sm italic text-red-500">
-                            {messages.amount}
+                            {errors.amount}
                         </p>
                     )}
                 </div>
 
                 <div>
-                   <label
+                    <label
                         className="block font-medium text-gray-700 mb-1"
                         htmlFor="category"
                     >
@@ -175,9 +153,9 @@ export default function ExpenseForm({
                             </option>
                         ))}
                     </select>
-                    {messages.category && (
+                    {errors.category && (
                         <p className="text-sm italic text-red-500">
-                            {messages.category}
+                            {errors.category}
                         </p>
                     )}
                 </div>
@@ -197,15 +175,15 @@ export default function ExpenseForm({
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
 
-                    {messages.date && (
+                    {errors.date && (
                         <p className="text-sm italic text-red-500">
-                            {messages.date}
+                            {errors.date}
                         </p>
                     )}
                 </div>
 
                 <div>
-                   <label
+                    <label
                         className="block font-medium text-gray-700 mb-1"
                         htmlFor="description"
                     >
@@ -221,7 +199,7 @@ export default function ExpenseForm({
                     />
                 </div>
 
-                <div className='text-right'>
+                <div className="text-right">
                     <Button
                         title={data?.id ? 'Update' : 'Create'}
                         type="submit"

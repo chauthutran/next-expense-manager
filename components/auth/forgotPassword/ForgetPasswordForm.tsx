@@ -28,7 +28,7 @@ export default function ForgotPasswordForm() {
             { abortEarly: false }
         );
         if (error) {
-            const newErrors = {};
+            const newErrors: JSONObject = {};
             error.details.forEach((err) => {
                 newErrors[err.path[0]] = err.message;
             });

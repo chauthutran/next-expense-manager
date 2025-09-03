@@ -9,6 +9,7 @@ import * as Constant from '@/libs/constants';
 import { getCategoriesFromMap } from '@/libs/utils/categoryUtil';
 import Button from '../basics/Button';
 import { formatDateForInput } from '@/libs/utils';
+import useFormValidation from '@/hooks/useFormValidation';
 
 const budgetValidationSchema = Joi.object({
     name: Joi.string().empty('').required().messages({
@@ -44,10 +45,13 @@ export default function BudgetForm({
     onSaved
 }: {
     data?: IBudget | null;
-    onSaved: (item) => void;
+    onSaved: (item: IBudget) => void;
 }) {
     const { user } = useAuth();
     const { categoryMap } = useCategory();
+    const { errors, validateForm, validateField } = useFormValidation(
+        budgetValidationSchema
+    );
 
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState<JSONObject>({});
@@ -57,26 +61,16 @@ export default function BudgetForm({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const { error } = budgetValidationSchema.validate(
-            {
-                name: formData.name,
-                startDate: formData.startDate,
-                endDate: formData.endDate,
-                totalLimit: formData.totalLimit,
-                category: formData.category
-            },
-            { abortEarly: false }
-        );
-        if (error) {
-            const newErrors = {};
-            error.details.forEach((err) => {
-                newErrors[err.path[0]] = err.message;
-            });
 
-            setMessages(newErrors);
-        } else {
-            setMessages({});
+        const isValid = validateForm({
+            name: formData.name,
+            startDate: formData.startDate,
+            endDate: formData.endDate,
+            totalLimit: formData.totalLimit,
+            category: formData.category
+        });
 
+        if (isValid) {
             const response = await BudgetService.save(formData);
             if (response.success) {
                 setMessages({ savedSuccess: 'The budget is saved !' });
@@ -87,20 +81,6 @@ export default function BudgetForm({
         }
 
         return false;
-    };
-
-    const validateField = (fieldName: string, value: any) => {
-        const schemaKeys = Object.keys(
-            (budgetValidationSchema as any).$_terms.keys ?? {}
-        );
-
-        if (schemaKeys.includes(fieldName)) {
-            const fieldSchema = budgetValidationSchema.extract(fieldName);
-            const { error } = fieldSchema.validate(value, { abortEarly: true });
-            return error ? error.details[0].message : null;
-        }
-
-        return null;
     };
 
     const handleChange = (name: string, value: string | Number) => {
@@ -150,9 +130,9 @@ export default function BudgetForm({
                             }
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
-                        {messages.name && (
+                        {errors.name && (
                             <p className="text-red-500 text-sm mt-1">
-                                {messages.name}
+                                {errors.name}
                             </p>
                         )}
                     </div>
@@ -173,9 +153,9 @@ export default function BudgetForm({
                             }
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
-                        {messages.totalLimit && (
+                        {errors.totalLimit && (
                             <p className="text-red-500 text-sm mt-1">
-                                {messages.totalLimit}
+                                {errors.totalLimit}
                             </p>
                         )}
                     </div>
@@ -193,9 +173,9 @@ export default function BudgetForm({
                             }
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
-                        {messages.startDate && (
+                        {errors.startDate && (
                             <p className="text-red-500 text-sm mt-1">
-                                {messages.startDate}
+                                {errors.startDate}
                             </p>
                         )}
                     </div>
@@ -213,9 +193,9 @@ export default function BudgetForm({
                             }
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
-                        {messages.endDate && (
+                        {errors.endDate && (
                             <p className="text-red-500 text-sm mt-1">
-                                {messages.endDate}
+                                {errors.endDate}
                             </p>
                         )}
                     </div>
@@ -239,9 +219,9 @@ export default function BudgetForm({
                                 </option>
                             ))}
                         </select>
-                        {messages.category && (
+                        {errors.category && (
                             <p className="text-red-500 text-sm mt-1">
-                                {messages.category}
+                                {errors.category}
                             </p>
                         )}
                     </div>

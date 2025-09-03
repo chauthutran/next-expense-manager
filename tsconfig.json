@@ -8,12 +8,13 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "sourceMap": false,
@@ -34,26 +35,24 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "types": [
+      "jest"
+    ]
   },
   "include": [
     "next-env.d.ts",
     "app",
+    "app/components/*.ts",
+    "app/components/**/*.ts",
     ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-, "components", "contexts", "pwa"],
-  "include_BK": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "app/lib/types/**/*.d.ts"
-  ],
+    "components",
+    "contexts",
+    "pwa"]
+  ,
   "exclude": [
     "node_modules"
-  ],
-  "lib": [
-    "es6"
   ]
 }

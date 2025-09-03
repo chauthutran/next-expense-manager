@@ -4,11 +4,11 @@
 
 import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { IoKeyOutline } from 'react-icons/io5';
 import { useAuth } from '@/contexts/AuthContext';
 import Joi from 'joi';
 import { IUser, JSONObject } from '@/libs/definations';
 import { useRouter } from 'next/navigation';
+import useFormValidation from '@/hooks/useFormValidation';
 
 const registerSchema = Joi.object({
     email: Joi.string()
@@ -48,7 +48,7 @@ export default function RegisterForm() {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState<JSONObject>({});
+    const { errors, validateForm } = useFormValidation(registerSchema);
 
     useEffect(() => {
         if (user != null) {
@@ -66,13 +66,8 @@ export default function RegisterForm() {
             { abortEarly: false }
         );
 
-        if (error) {
-            const newErrors = {};
-            error.details.forEach((err) => {
-                newErrors[err.path[0]] = err.message;
-            });
-            setErrors(newErrors);
-        } else {
+        const isValid = validateForm({ email, password, confirmPassword });
+        if (isValid) {
             register({ email, password } as IUser);
         }
 
@@ -84,7 +79,11 @@ export default function RegisterForm() {
     };
 
     return (
-        <form className="space-y-5" onSubmit={handleRegisterBtn}>
+        <form
+            aria-label="register form"
+            className="space-y-5"
+            onSubmit={handleRegisterBtn}
+        >
             <div>
                 <label
                     htmlFor="email"
@@ -100,7 +99,6 @@ export default function RegisterForm() {
                     type="email"
                     name="email"
                     value={email}
-                    minLength={4}
                     placeholder="Enter your email"
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -171,10 +169,12 @@ export default function RegisterForm() {
                    bg-blue-600 text-white font-medium 
                    hover:bg-blue-700 active:bg-blue-800
                    transition shadow-sm"
+                    aria-label="register button"
                 >
                     <span className="flex-1">Register</span>
                     {loading && (
                         <FaSpinner
+                            aria-label="register loading spinner"
                             className="ml-auto h-5 animate-spin"
                             size={20}
                         />
@@ -186,6 +186,7 @@ export default function RegisterForm() {
                    hover:bg-gray-400 active:bg-gray-500
                    transition shadow-sm"
                     onClick={handleOnCancel}
+                    aria-label="cancel button"
                 >
                     <span className="flex-1">Cancel</span>
                 </button>
