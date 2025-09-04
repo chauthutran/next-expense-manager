@@ -27,11 +27,17 @@ jobs:
         run: yarn install
 
       - name: Build Next.js App
-        run: yarn build
+        run: yarn build && yarn export
 
       - name: Run tests
         run: yarn test
 
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_totken: $${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./out
+        
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
         with:

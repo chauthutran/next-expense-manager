@@ -1,4 +1,5 @@
-const headersConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig  = {
   async headers() {
     return [
       {
@@ -37,6 +38,7 @@ const headersConfig = {
       },
     ];
   },
+  output: 'export', // <-- To make a demo page on Github repo
 };
 
-export default headersConfig;
+export default nextConfig;
