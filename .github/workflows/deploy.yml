@@ -31,12 +31,6 @@ jobs:
 
       - name: Run tests
         run: yarn test
-
-      - name: Deploy to Github Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_totken: $${{secrets.GITHUB_TOKEN}}
-          publish_dir: ./out
         
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
