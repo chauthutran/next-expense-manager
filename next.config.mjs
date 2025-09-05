@@ -37,8 +37,7 @@ const nextConfig  = {
         ],
       },
     ];
-  },
-  output: 'export', // <-- To make a demo page on Github repo
+  }
 };
 
 export default nextConfig;
