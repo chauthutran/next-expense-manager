@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useAuth } from '@/contexts/AuthContext';
 import Joi from 'joi';
-import { JSONObject } from '@/libs/definations';
 import { useRouter } from 'next/navigation';
 import useFormValidation from '@/hooks/useFormValidation';
 
@@ -39,7 +38,7 @@ export default function LoginForm() {
     const [email, setEmail] = useState('test1@gmail.com');
     const [password, setPassword] = useState('1234');
     const { errors, validateForm } = useFormValidation(loginSchema);
-
+    
     useEffect(() => {
         if (user != null) {
             router.push('/pages/dashboard');

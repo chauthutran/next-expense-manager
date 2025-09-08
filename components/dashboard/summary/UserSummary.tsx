@@ -17,9 +17,9 @@ export default function UserSummary({
     };
 
     return (
-        <div className="flex bg-gradient-to-r col-span-2 from-white via-slate-100 to-slate-100 rounded-xl">
+        <div className="flex bg-gradient-to-r from-white via-slate-100 to-slate-100 rounded-xl w-full">
             {/* Big Circle with Icon/Image */}
-            <div className="rounded-full bg-blue-100 flex items-center p-10">
+            <div className="rounded-full bg-blue-100 flex items-center justify-center aspect-square">
                 <Image src="/user.svg" alt="User" width={150} height={150} />
             </div>
 
@@ -36,7 +36,7 @@ export default function UserSummary({
 
                     <div className="flex items-center mt-3 sm:mt-5 text-base sm:text-lg font-semibold text-black">
                         <div
-                            className="px-4 py-2 bg-blue-100 rounded-l-lg"
+                            className="px-4 py-2 bg-blue-100 rounded-l-lg whitespace-nowrap"
                             style={{
                                 backgroundImage:
                                     'repeating-linear-gradient(45deg, #93c5fd 0 1px, transparent 1px 8px)'

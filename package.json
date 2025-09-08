@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "deploy": "gh-pages -d out"
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.13.9",
@@ -48,6 +47,7 @@
     "redux": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "rxjs": "^7.8.2",
     "uuid": "^10.0.0",
     "web-push": "^3.6.7"
   },

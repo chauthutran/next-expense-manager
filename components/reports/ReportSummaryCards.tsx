@@ -44,13 +44,17 @@ export default function ReportSummaryCards({
                 {/* Overspending alert */}
                 <div className="bg-red-100 text-red-800 p-3 rounded-lg shadow-sm flex justify-between items-center">
                     <span>Over Budget</span>
-                    <span className="font-bold">{formatCurrency(totalOverBudget)}</span>
+                    <span className="font-bold">
+                        {formatCurrency(totalOverBudget)}
+                    </span>
                 </div>
 
                 {/* Under budget */}
                 <div className="bg-green-100 text-green-800 p-3 rounded-lg shadow-sm flex justify-between items-center">
                     <span>Under Budget</span>
-                    <span className="font-bold">{formatCurrency(totalUnderBudget)}</span>
+                    <span className="font-bold">
+                        {formatCurrency(totalUnderBudget)}
+                    </span>
                 </div>
             </div>
 

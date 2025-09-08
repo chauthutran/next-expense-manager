@@ -24,10 +24,10 @@ export default function ProgressBar({
                 className="w-10 h-10"
                 dangerouslySetInnerHTML={{ __html: sanitizedIcon }}
             />
-            <div className="my-1 text-sm text-gray-700 font-bold">
+            <div className="pt-1 text-sm text-gray-700 font-bold">
                 <span>{label}</span>
             </div>
-            <div className='mt-5 italic flex justify-between text-gray-600'>
+            <div className='mt-2 italic flex justify-between text-gray-600 text-xs'>
                 <div>{formatCurrency(value)}</div>
                 <span>{percent}%</span>
             </div>

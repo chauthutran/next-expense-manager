@@ -1,51 +1,32 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
-import ExpensesByCategory from './CategoryWiseExpenses';
 import SummaryCard from './SumaryCard';
-import MonthlyBarChart from './MonthlyBarChart';
-import * as Constant from '@/libs/constants';
-import { useEffect, useState } from 'react';
-import { IExpense, IMessage, SearchFilters } from '@/libs/definations';
-import { ExpenseService } from '@/services/expenseService';
-import { createMessage } from '@/libs/utils';
 import { useCategory } from '@/contexts/CategoryContext';
+import useData from '@/hooks/useData';
+import { useMemo } from 'react';
+import CategoryWiseExpenses from './CategoryWiseExpenses';
+import ReportDetails from '../reports/ReportDetails';
+import LatestExpenses from './LatestExpenses';
 
 const DEMO_YEAR = 2024;
 
 export default function DashboardPage() {
     const { user } = useAuth();
-    const { loading: categoryLoading, categoryMap } = useCategory();
-    const [data, setData] = useState<IExpense[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState<IMessage>(createMessage());
 
-    const fetchExpenses = async () => {
-        setLoading(true);
-
-        const responseData = await ExpenseService.findExpenses({
+    const _filters = useMemo(
+        () => ({
             user: user?.id!,
             startDate: `${DEMO_YEAR}-01-01`,
             endDate: `${DEMO_YEAR}-12-31`
-        } as SearchFilters);
+        }),
+        [user]
+    );
 
-        if (responseData.success) {
-            setData(responseData.data);
-        } else {
-            setMessage({
-                type: Constant.ALERT_TYPE_ERROR,
-                msg: responseData.message!
-            });
-        }
-        setLoading(false);
-    };
-
-    useEffect(() => {
-        if (user) {
-            // Fetch data only when user is logged in
-            fetchExpenses();
-        }
-    }, [user]);
+    const { loading: categoryLoading, categoryMap } = useCategory();
+    const { loading, message, expenses, budgets } = useData({
+        filterData: _filters
+    });
 
     return (
         <>
@@ -56,13 +37,24 @@ export default function DashboardPage() {
             ) : (
                 <div className="bg-white">
                     {/* Header */}
-                    <SummaryCard year={DEMO_YEAR} expenses={data} />
+                    <SummaryCard
+                        year={DEMO_YEAR}
+                        expenses={expenses}
+                        budgets={budgets}
+                    />
 
-                    <div className="grid grid-cols-3 sm gap-6">
-                        <MonthlyBarChart data={data} />
-
+                    <div className="grid grid-cols-3 sm gap-2 pt-3">
                         <div className="col-span-2">
-                            <ExpensesByCategory expenses={data} />
+                            <CategoryWiseExpenses
+                                year={DEMO_YEAR}
+                                budgets={budgets}
+                            />
+                        </div>
+                        
+                        <div>
+                            <LatestExpenses 
+                                year={DEMO_YEAR}
+                                data={expenses} />
                         </div>
                     </div>
                 </div>

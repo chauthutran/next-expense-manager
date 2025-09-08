@@ -1,6 +1,6 @@
 'use client';
 
-import { IBudget, IExpense, JSONObject } from '@/libs/definations';
+import { IBudget, IExpense } from '@/libs/definations';
 import * as Utils from '@/libs/utils';
 import { useCategory } from '@/contexts/CategoryContext';
 import Button from '../basics/Button';

@@ -8,53 +8,17 @@ import * as Constant from '@/libs/constants';
 import SearchForm from '../layout/SearchForm';
 import ReportChart from './ReportChart';
 import { BudgetService } from '@/services/budgetService';
+import useData from '@/hooks/useData';
 
 export default function ReportsPage() {
-    const [message, setMessage] = useState<IMessage>(createMessage());
-    const [loading, setLoading] = useState(false);
-    const [expenses, setExpenses] = useState<IExpense[]>([]);
-    const [budgets, setBudgets] = useState<IBudget[]>([]);
+    const [filterData, setFilterData] = useState<SearchFilters | null>(null);
+    
+    const { loading, message, expenses, budgets } = useData({
+        filterData
+    });
 
-    const fetchData = async (_filters: SearchFilters) => {
-        setLoading(true);
-        try {
-            // Fetch in parallel
-            const [expenseRes, budgetRes] = await Promise.all([
-                ExpenseService.findExpenses(_filters),
-                BudgetService.findBudgets(_filters)
-            ]);
-
-            if (expenseRes.success) {
-                setExpenses(expenseRes.data);
-            } else {
-                setMessage({
-                    type: Constant.ALERT_TYPE_ERROR,
-                    msg: expenseRes.message!
-                });
-            }
-
-            if (budgetRes.success) {
-                setBudgets(budgetRes.data);
-            } else {
-                setMessage({
-                    type: Constant.ALERT_TYPE_ERROR,
-                    msg: budgetRes.message!
-                });
-            }
-        } catch (error) {
-            setMessage({
-                type: Constant.ALERT_TYPE_ERROR,
-                msg: 'Something went wrong while fetching data.'
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleOnSearch = async (filters: SearchFilters) => {
-        setMessage(createMessage());
-
-        await fetchData(filters);
+    const handleOnSearch = (filters: SearchFilters) => {
+        setFilterData(filters);
     };
 
     return (
