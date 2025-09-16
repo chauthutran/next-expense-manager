@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const FIND_EXPENSE_BY_ID = gql`
-    query FindExpenseById($id: ID!) {
-        findExpenseById(id: $id) {
+    query findExpense($id: ID!) {
+        findExpense(id: $id) {
             id
             category
             user
